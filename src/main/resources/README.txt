@@ -1,1 +1,0 @@
-This is a code repository for Career Opts, LLC.
