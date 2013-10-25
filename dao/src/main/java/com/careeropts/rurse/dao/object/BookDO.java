@@ -1,23 +1,34 @@
 package com.careeropts.rurse.dao.object;
 
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class BookDO {
 
-    String id;
-    String title;
-    String description;
-    String publisher;
-    Date publishDate;
-    Double price;
-    String ISBN;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
 
+    @Column(nullable = false)
+    String title;
+
+    @Column(nullable = false)
+    String description;
+
+    String publisher;
+
+    Date publishDate;
+
+    Double price;
+
+    String ISBN;
 
     public BookDO() {
     }
 
-    public BookDO(String id,
+    public BookDO(Long id,
                   String title,
                   String description,
                   String publisher,
@@ -34,11 +45,11 @@ public class BookDO {
         this.ISBN = ISBN;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

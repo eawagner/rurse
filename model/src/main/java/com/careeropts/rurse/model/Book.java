@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Book {
 
-    String id;
+    Long id;
     String title;
     String description;
     String publisher;
@@ -17,7 +17,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(String id,
+    public Book(Long id,
                 String title,
                 String description,
                 String publisher,
@@ -34,11 +34,11 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

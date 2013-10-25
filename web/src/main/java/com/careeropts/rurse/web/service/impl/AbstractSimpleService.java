@@ -20,7 +20,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
 
     @Override
-    public T getSingle(String id) {
+    public T getSingle(Long id) {
         if (id == null)
             throw new NotFoundException();
 
@@ -89,7 +89,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
         if (id == null)
             throw new NotFoundException();
 

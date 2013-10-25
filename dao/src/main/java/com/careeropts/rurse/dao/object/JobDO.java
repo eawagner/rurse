@@ -1,19 +1,32 @@
 package com.careeropts.rurse.dao.object;
 
+import javax.persistence.*;
+
+@Entity
 public class JobDO {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String description;
+
     private String location;
+
     private String city;
+
     private String state;
+
     private boolean active;
 
     public JobDO() {
     }
 
-    public JobDO(String id,
+    public JobDO(Long id,
                  String title,
                  String description,
                  String location,
@@ -30,11 +43,11 @@ public class JobDO {
         this.active = active;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

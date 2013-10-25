@@ -17,7 +17,7 @@ public class CourseResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{id}")
     public Course getSingleCourse(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
         return service.getSingle(id);
     }
@@ -27,7 +27,7 @@ public class CourseResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{id}")
     public Course saveSingleCourse(
-            @PathParam("id") String id,
+            @PathParam("id") Long id,
             Course model) {
 
         model.setId(id);
@@ -37,7 +37,7 @@ public class CourseResource {
     @DELETE
     @Path("/{id}")
     public void deleteSingleCourse(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
         service.delete(id);
     }

@@ -1,32 +1,32 @@
 package com.careeropts.rurse.web.resource;
 
 
-import com.careeropts.rurse.dao.IUserDao;
 import com.careeropts.rurse.model.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Collections;
 
 @Path("/user")
 public class UserResource {
 
-    IUserDao dao;
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{id}")
     public User getSingleUser(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
-        return dao.getSingle(id);
+        //return dao.getSingle(id);
+        return null;
     }
 
     @DELETE
     @Path("/{id}")
     public void deleteSingleUser(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
-        dao.delete(id);
+        //dao.delete(id);
     }
 
     @GET
@@ -41,6 +41,8 @@ public class UserResource {
         if (size == null)
             size = Integer.MAX_VALUE;
 
-        return dao.getAll(pageNum, size);
+        //return dao.getAll(pageNum, size);
+
+        return Collections.emptyList();
     }
 }

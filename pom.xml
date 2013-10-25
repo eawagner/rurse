@@ -21,6 +21,8 @@
 
         <commons.lang.version>3.0</commons.lang.version>
         <guava.version>14.0.1</guava.version>
+        <hibernate.version>4.2.6.Final</hibernate.version>
+        <hibernate.search.version>4.3.0.Final</hibernate.search.version>
         <jackson.version>2.2.3</jackson.version>
         <jersey.version>1.17.1</jersey.version>
         <junit.version>4.11</junit.version>
@@ -84,6 +86,18 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang.version}</version>
+            </dependency>
+
+            <!--Database-->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-search</artifactId>
+                <version>${hibernate.search.version}</version>
             </dependency>
 
             <!--Testing-->

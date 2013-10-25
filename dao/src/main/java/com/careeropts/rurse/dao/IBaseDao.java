@@ -3,7 +3,7 @@ package com.careeropts.rurse.dao;
 
 public interface IBaseDao<T> {
 
-    public T getSingle(String id);
+    public T getSingle(long id);
 
     public Iterable<T> getAll();
 
@@ -17,6 +17,6 @@ public interface IBaseDao<T> {
 
     public T saveOrUpdate(T item);
 
-    public void delete(String id);
+    public void delete(long id);
 
 }

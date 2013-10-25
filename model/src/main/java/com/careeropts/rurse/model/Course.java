@@ -2,7 +2,7 @@ package com.careeropts.rurse.model;
 
 public class Course {
 
-    String id;
+    Long id;
     String title;
     String description;
     Double cost;
@@ -11,7 +11,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(String id,
+    public Course(Long id,
                   String title,
                   String description,
                   Double cost,
@@ -24,11 +24,11 @@ public class Course {
         this.duration = duration;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

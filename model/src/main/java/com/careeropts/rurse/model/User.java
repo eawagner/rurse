@@ -3,22 +3,22 @@ package com.careeropts.rurse.model;
 
 public class User {
 
-    String id;
+    Long id;
     String email;
 
     public User() {
     }
 
-    public User(String id, String email) {
+    public User(Long id, String email) {
         this.id = id;
         this.email = email;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

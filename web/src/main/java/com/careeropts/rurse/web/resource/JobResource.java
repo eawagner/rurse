@@ -17,7 +17,7 @@ public class JobResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{id}")
     public Job getSingleJob(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
         return service.getSingle(id);
     }
@@ -27,7 +27,7 @@ public class JobResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{id}")
     public Job saveSingleJob(
-            @PathParam("id") String id,
+            @PathParam("id") Long id,
             Job model) {
 
         model.setId(id);
@@ -37,7 +37,7 @@ public class JobResource {
     @DELETE
     @Path("/{id}")
     public void deleteSingleJob(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
         service.delete(id);
     }

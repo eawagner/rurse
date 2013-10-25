@@ -17,7 +17,7 @@ public class BookResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{id}")
     public Book getSingleBook(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
         return service.getSingle(id);
     }
@@ -27,7 +27,7 @@ public class BookResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{id}")
     public Book saveSingleBook(
-            @PathParam("id") String id,
+            @PathParam("id") Long id,
             Book model) {
 
         model.setId(id);
@@ -37,7 +37,7 @@ public class BookResource {
     @DELETE
     @Path("/{id}")
     public void deleteSingleBook(
-            @PathParam("id") String id) {
+            @PathParam("id") Long id) {
 
         service.delete(id);
     }

@@ -2,7 +2,7 @@ package com.careeropts.rurse.model;
 
 public class Job {
 
-    private String id;
+    private Long id;
     private String title;
     private String description;
     private String location;
@@ -13,7 +13,7 @@ public class Job {
     public Job() {
     }
 
-    public Job(String id,
+    public Job(Long id,
                String title,
                String description,
                String location,
@@ -30,11 +30,11 @@ public class Job {
         this.active = active;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

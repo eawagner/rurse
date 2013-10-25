@@ -5,13 +5,13 @@ import com.careeropts.rurse.dao.IBaseDao;
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
     @Override
-    public T getSingle(String id) {
+    public T getSingle(long id) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public Iterable<T> getAll() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return getAll(0, Integer.MAX_VALUE);
     }
 
     @Override
@@ -21,7 +21,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
     @Override
     public Iterable<T> search(String searchText) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return search(null, 0, Integer.MAX_VALUE);
     }
 
     @Override
@@ -40,7 +40,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(long id) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 }
