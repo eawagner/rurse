@@ -5,7 +5,7 @@ public class CourseDO {
     String id;
     String title;
     String description;
-    String cost;
+    Double cost;
     String duration;
 
     public CourseDO() {
@@ -14,7 +14,7 @@ public class CourseDO {
     public CourseDO(String id,
                     String title,
                     String description,
-                    String cost,
+                    Double cost,
                     String duration) {
 
         this.id = id;
@@ -48,11 +48,11 @@ public class CourseDO {
         this.description = description;
     }
 
-    public String getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 

@@ -2,12 +2,67 @@ package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.object.BookDO;
 import com.careeropts.rurse.model.Book;
+import com.careeropts.rurse.web.exception.ClientErrorException;
+import com.google.common.base.Strings;
+import org.apache.commons.lang3.math.NumberUtils;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static java.lang.Integer.valueOf;
+import static java.lang.Math.round;
+import static org.apache.commons.lang3.math.NumberUtils.isDigits;
 
 public class BookService extends AbstractSimpleService<Book, BookDO> {
 
+    private static boolean isbnValid(String isbn) {
+        if (isbn == null)
+            return true; //if it is null then simply ignore it.
+
+        //ISBN checks from wikipedia
+        if (isDigits(isbn)) {
+            return false;
+        } else if (isbn.length() == 10) {
+            int check = 0;
+
+            for (int i = 0; i < 10; i++)
+                check += valueOf(isbn.substring(i, i + 1)) * (10 - i);
+
+            return check % 11 == 0;
+
+        } else if (isbn.length() == 13) {
+            int check = 0;
+
+            for (int i = 0; i < 12; i += 2)
+                check += valueOf(isbn.substring(i, i + 1));
+
+            for (int i = 1; i < 12; i += 2)
+                check += valueOf(isbn.substring(i, i + 1)) * 3;
+
+            check += valueOf(isbn.substring(12));
+            return check % 10 == 0;
+        }
+
+        return false;
+    }
+
     @Override
     protected void normalizeAndValidate(Book model) {
-        //TODO
+
+        if (isNullOrEmpty(model.getTitle())) {
+            throw new ClientErrorException("A book must have a title");
+        }
+
+        if (isNullOrEmpty(model.getDescription())) {
+            throw new ClientErrorException("A book must have a description");
+        }
+
+        if (!isbnValid(model.getISBN())) {
+            throw new ClientErrorException("The ISBN must follow the 10 or 13 digit ISBN standard and only contain numeric digits");
+        }
+
+        //normalize price to a two digit value
+        if (model.getPrice() != null)
+            model.setPrice(round(model.getPrice() * 100.0) / 100.0);
+
     }
 
     @Override

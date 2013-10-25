@@ -1,6 +1,8 @@
 package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.IBaseDao;
+import com.careeropts.rurse.web.exception.ClientErrorException;
+import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.ISimpleService;
 import com.google.common.base.Function;
 
@@ -19,15 +21,14 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
     @Override
     public T getSingle(String id) {
-        if (id == null) {
-            //TODO generate 404 exception
-        }
+        if (id == null)
+            throw new NotFoundException();
 
         U item = dao.getSingle(id);
 
-        if (item == null) {
-            //TODO generate 404 exception
-        }
+        if (item == null)
+            throw new NotFoundException();
+
 
         return fromDatabaseObject(item);
     }
@@ -41,11 +42,11 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
             perPage = Integer.MAX_VALUE;
 
         Iterable<U> results;
-        if (isNullOrEmpty(searchText)) {
+
+        if (isNullOrEmpty(searchText))
             results = dao.getAll(pageNum, perPage);
-        } else {
+        else
             results = dao.search(searchText, pageNum, perPage);
-        }
 
         return transform(results, new Function<U, T>() {
             @Override
@@ -57,9 +58,8 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
     @Override
     public T save(T item) {
-        if (item == null) {
-            //TODO generate 400 exception
-        }
+        if (item == null)
+            throw new ClientErrorException("Attempted to save null data");
 
         normalizeAndValidate(item);
 
@@ -74,9 +74,8 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
     @Override
     public T saveOrUpdate(T item) {
-        if (item == null) {
-            //TODO generate 400 exception
-        }
+        if (item == null)
+            throw new ClientErrorException("Attempted to save null data");
 
         normalizeAndValidate(item);
 
@@ -91,9 +90,8 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
     @Override
     public void delete(String id) {
-        if (id == null) {
-            //TODO generate 404 exception
-        }
+        if (id == null)
+            throw new NotFoundException();
 
         dao.delete(id);
     }
