@@ -1,7 +1,7 @@
 package com.careeropts.rurse.web.resource;
 
-import com.careeropts.rurse.dao.IBookDao;
 import com.careeropts.rurse.model.Book;
+import com.careeropts.rurse.web.service.IBookService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 public class BookResource {
 
 
-    IBookDao dao;
+    IBookService service;
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -19,7 +19,7 @@ public class BookResource {
     public Book getSingleBook(
             @PathParam("id") String id) {
 
-        return dao.getSingle(id);
+        return service.getSingle(id);
     }
 
     @PUT
@@ -31,7 +31,7 @@ public class BookResource {
             Book model) {
 
         model.setId(id);
-        return dao.saveOrUpdate(model);
+        return service.saveOrUpdate(model);
     }
 
     @DELETE
@@ -39,7 +39,7 @@ public class BookResource {
     public void deleteSingleBook(
             @PathParam("id") String id) {
 
-        dao.delete(id);
+        service.delete(id);
     }
 
     @GET
@@ -49,17 +49,8 @@ public class BookResource {
             @QueryParam("pageNum") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
-        if (pageNum == null)
-            pageNum = 0;
+        return service.query(searchText, pageNum, size);
 
-        if (size == null)
-            size = Integer.MAX_VALUE;
-
-        if (searchText != null) {
-            return dao.search(searchText, pageNum, size);
-        } else {
-            return dao.getAll(pageNum, size);
-        }
     }
 
     @POST
@@ -69,6 +60,6 @@ public class BookResource {
             Book model) {
 
         model.setId(null);
-        return dao.save(model);
+        return service.save(model);
     }
 }

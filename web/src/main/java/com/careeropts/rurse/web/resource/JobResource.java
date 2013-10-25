@@ -1,7 +1,7 @@
 package com.careeropts.rurse.web.resource;
 
-import com.careeropts.rurse.dao.IJobDao;
 import com.careeropts.rurse.model.Job;
+import com.careeropts.rurse.web.service.IJobService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 public class JobResource {
 
 
-    IJobDao dao;
+    IJobService service;
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -19,7 +19,7 @@ public class JobResource {
     public Job getSingleJob(
             @PathParam("id") String id) {
 
-        return dao.getSingle(id);
+        return service.getSingle(id);
     }
 
     @PUT
@@ -31,7 +31,7 @@ public class JobResource {
             Job model) {
 
         model.setId(id);
-        return dao.saveOrUpdate(model);
+        return service.saveOrUpdate(model);
     }
 
     @DELETE
@@ -39,7 +39,7 @@ public class JobResource {
     public void deleteSingleJob(
             @PathParam("id") String id) {
 
-        dao.delete(id);
+        service.delete(id);
     }
 
     @GET
@@ -49,18 +49,7 @@ public class JobResource {
             @QueryParam("pageNum") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
-        if (pageNum == null)
-            pageNum = 0;
-
-        if (size == null)
-            size = Integer.MAX_VALUE;
-
-        if (searchText != null) {
-            return dao.search(searchText, pageNum, size);
-        } else {
-            return dao.getAll(pageNum, size);
-        }
-
+        return service.query(searchText, pageNum, size);
 
     }
 
@@ -71,6 +60,6 @@ public class JobResource {
             Job model) {
 
         model.setId(null);
-        return dao.save(model);
+        return service.save(model);
     }
 }

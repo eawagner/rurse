@@ -1,6 +1,6 @@
 package com.careeropts.rurse.dao;
 
-import com.careeropts.rurse.model.Job;
+import com.careeropts.rurse.dao.object.JobDO;
 
-public interface IJobDao extends IBaseDao<Job> {
+public interface IJobDao extends IBaseDao<JobDO> {
 }

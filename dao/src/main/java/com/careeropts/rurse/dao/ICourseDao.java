@@ -1,6 +1,6 @@
 package com.careeropts.rurse.dao;
 
-import com.careeropts.rurse.model.Course;
+import com.careeropts.rurse.dao.object.CourseDO;
 
-public interface ICourseDao extends IBaseDao<Course> {
+public interface ICourseDao extends IBaseDao<CourseDO> {
 }
