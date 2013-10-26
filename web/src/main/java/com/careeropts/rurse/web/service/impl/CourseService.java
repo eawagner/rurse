@@ -2,7 +2,7 @@ package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.object.CourseDO;
 import com.careeropts.rurse.model.Course;
-import com.careeropts.rurse.web.exception.ClientErrorException;
+import com.careeropts.rurse.web.exception.BadRequestException;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Math.round;
@@ -13,11 +13,11 @@ public class CourseService extends AbstractSimpleService<Course, CourseDO> {
     protected void normalizeAndValidate(Course model) {
 
         if (isNullOrEmpty(model.getTitle())) {
-            throw new ClientErrorException("A course must have a title");
+            throw new BadRequestException("A course must have a title");
         }
 
         if (isNullOrEmpty(model.getDescription())) {
-            throw new ClientErrorException("A course must have a description");
+            throw new BadRequestException("A course must have a description");
         }
 
         //normalize price to a two digit value

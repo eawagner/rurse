@@ -2,7 +2,7 @@ package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.object.JobDO;
 import com.careeropts.rurse.model.Job;
-import com.careeropts.rurse.web.exception.ClientErrorException;
+import com.careeropts.rurse.web.exception.BadRequestException;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -11,11 +11,11 @@ public class JobService extends AbstractSimpleService<Job, JobDO> {
     @Override
     protected void normalizeAndValidate(Job model) {
         if (isNullOrEmpty(model.getTitle())) {
-            throw new ClientErrorException("A job listing must have a title");
+            throw new BadRequestException("A job listing must have a title");
         }
 
         if (isNullOrEmpty(model.getDescription())) {
-            throw new ClientErrorException("A job listing must have a description");
+            throw new BadRequestException("A job listing must have a description");
         }
 
         //TODO validate city and state.

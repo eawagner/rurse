@@ -2,9 +2,7 @@ package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.object.BookDO;
 import com.careeropts.rurse.model.Book;
-import com.careeropts.rurse.web.exception.ClientErrorException;
-import com.google.common.base.Strings;
-import org.apache.commons.lang3.math.NumberUtils;
+import com.careeropts.rurse.web.exception.BadRequestException;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Integer.valueOf;
@@ -48,15 +46,15 @@ public class BookService extends AbstractSimpleService<Book, BookDO> {
     protected void normalizeAndValidate(Book model) {
 
         if (isNullOrEmpty(model.getTitle())) {
-            throw new ClientErrorException("A book must have a title");
+            throw new BadRequestException("A book must have a title");
         }
 
         if (isNullOrEmpty(model.getDescription())) {
-            throw new ClientErrorException("A book must have a description");
+            throw new BadRequestException("A book must have a description");
         }
 
         if (!isbnValid(model.getISBN())) {
-            throw new ClientErrorException("The ISBN must follow the 10 or 13 digit ISBN standard and only contain numeric digits");
+            throw new BadRequestException("The ISBN must follow the 10 or 13 digit ISBN standard and only contain numeric digits");
         }
 
         //normalize price to a two digit value

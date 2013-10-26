@@ -2,23 +2,26 @@ package com.careeropts.rurse.web.exception;
 
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import static com.sun.jersey.api.Responses.notFound;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN_TYPE;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.status;
 
-public class NotFoundException extends WebApplicationException{
-    public NotFoundException() {
-        super(notFound().build());
+public class InternalServerError extends WebApplicationException{
+    public InternalServerError() {
+        super(status(INTERNAL_SERVER_ERROR).build());
     }
 
     /**
      * Create a HTTP 404 (Not Found) exception.
      * @param message the String that is the entity of the 404 response.
      */
-    public NotFoundException(String message) {
-        super(status(NOT_FOUND).
+    public InternalServerError(String message) {
+        super(status(INTERNAL_SERVER_ERROR).
                 entity(message).type(TEXT_PLAIN_TYPE).build());
     }
 }

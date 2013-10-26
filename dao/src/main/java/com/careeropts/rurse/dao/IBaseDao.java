@@ -17,6 +17,6 @@ public interface IBaseDao<T> {
 
     public T saveOrUpdate(T item);
 
-    public void delete(long id);
+    public boolean delete(long id);
 
 }

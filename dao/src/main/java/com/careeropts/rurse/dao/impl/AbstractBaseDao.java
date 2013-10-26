@@ -1,12 +1,22 @@
 package com.careeropts.rurse.dao.impl;
 
 import com.careeropts.rurse.dao.IBaseDao;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
+    SessionFactory sessionFactory;
+
+    protected abstract Class<T> getDOClass();
+
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
     @Override
     public T getSingle(long id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return (T) getSession().get(getDOClass(), id);
     }
 
     @Override
@@ -16,7 +26,11 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
     @Override
     public Iterable<T> getAll(int pageNum, int perPage) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return getSession()
+                .createCriteria(getDOClass())
+                .setFirstResult(pageNum * perPage)
+                .setMaxResults(perPage)
+                .list();
     }
 
     @Override
@@ -26,21 +40,30 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
     @Override
     public Iterable<T> search(String searchText, int pageNum, int perPage) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
     public T save(T item) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        getSession().save(item);
+        return item;
     }
 
     @Override
     public T saveOrUpdate(T item) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        getSession().saveOrUpdate(item);
+        return item;
     }
 
     @Override
-    public void delete(long id) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public boolean delete(long id) {
+        T item = getSingle(id);
+
+        if (item == null)
+            return false;
+
+        getSession().delete(item);
+
+        return true;
     }
 }

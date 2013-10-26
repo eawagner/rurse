@@ -1,7 +1,7 @@
 package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.IBaseDao;
-import com.careeropts.rurse.web.exception.ClientErrorException;
+import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.ISimpleService;
 import com.google.common.base.Function;
@@ -59,7 +59,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
     @Override
     public T save(T item) {
         if (item == null)
-            throw new ClientErrorException("Attempted to save null data");
+            throw new BadRequestException("Attempted to save null data");
 
         normalizeAndValidate(item);
 
@@ -75,7 +75,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
     @Override
     public T saveOrUpdate(T item) {
         if (item == null)
-            throw new ClientErrorException("Attempted to save null data");
+            throw new BadRequestException("Attempted to save null data");
 
         normalizeAndValidate(item);
 
@@ -93,6 +93,8 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         if (id == null)
             throw new NotFoundException();
 
-        dao.delete(id);
+        if (!dao.delete(id))
+            throw new NotFoundException();
+
     }
 }
