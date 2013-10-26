@@ -2,20 +2,24 @@ package com.careeropts.rurse.web.resource;
 
 import com.careeropts.rurse.model.Job;
 import com.careeropts.rurse.web.service.IJobService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
-@Path("/Job")
+@Component
+@Path("/job")
 public class JobResource {
 
-
+    @Autowired
     IJobService service;
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/{id}")
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Path("/{id:\\d+}")
     public Job getSingleJob(
             @PathParam("id") Long id) {
 
@@ -23,9 +27,9 @@ public class JobResource {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/{id}")
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Path("/{id:\\d+}")
     public Job saveSingleJob(
             @PathParam("id") Long id,
             Job model) {
@@ -35,7 +39,7 @@ public class JobResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{id:\\d+}")
     public void deleteSingleJob(
             @PathParam("id") Long id) {
 
@@ -43,10 +47,10 @@ public class JobResource {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Iterable<Job> queryJobs(
             @QueryParam("query") String searchText,
-            @QueryParam("pageNum") Integer pageNum,
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
         return service.query(searchText, pageNum, size);
@@ -54,8 +58,8 @@ public class JobResource {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Job addSingleJob(
             Job model) {
 

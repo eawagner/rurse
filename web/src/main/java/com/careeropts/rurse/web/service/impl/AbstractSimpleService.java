@@ -14,6 +14,10 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
     IBaseDao<U> dao;
 
+    protected AbstractSimpleService(IBaseDao<U> dao) {
+        this.dao = dao;
+    }
+
     protected abstract U toDatabaseObject (T model);
     protected abstract T fromDatabaseObject(U dataObject);
     protected abstract void normalizeAndValidate(T model);

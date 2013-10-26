@@ -2,20 +2,24 @@ package com.careeropts.rurse.web.resource;
 
 import com.careeropts.rurse.model.Book;
 import com.careeropts.rurse.web.service.IBookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
+@Component
 @Path("/book")
 public class BookResource {
 
-
+    @Autowired
     IBookService service;
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/{id}")
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Path("/{id:\\d+}")
     public Book getSingleBook(
             @PathParam("id") Long id) {
 
@@ -23,9 +27,9 @@ public class BookResource {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/{id}")
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Path("/{id:\\d+}")
     public Book saveSingleBook(
             @PathParam("id") Long id,
             Book model) {
@@ -35,7 +39,7 @@ public class BookResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{id:\\d+}")
     public void deleteSingleBook(
             @PathParam("id") Long id) {
 
@@ -43,7 +47,7 @@ public class BookResource {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Iterable<Book> queryBooks(
             @QueryParam("query") String searchText,
             @QueryParam("pageNum") Integer pageNum,
@@ -54,8 +58,8 @@ public class BookResource {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Book addSingleBook(
             Book model) {
 

@@ -1,13 +1,23 @@
 package com.careeropts.rurse.web.service.impl;
 
+import com.careeropts.rurse.dao.ICourseDao;
 import com.careeropts.rurse.dao.object.CourseDO;
 import com.careeropts.rurse.model.Course;
 import com.careeropts.rurse.web.exception.BadRequestException;
+import com.careeropts.rurse.web.service.ICourseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Math.round;
 
-public class CourseService extends AbstractSimpleService<Course, CourseDO> {
+@Service
+public class CourseService extends AbstractSimpleService<Course, CourseDO> implements ICourseService {
+
+    @Autowired
+    protected CourseService(ICourseDao dao) {
+        super(dao);
+    }
 
     @Override
     protected void normalizeAndValidate(Course model) {

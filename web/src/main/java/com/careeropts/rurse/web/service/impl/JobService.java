@@ -1,12 +1,22 @@
 package com.careeropts.rurse.web.service.impl;
 
+import com.careeropts.rurse.dao.IJobDao;
 import com.careeropts.rurse.dao.object.JobDO;
 import com.careeropts.rurse.model.Job;
 import com.careeropts.rurse.web.exception.BadRequestException;
+import com.careeropts.rurse.web.service.IJobService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
-public class JobService extends AbstractSimpleService<Job, JobDO> {
+@Service
+public class JobService extends AbstractSimpleService<Job, JobDO> implements IJobService {
+
+    @Autowired
+    protected JobService(IJobDao dao) {
+        super(dao);
+    }
 
     @Override
     protected void normalizeAndValidate(Job model) {

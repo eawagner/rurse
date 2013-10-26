@@ -2,20 +2,24 @@ package com.careeropts.rurse.web.resource;
 
 import com.careeropts.rurse.model.Course;
 import com.careeropts.rurse.web.service.ICourseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
-@Path("/Course")
+@Component
+@Path("/course")
 public class CourseResource {
 
-
+    @Autowired
     ICourseService service;
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/{id}")
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Path("/{id:\\d+}")
     public Course getSingleCourse(
             @PathParam("id") Long id) {
 
@@ -23,9 +27,9 @@ public class CourseResource {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/{id}")
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Path("/{id:\\d+}")
     public Course saveSingleCourse(
             @PathParam("id") Long id,
             Course model) {
@@ -35,7 +39,7 @@ public class CourseResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{id:\\d+}")
     public void deleteSingleCourse(
             @PathParam("id") Long id) {
 
@@ -43,10 +47,10 @@ public class CourseResource {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Iterable<Course> queryCourses(
             @QueryParam("query") String searchText,
-            @QueryParam("pageNum") Integer pageNum,
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
         return service.query(searchText, pageNum, size);
@@ -54,8 +58,8 @@ public class CourseResource {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Course addSingleCourse(
             Course model) {
 

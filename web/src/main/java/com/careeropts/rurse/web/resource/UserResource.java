@@ -2,23 +2,27 @@ package com.careeropts.rurse.web.resource;
 
 
 import com.careeropts.rurse.model.User;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.Collections;
+import java.util.Arrays;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+
+@Component
 @Path("/user")
 public class UserResource {
 
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Path("/{id}")
     public User getSingleUser(
             @PathParam("id") Long id) {
 
         //return dao.getSingle(id);
-        return null;
+        return new User(id, "user@email.com");
     }
 
     @DELETE
@@ -30,9 +34,9 @@ public class UserResource {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Iterable<User> queryUsers(
-            @QueryParam("pageNum") Integer pageNum,
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
         if (pageNum == null)
@@ -43,6 +47,6 @@ public class UserResource {
 
         //return dao.getAll(pageNum, size);
 
-        return Collections.emptyList();
+        return Arrays.asList(getSingleUser(1L));
     }
 }

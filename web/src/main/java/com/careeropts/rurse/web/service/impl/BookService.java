@@ -1,15 +1,25 @@
 package com.careeropts.rurse.web.service.impl;
 
+import com.careeropts.rurse.dao.IBookDao;
 import com.careeropts.rurse.dao.object.BookDO;
 import com.careeropts.rurse.model.Book;
 import com.careeropts.rurse.web.exception.BadRequestException;
+import com.careeropts.rurse.web.service.IBookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Integer.valueOf;
 import static java.lang.Math.round;
 import static org.apache.commons.lang3.math.NumberUtils.isDigits;
 
-public class BookService extends AbstractSimpleService<Book, BookDO> {
+@Service
+public class BookService extends AbstractSimpleService<Book, BookDO> implements IBookService {
+
+    @Autowired
+    public BookService(IBookDao dao) {
+        super(dao);
+    }
 
     private static boolean isbnValid(String isbn) {
         if (isbn == null)
