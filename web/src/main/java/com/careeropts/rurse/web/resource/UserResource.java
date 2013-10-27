@@ -34,7 +34,7 @@ public class UserResource {
     }
 
     @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON})
     public Iterable<User> queryUsers(
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {

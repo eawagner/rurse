@@ -47,7 +47,7 @@ public class CourseResource {
     }
 
     @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON})
     public Iterable<Course> queryCourses(
             @QueryParam("query") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
