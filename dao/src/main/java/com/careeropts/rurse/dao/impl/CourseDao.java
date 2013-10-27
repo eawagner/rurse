@@ -1,9 +1,12 @@
 package com.careeropts.rurse.dao.impl;
 
 
+import com.careeropts.rurse.dao.ICourseDao;
 import com.careeropts.rurse.dao.object.CourseDO;
+import org.springframework.stereotype.Repository;
 
-public class CourseDao extends AbstractBaseDao<CourseDO>{
+@Repository
+public class CourseDao extends AbstractBaseDao<CourseDO> implements ICourseDao {
 
     @Override
     protected Class<CourseDO> getDOClass() {

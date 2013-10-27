@@ -5,11 +5,13 @@ import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.ISimpleService;
 import com.google.common.base.Function;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Iterables.transform;
 
 
+@Transactional
 public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
     IBaseDao<U> dao;
@@ -22,7 +24,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
     protected abstract T fromDatabaseObject(U dataObject);
     protected abstract void normalizeAndValidate(T model);
 
-
+    @Transactional(readOnly = true)
     @Override
     public T getSingle(Long id) {
         if (id == null)
@@ -37,6 +39,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         return fromDatabaseObject(item);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<T> query(String searchText, Integer pageNum, Integer perPage) {
         if (pageNum == null || pageNum < 0)

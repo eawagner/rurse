@@ -3,9 +3,11 @@ package com.careeropts.rurse.dao.impl;
 import com.careeropts.rurse.dao.IBaseDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
+    @Autowired
     SessionFactory sessionFactory;
 
     protected abstract Class<T> getDOClass();
