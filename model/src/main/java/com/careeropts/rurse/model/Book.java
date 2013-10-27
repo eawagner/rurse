@@ -1,8 +1,15 @@
 package com.careeropts.rurse.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
+@JsonInclude(NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
 
     Long id;
@@ -11,7 +18,7 @@ public class Book {
     String publisher;
     Date publishDate;
     Double price;
-    String ISBN;
+    String isbn;
 
 
     public Book() {
@@ -23,7 +30,7 @@ public class Book {
                 String publisher,
                 Date publishDate,
                 Double price,
-                String ISBN) {
+                String isbn) {
 
         this.id = id;
         this.title = title;
@@ -31,7 +38,7 @@ public class Book {
         this.publisher = publisher;
         this.publishDate = publishDate;
         this.price = price;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
     }
 
     public Long getId() {
@@ -82,12 +89,12 @@ public class Book {
         this.price = price;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     @Override
@@ -97,7 +104,7 @@ public class Book {
 
         Book book = (Book) o;
 
-        if (ISBN != null ? !ISBN.equals(book.ISBN) : book.ISBN != null) return false;
+        if (isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) return false;
         if (description != null ? !description.equals(book.description) : book.description != null) return false;
         if (id != null ? !id.equals(book.id) : book.id != null) return false;
         if (price != null ? !price.equals(book.price) : book.price != null) return false;
@@ -116,7 +123,7 @@ public class Book {
         result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
         result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (ISBN != null ? ISBN.hashCode() : 0);
+        result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
         return result;
     }
 }

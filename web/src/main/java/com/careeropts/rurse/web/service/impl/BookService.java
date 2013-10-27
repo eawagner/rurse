@@ -63,7 +63,7 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
             throw new BadRequestException("A book must have a description");
         }
 
-        if (!isbnValid(model.getISBN())) {
+        if (!isbnValid(model.getIsbn())) {
             throw new BadRequestException("The ISBN must follow the 10 or 13 digit ISBN standard and only contain numeric digits");
         }
 
@@ -85,7 +85,7 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
                 model.getPublisher(),
                 model.getPublishDate(),
                 model.getPrice(),
-                model.getISBN()
+                model.getIsbn()
         );
     }
 
@@ -101,7 +101,7 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
                 dataObject.getPublisher(),
                 dataObject.getPublishDate(),
                 dataObject.getPrice(),
-                dataObject.getISBN()
+                dataObject.getIsbn()
         );
     }
 }

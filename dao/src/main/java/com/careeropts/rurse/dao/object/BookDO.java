@@ -23,7 +23,7 @@ public class BookDO {
 
     Double price;
 
-    String ISBN;
+    String isbn;
 
     public BookDO() {
     }
@@ -34,7 +34,7 @@ public class BookDO {
                   String publisher,
                   Date publishDate,
                   Double price,
-                  String ISBN) {
+                  String isbn) {
 
         this.id = id;
         this.title = title;
@@ -42,7 +42,7 @@ public class BookDO {
         this.publisher = publisher;
         this.publishDate = publishDate;
         this.price = price;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
     }
 
     public Long getId() {
@@ -93,11 +93,11 @@ public class BookDO {
         this.price = price;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 }
