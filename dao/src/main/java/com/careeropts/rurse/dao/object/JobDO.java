@@ -2,11 +2,15 @@ package com.careeropts.rurse.dao.object;
 
 import javax.persistence.*;
 
+import static javax.persistence.GenerationType.AUTO;
+
 @Entity
+@Table(name = "Job")
 public class JobDO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = AUTO)
+    @Column(nullable = false, unique = true)
     private Long id;
 
     @Column(nullable = false)

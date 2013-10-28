@@ -1,14 +1,23 @@
 package com.careeropts.rurse.dao.object;
 
 
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Resolution;
+
 import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.TemporalType.DATE;
+import static org.hibernate.search.annotations.Resolution.DAY;
+
 @Entity
+@Table(name = "Book")
 public class BookDO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = AUTO)
+    @Column(nullable = false, unique = true)
     Long id;
 
     @Column(nullable = false)
@@ -19,6 +28,8 @@ public class BookDO {
 
     String publisher;
 
+    @Temporal(DATE)
+    @DateBridge(resolution = DAY)
     Date publishDate;
 
     Double price;
