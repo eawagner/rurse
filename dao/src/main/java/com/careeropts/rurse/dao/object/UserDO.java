@@ -2,8 +2,6 @@ package com.careeropts.rurse.dao.object;
 
 import javax.persistence.*;
 
-import java.util.List;
-
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
@@ -17,7 +15,7 @@ public class UserDO {
     @Column(nullable = false, unique = true)
     Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String email;
 
     @Column(nullable = false)

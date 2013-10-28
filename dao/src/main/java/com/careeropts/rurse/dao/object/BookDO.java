@@ -2,7 +2,6 @@ package com.careeropts.rurse.dao.object;
 
 
 import org.hibernate.search.annotations.DateBridge;
-import org.hibernate.search.annotations.Resolution;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -12,13 +12,15 @@ public class User {
 
     Long id;
     String email;
+    Resume resume;
 
     public User() {
     }
 
-    public User(Long id, String email) {
+    public User(Long id, String email, Resume resume) {
         this.id = id;
         this.email = email;
+        this.resume = resume;
     }
 
     public Long getId() {
@@ -37,4 +39,11 @@ public class User {
         this.email = email;
     }
 
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
 }

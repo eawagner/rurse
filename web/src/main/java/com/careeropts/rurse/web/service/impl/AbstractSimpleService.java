@@ -2,6 +2,7 @@ package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.IBaseDao;
 import com.careeropts.rurse.web.exception.BadRequestException;
+import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.ISimpleService;
 import com.google.common.base.Function;
@@ -73,7 +74,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         U savedObj = dao.save(toDatabaseObject(item));
 
         if (savedObj == null) {
-            //TODO generate exception
+            throw new InternalServerError();
         }
 
         return fromDatabaseObject(savedObj);
@@ -89,7 +90,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         U savedObj = dao.saveOrUpdate(toDatabaseObject(item));
 
         if (savedObj == null) {
-            //TODO generate exception
+            throw new InternalServerError();
         }
 
         return fromDatabaseObject(savedObj);
