@@ -16,6 +16,12 @@ import java.io.InputStream;
 import static javax.ws.rs.core.MediaType.*;
 import static javax.ws.rs.core.Response.ok;
 
+/**
+ * User Resource
+ *
+ * @name User Resource
+ * @contextPath /rest
+ */
 @Component
 @Path("/user")
 public class UserResource {
@@ -35,7 +41,7 @@ public class UserResource {
         return service.getResumeResponse();
     }
 
-    @PUT
+    @POST
     @Consumes(MULTIPART_FORM_DATA)
     @Path("/resume")
     public Resume saveCurrentResume(

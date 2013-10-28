@@ -12,6 +12,12 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.Response.ok;
 
+/**
+ * Job Resource
+ *
+ * @name Job Resource
+ * @contextPath /rest
+ */
 @Component
 @Path("/job")
 public class JobResource {
@@ -28,7 +34,7 @@ public class JobResource {
         return service.getSingle(id);
     }
 
-    @PUT
+    @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Path("/{id:\\d+}")

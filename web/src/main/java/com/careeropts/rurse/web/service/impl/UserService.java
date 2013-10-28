@@ -154,7 +154,9 @@ public class UserService implements IUserService{
     public void delete(Long id) {
         if (id == null)
             throw new NotFoundException();
-        //To change body of implemented methods use File | Settings | File Templates.
+
+        if (!dao.delete(id))
+            throw new NotFoundException();
     }
 
     @Override

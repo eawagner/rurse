@@ -12,6 +12,12 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.Response.ok;
 
+/**
+ * Book Resource
+ *
+ * @name Book Resource
+ * @contextPath /rest
+ */
 @Component
 @Path("/book")
 public class BookResource {
@@ -28,7 +34,7 @@ public class BookResource {
         return service.getSingle(id);
     }
 
-    @PUT
+    @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Path("/{id:\\d+}")
