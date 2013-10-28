@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import static javax.ws.rs.core.Response.ok;
 
 @Component
 @Path("/book")
@@ -40,10 +42,12 @@ public class BookResource {
 
     @DELETE
     @Path("/{id:\\d+}")
-    public void deleteSingleBook(
+    public Response deleteSingleBook(
             @PathParam("id") Long id) {
 
         service.delete(id);
+
+        return ok().build();
     }
 
     @GET
