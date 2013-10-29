@@ -13,7 +13,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.Response.ok;
 
 /**
- * Book Resource
+ * Responsible for the management of books in the system.
  *
  * @name Book Resource
  * @contextPath /rest
@@ -25,6 +25,12 @@ public class BookResource {
     @Autowired
     IBookService service;
 
+    /**
+     * Retrieves a single book from the system.
+     *
+     * @param id The id of a book.
+     * @return
+     */
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Path("/{id:\\d+}")
@@ -34,6 +40,13 @@ public class BookResource {
         return service.getSingle(id);
     }
 
+    /**
+     * Updates the information about a specific book.
+     *
+     * @param id The id of a book.
+     * @param model A book object representing the new values to store for that book.
+     * @return
+     */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
@@ -46,6 +59,12 @@ public class BookResource {
         return service.saveOrUpdate(model);
     }
 
+    /**
+     * Deletes a specific book from the system.
+     *
+     * @param id The id of a book.
+     * @return
+     */
     @DELETE
     @Path("/{id:\\d+}")
     public Response deleteSingleBook(
@@ -56,6 +75,14 @@ public class BookResource {
         return ok().build();
     }
 
+    /**
+     * Queries the system for all books currently in the system.
+     *
+     * @param searchText If provided will limit the books returned to the keywords provided.  Otherwise will return all books.
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @return
+     */
     @GET
     @Produces({APPLICATION_JSON})
     public Iterable<Book> queryBooks(
@@ -67,6 +94,12 @@ public class BookResource {
 
     }
 
+    /**
+     * Adds a new book to the system.  A new id will be generated for the book and be provided in the response.
+     *
+     * @param model A book object representing the values to store for that book.
+     * @return
+     */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})

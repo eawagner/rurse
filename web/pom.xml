@@ -138,9 +138,8 @@
                                         <version>0.1-SNAPSHOT</version>
                                     </docletArtifact>
                                     <useStandardDocletOptions>false</useStandardDocletOptions>
-                                    <destDir>rest-api</destDir>
+                                    <destDir>rest-doc</destDir>
                                     <reportOutputDirectory>${project.build.directory}/docs</reportOutputDirectory>
-                                    <!--<additionalJOption>-J-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</additionalJOption>-->
                                     <additionalparam>-o swagger -version ${project.version} -url "http://localhost:8080/${artifact.name}"</additionalparam>
                                 </configuration>
                                 <goals>

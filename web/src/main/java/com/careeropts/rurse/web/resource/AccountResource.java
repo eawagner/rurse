@@ -14,7 +14,7 @@ import javax.ws.rs.QueryParam;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 /**
- * Account Resource
+ * Responsible for the management of user accounts
  *
  * @name Account Resource
  * @contextPath /rest
@@ -26,6 +26,12 @@ public class AccountResource {
     @Autowired
     IUserService service;
 
+    /**
+     * Creates an account with the provided email address and password
+     * @param email Email address for the new user account
+     * @param password Password for the new user account
+     * @return
+     */
     @POST
     @Consumes({TEXT_PLAIN})
     public User createAccount (

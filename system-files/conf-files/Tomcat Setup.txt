@@ -1,0 +1,25 @@
+Tomcat Setup
+============
+
+$CATALINA_HOME variable refers to the installed location of Tomcat on the specified system.
+
+Initial configuration
+---------------------
+
+1.  Copy the desired configuration to the tomcat server.  For example
+
+scp -r test/* user@server:$CATALINA_HOME/
+
+2.  Tell application where the properties are by modifying the catalina.properties file and setting the rurse.prop.dir property.  ONLY NEED TO DO THIS ONCE!!!
+
+ssh user@server
+cd $CATALINA_HOME/conf
+echo "rurse.prop.dir=\${catalina.home}/conf/rurse" >> catalina.properties
+
+
+Deploy WebApp
+-------------
+
+1.  Simply copy the war to the webapp directory
+
+scp web-service.war user@server:$CATALINA_HOME/webapp/

@@ -17,7 +17,7 @@ import static javax.ws.rs.core.MediaType.*;
 import static javax.ws.rs.core.Response.ok;
 
 /**
- * User Resource
+ * Responsible for the management of user information in the system and resumes associated with those users.
  *
  * @name User Resource
  * @contextPath /rest
@@ -29,18 +29,36 @@ public class UserResource {
     @Autowired
     IUserService service;
 
+    /**
+     * Retrieves information about the current authenticated user.
+     * @return
+     */
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public User getCurrentUser() {
         return service.getCurrentUser();
     }
 
+    /**
+     * Retrieves the resume document for the current authenticated user.
+     * @return
+     */
     @GET
     @Path("/resume")
     public Response getCurrentUserResume() {
         return service.getResumeResponse();
     }
 
+    /**
+     * Uploads a resume document for the current authenticated user.
+     *
+     * Consumes multipart/form-data.  Information about the filename and mime-type of the file should be sent with the
+     * request.
+     *
+     * @param uploadedInputStream
+     * @param bodyPart
+     * @return
+     */
     @POST
     @Consumes(MULTIPART_FORM_DATA)
     @Path("/resume")
@@ -60,6 +78,11 @@ public class UserResource {
         return service.saveResume(fileName, fileType, uploadedInputStream);
     }
 
+    /**
+     * Deletes the resume document for the current authenticated user.
+     *
+     * @return
+     */
     @DELETE
     @Path("/resume")
     public Response deleteCurrentResume() {
@@ -68,6 +91,12 @@ public class UserResource {
         return ok().build();
     }
 
+    /**
+     * Retrieves a specific user.
+     *
+     * @param id The id of a user.
+     * @return
+     */
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Path("/{id:\\d+}")
@@ -77,6 +106,11 @@ public class UserResource {
         return service.getUser(id);
     }
 
+    /**
+     * Retrieves the resume document for a specific user.
+     * @param id The id of a user.
+     * @return
+     */
     @GET
     @Path("/{id:\\d+}/resume")
     public Response getCurrentUserResume(
@@ -86,6 +120,11 @@ public class UserResource {
         return service.getResumeResponse(id);
     }
 
+    /**
+     * Removes a specific user from the system.
+     * @param id The id of a user.
+     * @return
+     */
     @DELETE
     @Path("/{id:\\d+}")
     public Response deleteUser(
@@ -95,6 +134,13 @@ public class UserResource {
         return ok().build();
     }
 
+    /**
+     * Retrieves a list of all the users in the system.
+     *
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @return
+     */
     @GET
     @Produces({APPLICATION_JSON})
     @Path("/list")

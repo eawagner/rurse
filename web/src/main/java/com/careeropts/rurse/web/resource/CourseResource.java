@@ -13,7 +13,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.Response.ok;
 
 /**
- * Course Resource
+ * Responsible for the management of courses in the system.
  *
  * @name Course Resource
  * @contextPath /rest
@@ -25,6 +25,12 @@ public class CourseResource {
     @Autowired
     ICourseService service;
 
+    /**
+     * Retrieves a single course from the system.
+     *
+     * @param id The id of a course.
+     * @return
+     */
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Path("/{id:\\d+}")
@@ -34,6 +40,13 @@ public class CourseResource {
         return service.getSingle(id);
     }
 
+    /**
+     * Updates the information about a specific course.
+     *
+     * @param id The id of a course.
+     * @param model A course object representing the new values to store for that course.
+     * @return
+     */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
@@ -46,6 +59,12 @@ public class CourseResource {
         return service.saveOrUpdate(model);
     }
 
+    /**
+     * Deletes a specific course from the system.
+     *
+     * @param id The id of a course.
+     * @return
+     */
     @DELETE
     @Path("/{id:\\d+}")
     public Response deleteSingleCourse(
@@ -56,6 +75,14 @@ public class CourseResource {
         return ok().build();
     }
 
+    /**
+     * Queries the system for all courses currently in the system.
+     *
+     * @param searchText If provided will limit the courses returned to the keywords provided.  Otherwise will return all courses.
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @return
+     */
     @GET
     @Produces({APPLICATION_JSON})
     public Iterable<Course> queryCourses(
@@ -67,6 +94,11 @@ public class CourseResource {
 
     }
 
+    /**
+     * Adds a new course to the system.  A new id will be generated for the course and be provided in the response.
+     * @param model A course object representing the values to store for that course.
+     * @return
+     */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
