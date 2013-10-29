@@ -10,25 +10,15 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Resume {
 
-    Long id;
     String fileName;
     DocType fileType;
 
     public Resume() {
     }
 
-    public Resume(Long id, String fileName, DocType fileType) {
-        this.id = id;
+    public Resume(String fileName, DocType fileType) {
         this.fileName = fileName;
         this.fileType = fileType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFileName() {
@@ -56,22 +46,20 @@ public class Resume {
 
         if (fileName != null ? !fileName.equals(resume.fileName) : resume.fileName != null) return false;
         if (fileType != resume.fileType) return false;
-        if (id != null ? !id.equals(resume.id) : resume.id != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
+        int result = fileName != null ? fileName.hashCode() : 0;
         result = 31 * result + (fileType != null ? fileType.hashCode() : 0);
         return result;
     }
 
     public static enum DocType {
-        WORD("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
-        TEXT("text/plain");
+        WordDocument("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+        TextDocument("text/plain");
 
         private final String mimeType;
 

@@ -48,10 +48,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
         </dependency>
@@ -68,6 +64,10 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -83,6 +83,12 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.13.v20130916</version>
                 <configuration>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>rurse.prop.dir</name>
+                            <value>${project.basedir}/../system-files/conf-files/dev/conf/rurse</value>
+                        </systemProperty>
+                    </systemProperties>
                     <webAppConfig>
                         <contextPath>/${artifact.name}</contextPath>
                     </webAppConfig>
@@ -103,7 +109,7 @@
                         <configuration>
                             <webResources>
                                 <resource>
-                                    <directory>${project.build.directory}/rest-api</directory>
+                                    <directory>${project.build.directory}/docs</directory>
                                 </resource>
                             </webResources>
                         </configuration>
@@ -133,7 +139,7 @@
                                     </docletArtifact>
                                     <useStandardDocletOptions>false</useStandardDocletOptions>
                                     <destDir>rest-api</destDir>
-                                    <reportOutputDirectory>${project.build.directory}</reportOutputDirectory>
+                                    <reportOutputDirectory>${project.build.directory}/docs</reportOutputDirectory>
                                     <!--<additionalJOption>-J-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</additionalJOption>-->
                                     <additionalparam>-o swagger -version ${project.version} -url "http://localhost:8080/${artifact.name}"</additionalparam>
                                 </configuration>

@@ -10,6 +10,7 @@
 	        http://www.springframework.org/schema/context
 	        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
+    <context:property-placeholder location="file:${rurse.prop.dir}/database.properties"/>
     <context:component-scan base-package="com.careeropts.rurse.dao"/>
     <tx:annotation-driven transaction-manager="txManager"/>
 
@@ -18,17 +19,17 @@
           p:packagesToScan="com.careeropts.rurse.dao.object">
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">${rurse.db.hbm2dll.auto}</prop>
+                <prop key="hibernate.dialect">${rurse.db.dialect}</prop>
             </props>
         </property>
     </bean>
 
     <bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource"
-          p:driverClassName="org.hsqldb.jdbcDriver"
-          p:url="jdbc:hsqldb:./target/dbfile"
-          p:username="SA"
-          p:password=""/>
+          p:driverClassName="${rurse.db.driver}"
+          p:url="${rurse.db.url}"
+          p:username="${rurse.db.username}"
+          p:password="${rurse.db.password}"/>
 
     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
           p:sessionFactory-ref="sessionFactory"/>

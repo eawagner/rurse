@@ -5,6 +5,7 @@ import com.careeropts.rurse.dao.object.BookDO;
 import com.careeropts.rurse.model.Book;
 import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.service.IBookService;
+import org.apache.commons.validator.routines.ISBNValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,51 +22,20 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
         super(dao);
     }
 
-    private static boolean isbnValid(String isbn) {
-        if (isbn == null)
-            return true; //if it is null then simply ignore it.
-
-        //ISBN checks from wikipedia
-        if (isDigits(isbn)) {
-            return false;
-        } else if (isbn.length() == 10) {
-            int check = 0;
-
-            for (int i = 0; i < 10; i++)
-                check += valueOf(isbn.substring(i, i + 1)) * (10 - i);
-
-            return check % 11 == 0;
-
-        } else if (isbn.length() == 13) {
-            int check = 0;
-
-            for (int i = 0; i < 12; i += 2)
-                check += valueOf(isbn.substring(i, i + 1));
-
-            for (int i = 1; i < 12; i += 2)
-                check += valueOf(isbn.substring(i, i + 1)) * 3;
-
-            check += valueOf(isbn.substring(12));
-            return check % 10 == 0;
-        }
-
-        return false;
-    }
-
     @Override
     protected void normalizeAndValidate(Book model) {
 
-        if (isNullOrEmpty(model.getTitle())) {
+        if (isNullOrEmpty(model.getTitle()))
             throw new BadRequestException("A book must have a title");
-        }
 
-        if (isNullOrEmpty(model.getDescription())) {
+
+        if (isNullOrEmpty(model.getDescription()))
             throw new BadRequestException("A book must have a description");
-        }
 
-        if (!isbnValid(model.getIsbn())) {
-            throw new BadRequestException("The ISBN must follow the 10 or 13 digit ISBN standard and only contain numeric digits");
-        }
+        //Only try to validate the ISBN if it is actually set
+        if (model.getIsbn() != null && !ISBNValidator.getInstance().isValid(model.getIsbn()))
+            throw new BadRequestException("The ISBN must follow the 10 or 13 digit ISBN standard");
+
 
         //normalize price to a two digit value
         if (model.getPrice() != null)

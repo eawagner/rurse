@@ -12,6 +12,7 @@ import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.IUserService;
 import com.google.common.base.Function;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +48,6 @@ public class UserService implements IUserService{
             return null;
 
         return new Resume(
-                dataObject.getId(),
                 dataObject.getFileName(),
                 fromMimeType(dataObject.getFileType())
         );
@@ -65,8 +65,8 @@ public class UserService implements IUserService{
     }
 
     private UserDO getByEmail(String email) {
-        if (email == null)
-            throw new BadRequestException("Invalid User credentials");
+        if (!EmailValidator.getInstance().isValid(email))
+            throw new BadRequestException("Invalid email address");
 
         UserDO user = dao.getByEmail(email);
 
@@ -212,7 +212,7 @@ public class UserService implements IUserService{
         if (resumeData == null)
             throw new BadRequestException("Empty file");
 
-        byte[] data = null;
+        byte[] data;
         try (InputStream input = resumeData;
              ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 
@@ -235,13 +235,9 @@ public class UserService implements IUserService{
         user = dao.save(user);
 
         if (user == null || user.getResume() == null)
-            throw new BadRequestException();
+            throw new InternalServerError();
 
-        return new Resume(
-                user.getResume().getId(),
-                name,
-                docType
-        );
+        return fromDatabaseObject(user.getResume());
     }
 
     @Override
