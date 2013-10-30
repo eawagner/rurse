@@ -40,4 +40,19 @@ public class AccountResource {
 
         return service.createAccount(email, password);
     }
+
+    /**
+     * Allows a manager to promote another user to a manager or to demote them.
+     * @param email Email address of the user to change the permissions for
+     * @param promote If set to true the given user will have manager authorizations in the RURSE system.
+     * @return
+     */
+    @POST
+    @Path("/manager")
+    public User makeManager(
+            @QueryParam("email") String email,
+            @QueryParam("promote") boolean promote) {
+
+        return service.makeManager(email, promote);
+    }
 }

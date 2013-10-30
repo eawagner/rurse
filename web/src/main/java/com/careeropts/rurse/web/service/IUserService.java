@@ -10,6 +10,7 @@ import java.io.InputStream;
 public interface IUserService {
 
     public User createAccount (String email, String password);
+    public User makeManager(String email, boolean promote);
 
 
     public User getUser(Long id);

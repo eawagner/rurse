@@ -70,13 +70,11 @@ public class UserResource {
     }
 
     /**
-     * Uploads a resume document for the current authenticated user.
+     * Uploads a resume document for the current authenticated user.  Consumes multipart/form-data.
+     * Information about the filename and mime-type of the file should be sent with the request.
      *
-     * Consumes multipart/form-data.  Information about the filename and mime-type of the file should be sent with the
-     * request.
-     *
-     * @param uploadedInputStream
-     * @param bodyPart
+     * @param uploadedInputStream Input stream of the file to store
+     * @param bodyPart Metadata about the file being uploaded.
      * @return
      */
     @POST

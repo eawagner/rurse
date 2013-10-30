@@ -12,16 +12,16 @@ public class User {
 
     Long id;
     String email;
-    UserType type;
+    boolean manager;
     Resume resume;
 
     public User() {
     }
 
-    public User(Long id, String email, UserType type, Resume resume) {
+    public User(Long id, String email, boolean manager, Resume resume) {
         this.id = id;
         this.email = email;
-        this.type = type;
+        this.manager = manager;
         this.resume = resume;
     }
 
@@ -41,12 +41,12 @@ public class User {
         this.email = email;
     }
 
-    public UserType getType() {
-        return type;
+    public boolean isManager() {
+        return manager;
     }
 
-    public void setType(UserType type) {
-        this.type = type;
+    public void setManager(boolean manager) {
+        this.manager = manager;
     }
 
     public Resume getResume() {
@@ -64,10 +64,10 @@ public class User {
 
         User user = (User) o;
 
+        if (manager != user.manager) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (resume != null ? !resume.equals(user.resume) : user.resume != null) return false;
-        if (type != user.type) return false;
 
         return true;
     }
@@ -76,30 +76,8 @@ public class User {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (manager ? 1 : 0);
         result = 31 * result + (resume != null ? resume.hashCode() : 0);
         return result;
-    }
-
-    public static enum UserType {
-        Basic("basic"),
-        Manager("manager");
-
-        private final String name;
-
-        private UserType(String name) {
-            this.name = name;
-        }
-
-        public static UserType fromName(String name) {
-            if (name == null)
-                return null;
-
-            for (UserType userType : UserType.values())
-                if (userType.name().equals(name))
-                    return userType;
-
-            return null;
-        }
     }
 }
