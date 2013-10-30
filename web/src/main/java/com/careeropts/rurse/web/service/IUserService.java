@@ -14,7 +14,7 @@ public interface IUserService {
 
     public User getUser(Long id);
     public Response getResumeResponse(Long id);
-    public Iterable<User> getAll(Integer pageNum, Integer perPage);
+    public Iterable<User> query(String searchText, Integer pageNum, Integer perPage);
     public void delete(Long id);
 
 

@@ -23,9 +23,7 @@ public class UserDao extends AbstractBaseDao<UserDO> implements IUserDao {
     }
 
     @Override
-    public boolean deleteResume(long resumeId) {
-        ResumeDO resume = (ResumeDO)getSession().get(ResumeDO.class, resumeId);
-
+    public boolean deleteResume(ResumeDO resume) {
         if (resume == null)
             return false;
 

@@ -30,6 +30,7 @@
         <junit.version>4.11</junit.version>
         <mysql.version>5.1.26</mysql.version>
         <spring.version>3.2.4.RELEASE</spring.version>
+        <tika.version>1.4</tika.version>
         <tomcat.dbcp.version>7.0.41</tomcat.dbcp.version>
     </properties>
 
@@ -140,6 +141,11 @@
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
                 <version>${commons.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
             </dependency>
 
             <!--Database-->

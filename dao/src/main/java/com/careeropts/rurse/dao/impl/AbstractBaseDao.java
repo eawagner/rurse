@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
+
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
     @Autowired
@@ -42,7 +44,8 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
     @Override
     public Iterable<T> search(String searchText, int pageNum, int perPage) {
-        return null;
+        //TODO implement search capability
+        return Collections.emptyList();
     }
 
     @Override

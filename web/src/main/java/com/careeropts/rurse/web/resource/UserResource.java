@@ -30,10 +30,30 @@ public class UserResource {
     IUserService service;
 
     /**
+     * Retrieves a list of all the users in the system.
+     *
+     * @param searchText If provided will limit the users returned to the users with resumes with the keywords provided.  Otherwise will return all users.
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @return
+     */
+    @GET
+    @Produces({APPLICATION_JSON})
+    public Iterable<User> queryUsers(
+            @QueryParam("search") String searchText,
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
+            @QueryParam("resultSize") Integer size) {
+
+        return service.query(searchText, pageNum, size);
+    }
+
+
+    /**
      * Retrieves information about the current authenticated user.
      * @return
      */
     @GET
+    @Path("/current")
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public User getCurrentUser() {
         return service.getCurrentUser();
@@ -44,7 +64,7 @@ public class UserResource {
      * @return
      */
     @GET
-    @Path("/resume")
+    @Path("/current/resume")
     public Response getCurrentUserResume() {
         return service.getResumeResponse();
     }
@@ -61,7 +81,7 @@ public class UserResource {
      */
     @POST
     @Consumes(MULTIPART_FORM_DATA)
-    @Path("/resume")
+    @Path("/current/resume")
     public Resume saveCurrentResume(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataBodyPart bodyPart) {
@@ -84,7 +104,7 @@ public class UserResource {
      * @return
      */
     @DELETE
-    @Path("/resume")
+    @Path("/current/resume")
     public Response deleteCurrentResume() {
 
         service.deleteResume();
@@ -132,22 +152,5 @@ public class UserResource {
 
         service.delete(id);
         return ok().build();
-    }
-
-    /**
-     * Retrieves a list of all the users in the system.
-     *
-     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
-     * @return
-     */
-    @GET
-    @Produces({APPLICATION_JSON})
-    @Path("/list")
-    public Iterable<User> queryUsers(
-            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
-
-        return service.getAll(pageNum, size);
     }
 }
