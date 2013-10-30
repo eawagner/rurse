@@ -140,7 +140,7 @@
                                     <useStandardDocletOptions>false</useStandardDocletOptions>
                                     <destDir>rest-doc</destDir>
                                     <reportOutputDirectory>${project.build.directory}/docs</reportOutputDirectory>
-                                    <additionalparam>-o swagger -version ${project.version} -url "http://localhost:8080/${artifact.name}"</additionalparam>
+                                    <additionalparam>-o swagger -version ${project.version} -url "http://54.200.170.49:8080/${artifact.name}"</additionalparam>
                                 </configuration>
                                 <goals>
                                     <goal>javadoc</goal>

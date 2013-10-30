@@ -27,6 +27,7 @@ import static com.careeropts.rurse.model.Resume.DocType.fromMimeType;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Iterables.transform;
 import static javax.ws.rs.core.Response.ok;
+import static org.apache.commons.io.IOUtils.copy;
 
 @Service
 @Transactional
@@ -203,21 +204,21 @@ public class UserService implements IUserService{
 
     @Override
     public Resume saveResume(String name, String type, InputStream resumeData) {
-        if (name == null)
+        if (isNullOrEmpty(name))
             throw new BadRequestException("The file name is required for a resume");
 
         DocType docType = fromMimeType(type);
         if (docType == null)
-            throw new BadRequestException("Unrecognized document type");
+            throw new BadRequestException("Unrecognized document type: " + type);
 
         if (resumeData == null)
-            throw new BadRequestException("Empty file");
+            throw new BadRequestException("No file contents were found");
 
         byte[] data;
         try (InputStream input = resumeData;
              ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 
-            IOUtils.copy(input, output);
+            copy(input, output);
             output.flush();
 
             data = output.toByteArray();
@@ -245,14 +246,17 @@ public class UserService implements IUserService{
     public void deleteResume() {
         UserDO user = dao.getByEmail(CURRENT_USER);
 
-        if (user == null)
+        if (user == null || user.getResume() == null)
             throw new NotFoundException();
+
+        long resumeId = user.getResume().getId();
 
         user.setResume(null);
 
         user = dao.save(user);
 
-        if (user == null)
-            throw new BadRequestException();
+        //delete resume seperately because database may not cascade a delete for dereferenced entities.
+        if (!dao.deleteResume(resumeId) || user == null)
+            throw new InternalServerError();
     }
 }
