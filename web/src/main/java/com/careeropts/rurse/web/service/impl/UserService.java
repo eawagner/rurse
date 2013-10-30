@@ -171,7 +171,7 @@ public class UserService implements IUserService{
         UserDO user = getByEmail(email);
 
         user.setManager(promote);
-        user = dao.save(user);
+        user = dao.saveOrUpdate(user);
 
         if (user == null)
             throw  new InternalServerError();
@@ -279,7 +279,7 @@ public class UserService implements IUserService{
         ResumeDO oldResume = user.getResume();
 
         user.setResume(generateNewResume(name, type, resumeData));
-        user = dao.save(user);
+        user = dao.saveOrUpdate(user);
 
         if (user == null || user.getResume() == null)
             throw new InternalServerError();
@@ -302,7 +302,7 @@ public class UserService implements IUserService{
 
         user.setResume(null);
 
-        user = dao.save(user);
+        user = dao.saveOrUpdate(user);
 
         //delete resume seperately because database may not cascade a delete for dereferenced entities.
         if (!dao.deleteResume(resume) || user == null)

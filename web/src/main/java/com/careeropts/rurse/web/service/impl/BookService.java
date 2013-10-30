@@ -36,7 +36,6 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
         if (model.getIsbn() != null && !ISBNValidator.getInstance().isValid(model.getIsbn()))
             throw new BadRequestException("The ISBN must follow the 10 or 13 digit ISBN standard");
 
-
         //normalize price to a two digit value
         if (model.getPrice() != null)
             model.setPrice(round(model.getPrice() * 100.0) / 100.0);

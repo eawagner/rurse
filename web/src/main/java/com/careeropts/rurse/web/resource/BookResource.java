@@ -26,6 +26,41 @@ public class BookResource {
     IBookService service;
 
     /**
+     * Queries the system for all books currently in the system.
+     *
+     * @param searchText If provided will limit the books returned to the keywords provided.  Otherwise will return all books.
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @return
+     */
+    @GET
+    @Produces({APPLICATION_JSON})
+    public Iterable<Book> queryBooks(
+            @QueryParam("search") String searchText,
+            @QueryParam("pageNum") Integer pageNum,
+            @QueryParam("resultSize") Integer size) {
+
+        return service.query(searchText, pageNum, size);
+
+    }
+
+    /**
+     * Adds a new book to the system.  A new id will be generated for the book and be provided in the response.
+     *
+     * @param model A book object representing the values to store for that book.
+     * @return
+     */
+    @POST
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    public Book addSingleBook(
+            Book model) {
+
+        model.setId(null);
+        return service.save(model);
+    }
+
+    /**
      * Retrieves a single book from the system.
      *
      * @param id The id of a book.
@@ -73,40 +108,5 @@ public class BookResource {
         service.delete(id);
 
         return ok().build();
-    }
-
-    /**
-     * Queries the system for all books currently in the system.
-     *
-     * @param searchText If provided will limit the books returned to the keywords provided.  Otherwise will return all books.
-     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
-     * @return
-     */
-    @GET
-    @Produces({APPLICATION_JSON})
-    public Iterable<Book> queryBooks(
-            @QueryParam("search") String searchText,
-            @QueryParam("pageNum") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
-
-        return service.query(searchText, pageNum, size);
-
-    }
-
-    /**
-     * Adds a new book to the system.  A new id will be generated for the book and be provided in the response.
-     *
-     * @param model A book object representing the values to store for that book.
-     * @return
-     */
-    @POST
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
-    public Book addSingleBook(
-            Book model) {
-
-        model.setId(null);
-        return service.save(model);
     }
 }
