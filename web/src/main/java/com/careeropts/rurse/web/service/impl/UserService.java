@@ -60,6 +60,7 @@ public class UserService implements IUserService{
         return new User(
                 dataObject.getId(),
                 dataObject.getEmail(),
+                (dataObject.isManager() ? User.UserType.Manager: User.UserType.Basic),
                 (includeResume? fromDatabaseObject(dataObject.getResume()) : null)
         );
     }
@@ -89,7 +90,7 @@ public class UserService implements IUserService{
         UserDO user;
 
         try {
-            user = dao.save(new UserDO(email, password, null));
+            user = dao.save(new UserDO(email, password, false, null));
         } catch (Exception ex) {
             throw new BadRequestException("Account already exists");
         }

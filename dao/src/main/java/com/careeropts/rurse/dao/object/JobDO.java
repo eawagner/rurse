@@ -25,6 +25,7 @@ public class JobDO {
 
     private String state;
 
+    @Column(nullable = false)
     private boolean active;
 
     public JobDO() {

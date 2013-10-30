@@ -21,15 +21,19 @@ public class UserDO {
     @Column(nullable = false)
     String password;
 
+    @Column(nullable = false)
+    private boolean manager;
+
     @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
     ResumeDO resume;
 
     public UserDO() {
     }
 
-    public UserDO(String email, String password, ResumeDO resume) {
+    public UserDO(String email, String password, boolean manager, ResumeDO resume) {
         this.email = email;
         this.password = password;
+        this.manager = manager;
         this.resume = resume;
     }
 
@@ -55,6 +59,14 @@ public class UserDO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isManager() {
+        return manager;
+    }
+
+    public void setManager(boolean manager) {
+        this.manager = manager;
     }
 
     public ResumeDO getResume() {

@@ -86,7 +86,7 @@ public class JobResource {
     @GET
     @Produces({APPLICATION_JSON})
     public Iterable<Job> queryJobs(
-            @QueryParam("query") String searchText,
+            @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 

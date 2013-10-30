@@ -86,7 +86,7 @@ public class CourseResource {
     @GET
     @Produces({APPLICATION_JSON})
     public Iterable<Course> queryCourses(
-            @QueryParam("query") String searchText,
+            @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 

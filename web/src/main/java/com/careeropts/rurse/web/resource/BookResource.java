@@ -86,7 +86,7 @@ public class BookResource {
     @GET
     @Produces({APPLICATION_JSON})
     public Iterable<Book> queryBooks(
-            @QueryParam("query") String searchText,
+            @QueryParam("search") String searchText,
             @QueryParam("pageNum") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
