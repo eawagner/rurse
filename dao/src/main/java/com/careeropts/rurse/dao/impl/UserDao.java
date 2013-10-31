@@ -1,29 +1,29 @@
 package com.careeropts.rurse.dao.impl;
 
 import com.careeropts.rurse.dao.IUserDao;
-import com.careeropts.rurse.dao.object.ResumeDO;
-import com.careeropts.rurse.dao.object.UserDO;
+import com.careeropts.rurse.dao.object.ResumeEntity;
+import com.careeropts.rurse.dao.object.UserEntity;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class UserDao extends AbstractBaseDao<UserDO> implements IUserDao {
+public class UserDao extends AbstractBaseDao<UserEntity> implements IUserDao {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Class<UserDO> getDOClass() {
-        return UserDO.class;
+    protected Class<UserEntity> getDOClass() {
+        return UserEntity.class;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public UserDO getByEmail(String email) {
-        return (UserDO) getSession()
+    public UserEntity getByEmail(String email) {
+        return (UserEntity) getSession()
                 .createCriteria(getDOClass())
                 .add(Restrictions.eq("email", email))
                 .uniqueResult();
@@ -33,7 +33,7 @@ public class UserDao extends AbstractBaseDao<UserDO> implements IUserDao {
      * {@inheritDoc}
      */
     @Override
-    public boolean deleteResume(ResumeDO resume) {
+    public boolean deleteResume(ResumeEntity resume) {
         if (resume == null)
             return false;
 

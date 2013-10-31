@@ -2,8 +2,8 @@ package com.careeropts.rurse.web.service.impl;
 
 
 import com.careeropts.rurse.dao.IUserDao;
-import com.careeropts.rurse.dao.object.ResumeDO;
-import com.careeropts.rurse.dao.object.UserDO;
+import com.careeropts.rurse.dao.object.ResumeEntity;
+import com.careeropts.rurse.dao.object.UserEntity;
 import com.careeropts.rurse.model.Resume;
 import com.careeropts.rurse.model.User;
 import com.careeropts.rurse.web.exception.BadRequestException;
@@ -49,7 +49,7 @@ public class UserService implements IUserService{
         return "user@email.com";
     }
 
-    private static Resume fromDBObject(ResumeDO dataObject) {
+    private static Resume fromDBObject(ResumeEntity dataObject) {
         if (dataObject == null)
             return null;
 
@@ -59,7 +59,7 @@ public class UserService implements IUserService{
         );
     }
 
-    private static User fromDBObject(UserDO dataObject, boolean includeResume) {
+    private static User fromDBObject(UserEntity dataObject, boolean includeResume) {
         if (dataObject == null)
             return null;
 
@@ -95,7 +95,7 @@ public class UserService implements IUserService{
         return null;
     }
 
-    private static ResumeDO generateNewResume(String name, String type, InputStream resumeData) {
+    private static ResumeEntity generateNewResume(String name, String type, InputStream resumeData) {
         if (isNullOrEmpty(name))
             throw new BadRequestException("The file name is required for a resume");
 
@@ -117,14 +117,14 @@ public class UserService implements IUserService{
         if (docType == null)
             throw new BadRequestException("Unrecognized document type.  Text and Micorosoft Word documents are accepted.");
 
-        return new ResumeDO(name, docType.getMimeType(), data);
+        return new ResumeEntity(name, docType.getMimeType(), data);
     }
 
-    private UserDO getByEmail(String email) {
+    private UserEntity getByEmail(String email) {
         if (!EmailValidator.getInstance().isValid(email))
             throw new BadRequestException("Invalid email address");
 
-        UserDO user = dao.getByEmail(email);
+        UserEntity user = dao.getByEmail(email);
 
         if (user == null)
             throw new NotFoundException("No user user exists with the following email address: " + email);
@@ -132,11 +132,11 @@ public class UserService implements IUserService{
         return user;
     }
 
-    private UserDO getById(Long id) {
+    private UserEntity getById(Long id) {
         if (id == null)
             throw new NotFoundException();
 
-        UserDO user = dao.getSingle(id);
+        UserEntity user = dao.getSingle(id);
 
         if (user == null)
             throw new NotFoundException("No user user exists with the following id: " + id);
@@ -155,14 +155,10 @@ public class UserService implements IUserService{
         if (!validPassword(password))
             throw new BadRequestException("Invalid password");
 
-        UserDO user;
-
-        try {
-            user = dao.save(new UserDO(email, password, false, null));
-        } catch (Exception ex) {
+        if (dao.getByEmail(email) != null)
             throw new BadRequestException("Account already exists");
-        }
 
+        UserEntity user = dao.save(new UserEntity(email, password, false, null));
         if (user == null)
             throw new InternalServerError();
 
@@ -185,12 +181,12 @@ public class UserService implements IUserService{
     @Override
     public Response getResumeResponse(Long id) {
 
-        UserDO user = getById(id);
+        UserEntity user = getById(id);
 
         if (user.getResume() == null)
             throw new NotFoundException();
 
-        ResumeDO resume = user.getResume();
+        ResumeEntity resume = user.getResume();
 
         return ok(resume.getData())
                 .type(resume.getFileType())
@@ -209,17 +205,17 @@ public class UserService implements IUserService{
         if (perPage == null || perPage < 0)
             perPage = Integer.MAX_VALUE;
 
-        Iterable<UserDO> results;
+        Iterable<UserEntity> results;
 
         if (isNullOrEmpty(searchText))
             results = dao.getAll(pageNum, perPage);
         else
             results = dao.search(searchText, pageNum, perPage);
 
-        return transform(results, new Function<UserDO, User>() {
+        return transform(results, new Function<UserEntity, User>() {
             @Override
-            public User apply(UserDO userDO) {
-                return fromDBObject(userDO, false);
+            public User apply(UserEntity userEntity) {
+                return fromDBObject(userEntity, false);
             }
         });
     }
@@ -229,10 +225,10 @@ public class UserService implements IUserService{
      */
     @Override
     public User updateAuths(Long id, boolean manager) {
-        UserDO user = getById(id);
+        UserEntity user = getById(id);
 
         user.setManager(manager);
-        user = dao.saveOrUpdate(user);
+        user = dao.update(user);
 
         if (user == null)
             throw  new InternalServerError();
@@ -245,11 +241,9 @@ public class UserService implements IUserService{
      */
     @Override
     public void delete(Long id) {
-        if (id == null)
+        if (!dao.delete(getById(id)))
             throw new NotFoundException();
 
-        if (!dao.delete(id))
-            throw new NotFoundException();
     }
 
 
@@ -262,13 +256,13 @@ public class UserService implements IUserService{
         if (!validPassword(password))
             throw new BadRequestException("Invalid password");
 
-        UserDO savedObj = getByEmail(getCurrentUserName());
+        UserEntity savedObj = getByEmail(getCurrentUserName());
 
         //TODO change password before securing.
         savedObj.setPassword(password);
-        if (dao.saveOrUpdate(savedObj) == null) {
+        if (dao.update(savedObj) == null)
             throw new InternalServerError();
-        }
+
     }
 
     /**
@@ -277,7 +271,10 @@ public class UserService implements IUserService{
     @Transactional(readOnly = true)
     @Override
     public User getCurrentUser() {
-        return fromDBObject(getByEmail(getCurrentUserName()), true);
+        return fromDBObject(
+                getByEmail(getCurrentUserName()),
+                true
+        );
 
     }
 
@@ -287,12 +284,12 @@ public class UserService implements IUserService{
     @Transactional(readOnly = true)
     @Override
     public Response getResumeResponse() {
-        UserDO user = getByEmail(getCurrentUserName());
+        UserEntity user = getByEmail(getCurrentUserName());
 
         if (user.getResume() == null)
             throw new NotFoundException();
 
-        ResumeDO resume = user.getResume();
+        ResumeEntity resume = user.getResume();
 
         return ok(resume.getData())
                 .type(resume.getFileType())
@@ -306,11 +303,11 @@ public class UserService implements IUserService{
     public Resume saveResume(String name, String type, InputStream resumeData) {
 
         //save the resume
-        UserDO user = getByEmail(getCurrentUserName());
-        ResumeDO oldResume = user.getResume();
+        UserEntity user = getByEmail(getCurrentUserName());
+        ResumeEntity oldResume = user.getResume();
 
         user.setResume(generateNewResume(name, type, resumeData));
-        user = dao.saveOrUpdate(user);
+        user = dao.update(user);
 
         if (user == null || user.getResume() == null)
             throw new InternalServerError();
@@ -327,16 +324,16 @@ public class UserService implements IUserService{
      */
     @Override
     public void deleteResume() {
-        UserDO user = getByEmail(getCurrentUserName());
+        UserEntity user = getByEmail(getCurrentUserName());
 
         if (user.getResume() == null)
             throw new NotFoundException();
 
-        ResumeDO resume = user.getResume();
+        ResumeEntity resume = user.getResume();
 
         user.setResume(null);
 
-        user = dao.saveOrUpdate(user);
+        user = dao.update(user);
 
         //delete resume seperately because database may not cascade a delete for dereferenced entities.
         if (!dao.deleteResume(resume) || user == null)

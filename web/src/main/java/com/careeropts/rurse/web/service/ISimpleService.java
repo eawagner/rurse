@@ -31,7 +31,7 @@ public interface ISimpleService<T> {
      * Saves a new entity into the system or updates an existing entity.
      * @param item Entity to save.
      */
-    public T saveOrUpdate(T item);
+    public T update(T item);
 
     /**
      * Deletes an entity from the system with the given id.

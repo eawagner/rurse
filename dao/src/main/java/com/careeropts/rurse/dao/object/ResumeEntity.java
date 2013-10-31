@@ -6,7 +6,7 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "Resume")
-public class ResumeDO {
+public class ResumeEntity {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -23,10 +23,10 @@ public class ResumeDO {
     @Column(nullable = false)
     byte[] data;
 
-    public ResumeDO() {
+    public ResumeEntity() {
     }
 
-    public ResumeDO(String fileName, String fileType, byte[] data) {
+    public ResumeEntity(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;

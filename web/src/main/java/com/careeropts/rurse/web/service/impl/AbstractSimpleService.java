@@ -22,22 +22,28 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
     }
 
     /**
-     * Converts the entity model to a database object.
+     * Converts the model to a database entity.
      * @param model Model to convert.
      */
-    protected abstract U toDatabaseObject (T model);
+    protected abstract U toEntity(T model);
 
     /**
-     * Converts a database object to an entity model.
+     * Converts a database entity to a model.
      * @param dataObject Database object to convert.
      */
-    protected abstract T fromDatabaseObject(U dataObject);
+    protected abstract T fromEntity(U dataObject);
 
     /**
      * Validate and normalizes data in the provided model.
      * @param model Model to check.
      */
     protected abstract void normalizeAndValidate(T model);
+
+    /**
+     * Retrieves the id from a model object.
+     * @param model Model to retrieve the id from.
+     */
+    protected abstract Long getId(T model);
 
     /**
      * {@inheritDoc}
@@ -48,13 +54,13 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         if (id == null)
             throw new NotFoundException();
 
-        U item = dao.getSingle(id);
+        U entity = dao.getSingle(id);
 
-        if (item == null)
+        if (entity == null)
             throw new NotFoundException();
 
 
-        return fromDatabaseObject(item);
+        return fromEntity(entity);
     }
 
     /**
@@ -79,7 +85,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         return transform(results, new Function<U, T>() {
             @Override
             public T apply(U u) {
-                return fromDatabaseObject(u);
+                return fromEntity(u);
             }
         });
     }
@@ -94,32 +100,33 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
         normalizeAndValidate(item);
 
-        U savedObj = dao.save(toDatabaseObject(item));
+        U entity = dao.save(toEntity(item));
 
-        if (savedObj == null) {
+        if (entity == null)
             throw new InternalServerError();
-        }
 
-        return fromDatabaseObject(savedObj);
+        return fromEntity(entity);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T saveOrUpdate(T item) {
+    public T update(T item) {
         if (item == null)
             throw new BadRequestException("Attempted to save null data");
 
+        //Call get single to generate NotFoundExceptions if the object being saved is not already there.
+        getSingle(getId(item));
+
         normalizeAndValidate(item);
+        U entity = dao.update(toEntity(item));
 
-        U savedObj = dao.saveOrUpdate(toDatabaseObject(item));
-
-        if (savedObj == null) {
+        if (entity == null) {
             throw new InternalServerError();
         }
 
-        return fromDatabaseObject(savedObj);
+        return fromEntity(entity);
     }
 
     /**
@@ -130,7 +137,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         if (id == null)
             throw new NotFoundException();
 
-        if (!dao.delete(id))
+        if (!dao.delete(dao.getSingle(id)))
             throw new NotFoundException();
 
     }

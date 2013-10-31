@@ -1,7 +1,7 @@
 package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.ICourseDao;
-import com.careeropts.rurse.dao.object.CourseDO;
+import com.careeropts.rurse.dao.object.CourseEntity;
 import com.careeropts.rurse.model.Course;
 import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.service.ICourseService;
@@ -12,11 +12,19 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Math.round;
 
 @Service
-public class CourseService extends AbstractSimpleService<Course, CourseDO> implements ICourseService {
+public class CourseService extends AbstractSimpleService<Course, CourseEntity> implements ICourseService {
 
     @Autowired
     protected CourseService(ICourseDao dao) {
         super(dao);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Long getId(Course model) {
+        return model.getId();
     }
 
     /**
@@ -42,11 +50,11 @@ public class CourseService extends AbstractSimpleService<Course, CourseDO> imple
      * {@inheritDoc}
      */
     @Override
-    protected CourseDO toDatabaseObject(Course model) {
+    protected CourseEntity toEntity(Course model) {
         if (model == null)
             return null;
 
-        return new CourseDO(
+        return new CourseEntity(
                 model.getId(),
                 model.getTitle(),
                 model.getDescription(),
@@ -59,7 +67,7 @@ public class CourseService extends AbstractSimpleService<Course, CourseDO> imple
      * {@inheritDoc}
      */
     @Override
-    protected Course fromDatabaseObject(CourseDO dataObject) {
+    protected Course fromEntity(CourseEntity dataObject) {
         if (dataObject == null)
             return null;
 

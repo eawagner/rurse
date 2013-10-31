@@ -8,7 +8,7 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "User")
-public class UserDO {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -25,12 +25,12 @@ public class UserDO {
     private boolean manager;
 
     @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
-    ResumeDO resume;
+    ResumeEntity resume;
 
-    public UserDO() {
+    public UserEntity() {
     }
 
-    public UserDO(String email, String password, boolean manager, ResumeDO resume) {
+    public UserEntity(String email, String password, boolean manager, ResumeEntity resume) {
         this.email = email;
         this.password = password;
         this.manager = manager;
@@ -69,11 +69,11 @@ public class UserDO {
         this.manager = manager;
     }
 
-    public ResumeDO getResume() {
+    public ResumeEntity getResume() {
         return resume;
     }
 
-    public void setResume(ResumeDO resume) {
+    public void setResume(ResumeEntity resume) {
         this.resume = resume;
     }
 }

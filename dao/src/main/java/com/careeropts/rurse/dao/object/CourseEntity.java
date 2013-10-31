@@ -6,7 +6,7 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "Course")
-public class CourseDO {
+public class CourseEntity {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -23,14 +23,14 @@ public class CourseDO {
 
     String duration;
 
-    public CourseDO() {
+    public CourseEntity() {
     }
 
-    public CourseDO(Long id,
-                    String title,
-                    String description,
-                    Double cost,
-                    String duration) {
+    public CourseEntity(Long id,
+                        String title,
+                        String description,
+                        Double cost,
+                        String duration) {
 
         this.id = id;
         this.title = title;

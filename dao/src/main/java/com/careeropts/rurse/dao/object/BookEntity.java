@@ -12,7 +12,7 @@ import static org.hibernate.search.annotations.Resolution.DAY;
 
 @Entity
 @Table(name = "Book")
-public class BookDO {
+public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -35,16 +35,16 @@ public class BookDO {
 
     String isbn;
 
-    public BookDO() {
+    public BookEntity() {
     }
 
-    public BookDO(Long id,
-                  String title,
-                  String description,
-                  String publisher,
-                  Date publishDate,
-                  Double price,
-                  String isbn) {
+    public BookEntity(Long id,
+                      String title,
+                      String description,
+                      String publisher,
+                      Date publishDate,
+                      Double price,
+                      String isbn) {
 
         this.id = id;
         this.title = title;

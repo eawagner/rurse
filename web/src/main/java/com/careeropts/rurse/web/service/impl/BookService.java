@@ -1,7 +1,7 @@
 package com.careeropts.rurse.web.service.impl;
 
 import com.careeropts.rurse.dao.IBookDao;
-import com.careeropts.rurse.dao.object.BookDO;
+import com.careeropts.rurse.dao.object.BookEntity;
 import com.careeropts.rurse.model.Book;
 import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.service.IBookService;
@@ -13,11 +13,19 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Math.round;
 
 @Service
-public class BookService extends AbstractSimpleService<Book, BookDO> implements IBookService {
+public class BookService extends AbstractSimpleService<Book, BookEntity> implements IBookService {
 
     @Autowired
     public BookService(IBookDao dao) {
         super(dao);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Long getId(Book model) {
+        return model.getId();
     }
 
     /**
@@ -47,11 +55,11 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
      * {@inheritDoc}
      */
     @Override
-    protected BookDO toDatabaseObject(Book model) {
+    protected BookEntity toEntity(Book model) {
         if (model == null)
             return null;
 
-        return new BookDO(
+        return new BookEntity(
                 model.getId(),
                 model.getTitle(),
                 model.getDescription(),
@@ -66,7 +74,7 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
      * {@inheritDoc}
      */
     @Override
-    protected Book fromDatabaseObject(BookDO dataObject) {
+    protected Book fromEntity(BookEntity dataObject) {
         if (dataObject == null)
             return null;
 

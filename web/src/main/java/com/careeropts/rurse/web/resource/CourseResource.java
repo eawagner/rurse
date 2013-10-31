@@ -86,7 +86,7 @@ public class CourseResource {
             Course model) {
 
         model.setId(id);
-        return service.saveOrUpdate(model);
+        return service.update(model);
     }
 
     /**

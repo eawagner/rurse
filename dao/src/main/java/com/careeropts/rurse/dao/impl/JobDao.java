@@ -2,18 +2,18 @@ package com.careeropts.rurse.dao.impl;
 
 
 import com.careeropts.rurse.dao.IJobDao;
-import com.careeropts.rurse.dao.object.JobDO;
+import com.careeropts.rurse.dao.object.JobEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JobDao extends AbstractBaseDao<JobDO> implements IJobDao {
+public class JobDao extends AbstractBaseDao<JobEntity> implements IJobDao {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Class<JobDO> getDOClass() {
-        return JobDO.class;
+    protected Class<JobEntity> getDOClass() {
+        return JobEntity.class;
     }
 
 }

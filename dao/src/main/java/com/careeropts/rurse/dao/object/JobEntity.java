@@ -6,7 +6,7 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "Job")
-public class JobDO {
+public class JobEntity {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -28,16 +28,16 @@ public class JobDO {
     @Column(nullable = false)
     private boolean active;
 
-    public JobDO() {
+    public JobEntity() {
     }
 
-    public JobDO(Long id,
-                 String title,
-                 String description,
-                 String location,
-                 String city,
-                 String state,
-                 boolean active) {
+    public JobEntity(Long id,
+                     String title,
+                     String description,
+                     String location,
+                     String city,
+                     String state,
+                     boolean active) {
 
         this.id = id;
         this.title = title;

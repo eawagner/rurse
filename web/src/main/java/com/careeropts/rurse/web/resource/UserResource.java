@@ -64,12 +64,12 @@ public class UserResource {
     @POST
     @Consumes({TEXT_PLAIN})
     @Path("/current/password")
-    public void changePassword(
+    public Response changePassword(
             String password) {
 
         service.changePassword(password);
 
-        ok().build();
+        return ok().build();
     }
 
     /**

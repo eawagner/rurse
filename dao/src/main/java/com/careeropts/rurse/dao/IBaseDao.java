@@ -34,13 +34,13 @@ public interface IBaseDao<T> {
     public T save(T item);
 
     /**
-     * Saves or updates the entity to the dao.
+     * Updates the entity in the dao.
      */
-    public T saveOrUpdate(T item);
+    public T update(T item);
 
     /**
      * Deletes the entity with the given id from the dao.
      */
-    public boolean delete(long id);
+    public boolean delete(T item);
 
 }

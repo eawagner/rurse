@@ -87,7 +87,7 @@ public class BookResource {
             Book model) {
 
         model.setId(id);
-        return service.saveOrUpdate(model);
+        return service.update(model);
     }
 
     /**

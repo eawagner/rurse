@@ -87,7 +87,7 @@ public class JobResource {
             Job model) {
 
         model.setId(id);
-        return service.saveOrUpdate(model);
+        return service.update(model);
     }
 
     /**

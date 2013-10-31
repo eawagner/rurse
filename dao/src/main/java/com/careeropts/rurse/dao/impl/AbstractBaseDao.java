@@ -51,7 +51,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      */
     @Override
     public Iterable<T> search(String searchText) {
-        return search(null, 0, Integer.MAX_VALUE);
+        return search(searchText, 0, Integer.MAX_VALUE);
     }
 
     /**
@@ -68,6 +68,9 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      */
     @Override
     public T save(T item) {
+        if (item == null)
+            return null;
+
         getSession().save(item);
         return item;
     }
@@ -76,7 +79,10 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      * {@inheritDoc}
      */
     @Override
-    public T saveOrUpdate(T item) {
+    public T update(T item) {
+        if (item ==null)
+            return null;
+
         getSession().saveOrUpdate(item);
         return item;
     }
@@ -85,14 +91,11 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      * {@inheritDoc}
      */
     @Override
-    public boolean delete(long id) {
-        T item = getSingle(id);
-
+    public boolean delete(T item) {
         if (item == null)
             return false;
 
         getSession().delete(item);
-
         return true;
     }
 }
