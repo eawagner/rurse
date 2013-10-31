@@ -19,6 +19,9 @@ public class CourseService extends AbstractSimpleService<Course, CourseDO> imple
         super(dao);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void normalizeAndValidate(Course model) {
 
@@ -35,6 +38,9 @@ public class CourseService extends AbstractSimpleService<Course, CourseDO> imple
             model.setCost(round(model.getCost() * 100.0) / 100.0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected CourseDO toDatabaseObject(Course model) {
         if (model == null)
@@ -49,6 +55,9 @@ public class CourseService extends AbstractSimpleService<Course, CourseDO> imple
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Course fromDatabaseObject(CourseDO dataObject) {
         if (dataObject == null)

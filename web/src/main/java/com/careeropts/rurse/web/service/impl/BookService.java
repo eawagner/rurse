@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static java.lang.Integer.valueOf;
 import static java.lang.Math.round;
-import static org.apache.commons.lang3.math.NumberUtils.isDigits;
 
 @Service
 public class BookService extends AbstractSimpleService<Book, BookDO> implements IBookService {
@@ -22,6 +20,9 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
         super(dao);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void normalizeAndValidate(Book model) {
 
@@ -42,6 +43,9 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected BookDO toDatabaseObject(Book model) {
         if (model == null)
@@ -58,6 +62,9 @@ public class BookService extends AbstractSimpleService<Book, BookDO> implements 
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Book fromDatabaseObject(BookDO dataObject) {
         if (dataObject == null)

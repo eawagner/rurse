@@ -30,7 +30,6 @@ public class AccountResource {
      * Creates an account with the provided email address and password
      * @param email Email address for the new user account
      * @param password Password for the new user account
-     * @return
      */
     @POST
     @Consumes({TEXT_PLAIN})
@@ -39,20 +38,5 @@ public class AccountResource {
             String password) {
 
         return service.createAccount(email, password);
-    }
-
-    /**
-     * Allows a manager to promote another user to a manager or to demote them.
-     * @param email Email address of the user to change the permissions for
-     * @param promote If set to true the given user will have manager authorizations in the RURSE system.
-     * @return
-     */
-    @POST
-    @Path("/manager")
-    public User makeManager(
-            @QueryParam("email") String email,
-            @QueryParam("promote") boolean promote) {
-
-        return service.makeManager(email, promote);
     }
 }

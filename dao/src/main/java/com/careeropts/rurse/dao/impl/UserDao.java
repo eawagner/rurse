@@ -9,11 +9,18 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDao extends AbstractBaseDao<UserDO> implements IUserDao {
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Class<UserDO> getDOClass() {
         return UserDO.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserDO getByEmail(String email) {
         return (UserDO) getSession()
@@ -22,6 +29,9 @@ public class UserDao extends AbstractBaseDao<UserDO> implements IUserDao {
                 .uniqueResult();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteResume(ResumeDO resume) {
         if (resume == null)

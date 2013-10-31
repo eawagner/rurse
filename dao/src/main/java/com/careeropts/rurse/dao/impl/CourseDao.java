@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CourseDao extends AbstractBaseDao<CourseDO> implements ICourseDao {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Class<CourseDO> getDOClass() {
         return CourseDO.class;

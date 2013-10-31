@@ -18,16 +18,25 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
         return sessionFactory.getCurrentSession();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T getSingle(long id) {
         return (T) getSession().get(getDOClass(), id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterable<T> getAll() {
         return getAll(0, Integer.MAX_VALUE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterable<T> getAll(int pageNum, int perPage) {
         return getSession()
@@ -37,29 +46,44 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
                 .list();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterable<T> search(String searchText) {
         return search(null, 0, Integer.MAX_VALUE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterable<T> search(String searchText, int pageNum, int perPage) {
         //TODO implement search capability
         return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T save(T item) {
         getSession().save(item);
         return item;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T saveOrUpdate(T item) {
         getSession().saveOrUpdate(item);
         return item;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean delete(long id) {
         T item = getSingle(id);

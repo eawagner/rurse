@@ -36,8 +36,6 @@ import static org.apache.commons.io.IOUtils.copy;
 @Transactional
 public class UserService implements IUserService{
 
-    private static String CURRENT_USER = "user@email.com";
-
     @Autowired
     IUserDao dao;
 
@@ -46,6 +44,10 @@ public class UserService implements IUserService{
         return !isNullOrEmpty(password);
     }
 
+    private static String getCurrentUserName() {
+        //TODO retrieve from security context
+        return "user@email.com";
+    }
 
     private static Resume fromDBObject(ResumeDO dataObject) {
         if (dataObject == null)
@@ -101,10 +103,9 @@ public class UserService implements IUserService{
             throw new BadRequestException("No file contents were found");
 
         byte[] data;
-        try (InputStream input = resumeData;
-             ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+        try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 
-            copy(input, output);
+            copy(resumeData, output);
             output.flush();
 
             data = output.toByteArray();
@@ -143,7 +144,9 @@ public class UserService implements IUserService{
         return user;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User createAccount(String email, String password) {
         if (!EmailValidator.getInstance().isValid(email))
@@ -166,25 +169,18 @@ public class UserService implements IUserService{
         return fromDBObject(user, false);
     }
 
-    @Override
-    public User makeManager(String email, boolean promote) {
-        UserDO user = getByEmail(email);
-
-        user.setManager(promote);
-        user = dao.saveOrUpdate(user);
-
-        if (user == null)
-            throw  new InternalServerError();
-
-        return fromDBObject(user, false);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public User getUser(Long id) {
         return fromDBObject(getById(id), true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public Response getResumeResponse(Long id) {
@@ -201,6 +197,9 @@ public class UserService implements IUserService{
                 .build();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public Iterable<User> query(String searchText, Integer pageNum, Integer perPage) {
@@ -217,7 +216,6 @@ public class UserService implements IUserService{
         else
             results = dao.search(searchText, pageNum, perPage);
 
-
         return transform(results, new Function<UserDO, User>() {
             @Override
             public User apply(UserDO userDO) {
@@ -226,6 +224,25 @@ public class UserService implements IUserService{
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User updateAuths(Long id, boolean manager) {
+        UserDO user = getById(id);
+
+        user.setManager(manager);
+        user = dao.saveOrUpdate(user);
+
+        if (user == null)
+            throw  new InternalServerError();
+
+        return fromDBObject(user, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(Long id) {
         if (id == null)
@@ -235,12 +252,17 @@ public class UserService implements IUserService{
             throw new NotFoundException();
     }
 
+
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changePassword(String password) {
         if (!validPassword(password))
             throw new BadRequestException("Invalid password");
 
-        UserDO savedObj = getByEmail(CURRENT_USER);
+        UserDO savedObj = getByEmail(getCurrentUserName());
 
         //TODO change password before securing.
         savedObj.setPassword(password);
@@ -249,17 +271,23 @@ public class UserService implements IUserService{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public User getCurrentUser() {
-        return fromDBObject(getByEmail(CURRENT_USER), true);
+        return fromDBObject(getByEmail(getCurrentUserName()), true);
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public Response getResumeResponse() {
-        UserDO user = getByEmail(CURRENT_USER);
+        UserDO user = getByEmail(getCurrentUserName());
 
         if (user.getResume() == null)
             throw new NotFoundException();
@@ -271,11 +299,14 @@ public class UserService implements IUserService{
                 .build();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Resume saveResume(String name, String type, InputStream resumeData) {
 
         //save the resume
-        UserDO user = getByEmail(CURRENT_USER);
+        UserDO user = getByEmail(getCurrentUserName());
         ResumeDO oldResume = user.getResume();
 
         user.setResume(generateNewResume(name, type, resumeData));
@@ -291,9 +322,12 @@ public class UserService implements IUserService{
         return fromDBObject(user.getResume());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteResume() {
-        UserDO user = getByEmail(CURRENT_USER);
+        UserDO user = getByEmail(getCurrentUserName());
 
         if (user.getResume() == null)
             throw new NotFoundException();

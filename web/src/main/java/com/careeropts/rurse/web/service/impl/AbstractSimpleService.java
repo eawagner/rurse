@@ -21,10 +21,27 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         this.dao = dao;
     }
 
+    /**
+     * Converts the entity model to a database object.
+     * @param model Model to convert.
+     */
     protected abstract U toDatabaseObject (T model);
+
+    /**
+     * Converts a database object to an entity model.
+     * @param dataObject Database object to convert.
+     */
     protected abstract T fromDatabaseObject(U dataObject);
+
+    /**
+     * Validate and normalizes data in the provided model.
+     * @param model Model to check.
+     */
     protected abstract void normalizeAndValidate(T model);
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public T getSingle(Long id) {
@@ -40,6 +57,9 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         return fromDatabaseObject(item);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public Iterable<T> query(String searchText, Integer pageNum, Integer perPage) {
@@ -64,6 +84,9 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T save(T item) {
         if (item == null)
@@ -80,6 +103,9 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         return fromDatabaseObject(savedObj);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T saveOrUpdate(T item) {
         if (item == null)
@@ -96,6 +122,9 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         return fromDatabaseObject(savedObj);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(Long id) {
         if (id == null)

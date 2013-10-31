@@ -35,7 +35,6 @@ public class UserResource {
      * @param searchText If provided will limit the users returned to the users with resumes with the keywords provided.  Otherwise will return all users.
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
-     * @return
      */
     @GET
     @Produces({APPLICATION_JSON})
@@ -50,7 +49,6 @@ public class UserResource {
 
     /**
      * Retrieves information about the current authenticated user.
-     * @return
      */
     @GET
     @Path("/current")
@@ -60,8 +58,22 @@ public class UserResource {
     }
 
     /**
+     * Allows the authenticated user to change their password.
+     * @param password The new password to use.
+     */
+    @POST
+    @Consumes({TEXT_PLAIN})
+    @Path("/current/password")
+    public void changePassword(
+            String password) {
+
+        service.changePassword(password);
+
+        ok().build();
+    }
+
+    /**
      * Retrieves the resume document for the current authenticated user.
-     * @return
      */
     @GET
     @Path("/current/resume")
@@ -75,7 +87,6 @@ public class UserResource {
      *
      * @param uploadedInputStream Input stream of the file to store
      * @param bodyPart Metadata about the file being uploaded.
-     * @return
      */
     @POST
     @Consumes(MULTIPART_FORM_DATA)
@@ -98,8 +109,6 @@ public class UserResource {
 
     /**
      * Deletes the resume document for the current authenticated user.
-     *
-     * @return
      */
     @DELETE
     @Path("/current/resume")
@@ -113,7 +122,6 @@ public class UserResource {
      * Retrieves a specific user.
      *
      * @param id The id of a user.
-     * @return
      */
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
@@ -125,9 +133,21 @@ public class UserResource {
     }
 
     /**
+     * Removes a specific user from the system.
+     * @param id The id of a user.
+     */
+    @DELETE
+    @Path("/{id:\\d+}")
+    public Response deleteUser(
+            @PathParam("id") Long id) {
+
+        service.delete(id);
+        return ok().build();
+    }
+
+    /**
      * Retrieves the resume document for a specific user.
      * @param id The id of a user.
-     * @return
      */
     @GET
     @Path("/{id:\\d+}/resume")
@@ -139,16 +159,17 @@ public class UserResource {
     }
 
     /**
-     * Removes a specific user from the system.
-     * @param id The id of a user.
-     * @return
+     * Allows a manager to change the authorizations of another user in the system.
+     * @param id The Id of a user.
+     * @param manager If set to true the given user will have manager authorizations in the RURSE system.
      */
-    @DELETE
-    @Path("/{id:\\d+}")
-    public Response deleteUser(
-            @PathParam("id") Long id) {
+    @POST
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Path("/{id:\\d+}/auth")
+    public User changeAuths(
+            @PathParam("id") Long id,
+            @QueryParam("manager") boolean manager) {
 
-        service.delete(id);
-        return ok().build();
+        return service.updateAuths(id, manager);
     }
 }

@@ -31,7 +31,6 @@ public class JobResource {
      * @param searchText If provided will limit the job listings returned to the keywords provided.  Otherwise will return all job listings.
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
-     * @return
      */
     @GET
     @Produces({APPLICATION_JSON})
@@ -48,7 +47,6 @@ public class JobResource {
      * Adds a new job listing to the system.  A new id will be generated for the job listing and be provided in the response.
      *
      * @param model A job listing object representing the values to store for that job listing.
-     * @return
      */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
@@ -64,7 +62,6 @@ public class JobResource {
      * Retrieves a single job listing from the system.
      *
      * @param id The id of a job listing.
-     * @return
      */
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
@@ -80,7 +77,6 @@ public class JobResource {
      *
      * @param id The id of a job listing.
      * @param model A job listing object representing the new values to store for that job listing.
-     * @return
      */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
@@ -98,7 +94,6 @@ public class JobResource {
      * Deletes a specific job listing from the system.
      *
      * @param id The id of a job listing.
-     * @return
      */
     @DELETE
     @Path("/{id:\\d+}")

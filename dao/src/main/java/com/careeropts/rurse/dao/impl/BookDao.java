@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BookDao extends AbstractBaseDao<BookDO> implements IBookDao {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Class<BookDO> getDOClass() {
         return BookDO.class;

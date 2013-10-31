@@ -31,7 +31,6 @@ public class CourseResource {
      * @param searchText If provided will limit the courses returned to the keywords provided.  Otherwise will return all courses.
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
-     * @return
      */
     @GET
     @Produces({APPLICATION_JSON})
@@ -47,7 +46,6 @@ public class CourseResource {
     /**
      * Adds a new course to the system.  A new id will be generated for the course and be provided in the response.
      * @param model A course object representing the values to store for that course.
-     * @return
      */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
@@ -63,7 +61,6 @@ public class CourseResource {
      * Retrieves a single course from the system.
      *
      * @param id The id of a course.
-     * @return
      */
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
@@ -79,7 +76,6 @@ public class CourseResource {
      *
      * @param id The id of a course.
      * @param model A course object representing the new values to store for that course.
-     * @return
      */
     @POST
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
@@ -97,7 +93,6 @@ public class CourseResource {
      * Deletes a specific course from the system.
      *
      * @param id The id of a course.
-     * @return
      */
     @DELETE
     @Path("/{id:\\d+}")

@@ -18,6 +18,9 @@ public class JobService extends AbstractSimpleService<Job, JobDO> implements IJo
         super(dao);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void normalizeAndValidate(Job model) {
         if (isNullOrEmpty(model.getTitle())) {
@@ -31,6 +34,9 @@ public class JobService extends AbstractSimpleService<Job, JobDO> implements IJo
         //TODO validate city and state.
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected JobDO toDatabaseObject(Job model) {
         if (model == null)
@@ -47,6 +53,9 @@ public class JobService extends AbstractSimpleService<Job, JobDO> implements IJo
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Job fromDatabaseObject(JobDO dataObject) {
         if (dataObject == null)
