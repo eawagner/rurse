@@ -23,6 +23,9 @@ public class UserDao extends AbstractBaseDao<UserEntity> implements IUserDao {
      */
     @Override
     public UserEntity getByEmail(String email) {
+        if (email == null)
+            return null;
+
         return (UserEntity) getSession()
                 .createCriteria(getDOClass())
                 .add(Restrictions.eq("email", email))
