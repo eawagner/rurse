@@ -52,7 +52,7 @@ public class UserResource {
      */
     @GET
     @Path("/current")
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     public User getCurrentUser() {
         return service.getCurrentUser();
     }
@@ -124,7 +124,7 @@ public class UserResource {
      * @param id The id of a user.
      */
     @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
     public User getUser(
             @PathParam("id") Long id) {
@@ -164,7 +164,7 @@ public class UserResource {
      * @param manager If set to true the given user will have manager authorizations in the RURSE system.
      */
     @POST
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}/auth")
     public User changeAuths(
             @PathParam("id") Long id,

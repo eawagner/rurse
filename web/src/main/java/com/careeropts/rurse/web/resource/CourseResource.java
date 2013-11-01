@@ -48,8 +48,8 @@ public class CourseResource {
      * @param model A course object representing the values to store for that course.
      */
     @POST
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Consumes({APPLICATION_JSON, APPLICATION_XML})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     public Course addSingleCourse(
             Course model) {
 
@@ -63,7 +63,7 @@ public class CourseResource {
      * @param id The id of a course.
      */
     @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
     public Course getSingleCourse(
             @PathParam("id") Long id) {
@@ -78,8 +78,8 @@ public class CourseResource {
      * @param model A course object representing the new values to store for that course.
      */
     @POST
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Consumes({APPLICATION_JSON, APPLICATION_XML})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
     public Course saveSingleCourse(
             @PathParam("id") Long id,

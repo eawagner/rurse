@@ -6,12 +6,9 @@ import com.careeropts.rurse.web.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 
-import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
+import static javax.ws.rs.core.MediaType.*;
 
 /**
  * Responsible for the management of user accounts
@@ -33,6 +30,7 @@ public class AccountResource {
      */
     @POST
     @Consumes({TEXT_PLAIN})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     public User createAccount (
             @QueryParam("email") String email,
             String password) {

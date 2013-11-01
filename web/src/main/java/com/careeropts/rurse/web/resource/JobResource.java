@@ -49,8 +49,8 @@ public class JobResource {
      * @param model A job listing object representing the values to store for that job listing.
      */
     @POST
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Consumes({APPLICATION_JSON, APPLICATION_XML})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     public Job addSingleJob(
             Job model) {
 
@@ -64,7 +64,7 @@ public class JobResource {
      * @param id The id of a job listing.
      */
     @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
     public Job getSingleJob(
             @PathParam("id") Long id) {
@@ -79,8 +79,8 @@ public class JobResource {
      * @param model A job listing object representing the new values to store for that job listing.
      */
     @POST
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Consumes({APPLICATION_JSON, APPLICATION_XML})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
     public Job saveSingleJob(
             @PathParam("id") Long id,

@@ -49,8 +49,8 @@ public class BookResource {
      * @param model A book object representing the values to store for that book.
      */
     @POST
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Consumes({APPLICATION_JSON, APPLICATION_XML})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     public Book addSingleBook(
             Book model) {
 
@@ -64,7 +64,7 @@ public class BookResource {
      * @param id The id of a book.
      */
     @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
     public Book getSingleBook(
             @PathParam("id") Long id) {
@@ -79,8 +79,8 @@ public class BookResource {
      * @param model A book object representing the new values to store for that book.
      */
     @POST
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Consumes({APPLICATION_JSON, APPLICATION_XML})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
     public Book saveSingleBook(
             @PathParam("id") Long id,
