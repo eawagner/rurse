@@ -10,7 +10,7 @@ import static javax.ws.rs.core.Response.status;
 
 public class BadRequestException extends WebApplicationException{
     public BadRequestException() {
-        super(clientError().build());
+        super(clientError().entity("").type(TEXT_PLAIN_TYPE).build());
     }
 
     /**

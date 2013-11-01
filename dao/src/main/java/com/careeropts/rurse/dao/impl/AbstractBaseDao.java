@@ -83,7 +83,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
         if (item ==null)
             return null;
 
-        getSession().saveOrUpdate(item);
+        getSession().merge(item);
         return item;
     }
 

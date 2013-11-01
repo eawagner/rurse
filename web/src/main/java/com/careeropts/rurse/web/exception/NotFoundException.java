@@ -10,7 +10,7 @@ import static javax.ws.rs.core.Response.status;
 
 public class NotFoundException extends WebApplicationException{
     public NotFoundException() {
-        super(notFound().build());
+        super(notFound().entity("").type(TEXT_PLAIN_TYPE).build());
     }
 
     /**

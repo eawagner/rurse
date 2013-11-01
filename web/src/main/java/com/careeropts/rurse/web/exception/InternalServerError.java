@@ -9,7 +9,7 @@ import static javax.ws.rs.core.Response.status;
 
 public class InternalServerError extends WebApplicationException{
     public InternalServerError() {
-        super(status(INTERNAL_SERVER_ERROR).build());
+        super(status(INTERNAL_SERVER_ERROR).entity("").type(TEXT_PLAIN_TYPE).build());
     }
 
     /**
