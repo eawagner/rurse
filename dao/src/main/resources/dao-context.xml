@@ -29,7 +29,10 @@
           p:driverClassName="${rurse.db.driver}"
           p:url="${rurse.db.url}"
           p:username="${rurse.db.username}"
-          p:password="${rurse.db.password}"/>
+          p:password="${rurse.db.password}"
+          p:timeBetweenEvictionRunsMillis="${rurse.db.connection.idle.timeout}"
+          p:minEvictableIdleTimeMillis="${rurse.db.connection.idle.timeout}"/>
+
 
     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
           p:sessionFactory-ref="sessionFactory"/>
