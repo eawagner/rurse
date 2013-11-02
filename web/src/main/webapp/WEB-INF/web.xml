@@ -21,7 +21,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>com.careeropts.web;com.fasterxml.jackson.jaxrs.json;com.fasterxml.jackson.jaxrs.xml</param-value>
+            <param-value>com.careeropts.web;com.fasterxml.jackson.jaxrs.json</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

@@ -24,11 +24,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static com.careeropts.rurse.model.Resume.DocType;
 import static com.careeropts.rurse.model.Resume.DocType.fromMimeType;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Iterables.transform;
+import static com.google.common.collect.Lists.transform;
 import static javax.ws.rs.core.Response.ok;
 import static org.apache.commons.io.IOUtils.copy;
 
@@ -198,14 +199,14 @@ public class UserService implements IUserService{
      */
     @Transactional(readOnly = true)
     @Override
-    public Iterable<User> query(String searchText, Integer pageNum, Integer perPage) {
+    public List<User> query(String searchText, Integer pageNum, Integer perPage) {
         if (pageNum == null || pageNum < 0)
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
             perPage = Integer.MAX_VALUE;
 
-        Iterable<UserEntity> results;
+        List<UserEntity> results;
 
         if (isNullOrEmpty(searchText))
             results = dao.getAll(pageNum, perPage);

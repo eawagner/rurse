@@ -1,6 +1,8 @@
 package com.careeropts.rurse.dao;
 
 
+import java.util.List;
+
 public interface IBaseDao<T> {
 
     /**
@@ -11,22 +13,22 @@ public interface IBaseDao<T> {
     /**
      * Retrieves all entities managed by the dao
      */
-    public Iterable<T> getAll();
+    public List<T> getAll();
 
     /**
      * Retrieves all entities managed by the dao with pagination parameters.
      */
-    public Iterable<T> getAll(int pageNum, int perPage);
+    public List<T> getAll(int pageNum, int perPage);
 
     /**
      * Retrieves all entities managed by the dao matches the given search text.
      */
-    public Iterable<T> search(String searchText);
+    public List<T> search(String searchText);
 
     /**
      * Retrieves all entities managed by the dao matches the given search text with pagination parameters.
      */
-    public Iterable<T> search(String searchText, int pageNum, int perPage);
+    public List<T> search(String searchText, int pageNum, int perPage);
 
     /**
      * Saves a new entity to the dao

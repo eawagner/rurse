@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.*;
 import static javax.ws.rs.core.Response.ok;
@@ -37,8 +38,8 @@ public class UserResource {
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
-    @Produces({APPLICATION_JSON})
-    public Iterable<User> queryUsers(
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    public List<User> queryUsers(
             @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
@@ -90,6 +91,7 @@ public class UserResource {
      */
     @POST
     @Consumes(MULTIPART_FORM_DATA)
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/current/resume")
     public Resume saveCurrentResume(
             @FormDataParam("file") InputStream uploadedInputStream,

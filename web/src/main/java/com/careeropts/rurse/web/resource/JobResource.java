@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
@@ -33,8 +34,8 @@ public class JobResource {
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
-    @Produces({APPLICATION_JSON})
-    public Iterable<Job> queryJobs(
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    public List<Job> queryJobs(
             @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {

@@ -3,10 +3,13 @@ package com.careeropts.rurse.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement
 public class Course {
 
     Long id;

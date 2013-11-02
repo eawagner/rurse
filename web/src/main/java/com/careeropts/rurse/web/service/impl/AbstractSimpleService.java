@@ -8,8 +8,10 @@ import com.careeropts.rurse.web.service.ISimpleService;
 import com.google.common.base.Function;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Iterables.transform;
+import static com.google.common.collect.Lists.transform;
 
 
 @Transactional
@@ -68,14 +70,14 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
      */
     @Transactional(readOnly = true)
     @Override
-    public Iterable<T> query(String searchText, Integer pageNum, Integer perPage) {
+    public List<T> query(String searchText, Integer pageNum, Integer perPage) {
         if (pageNum == null || pageNum < 0)
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
             perPage = Integer.MAX_VALUE;
 
-        Iterable<U> results;
+        List<U> results;
 
         if (isNullOrEmpty(searchText))
             results = dao.getAll(pageNum, perPage);

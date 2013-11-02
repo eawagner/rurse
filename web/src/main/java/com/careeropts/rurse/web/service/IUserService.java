@@ -6,6 +6,7 @@ import com.careeropts.rurse.model.User;
 
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Interface responsible for all business logic regarding the management of users and resumes.
@@ -38,7 +39,7 @@ public interface IUserService {
      * @param pageNum The page number of the results to be retrieved.
      * @param perPage The number of results per page.
      */
-    public Iterable<User> query(String searchText, Integer pageNum, Integer perPage);
+    public List<User> query(String searchText, Integer pageNum, Integer perPage);
 
     /**
      * Deletes a user from the system with the given id.

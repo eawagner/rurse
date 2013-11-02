@@ -1,5 +1,7 @@
 package com.careeropts.rurse.web.service;
 
+import java.util.List;
+
 /**
  * Basic business layer interface to define common methods for basic business logic.
  * @param <T>
@@ -19,7 +21,7 @@ public interface ISimpleService<T> {
      * @param pageNum The page number of the results to be retrieved.
      * @param perPage The number of results per page.
      */
-    public Iterable<T> query(String searchText, Integer pageNum, Integer perPage);
+    public List<T> query(String searchText, Integer pageNum, Integer perPage);
 
     /**
      * Saves an new entity into the system.

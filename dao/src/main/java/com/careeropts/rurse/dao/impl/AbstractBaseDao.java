@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
@@ -30,7 +31,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      * {@inheritDoc}
      */
     @Override
-    public Iterable<T> getAll() {
+    public List<T> getAll() {
         return getAll(0, Integer.MAX_VALUE);
     }
 
@@ -38,7 +39,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      * {@inheritDoc}
      */
     @Override
-    public Iterable<T> getAll(int pageNum, int perPage) {
+    public List<T> getAll(int pageNum, int perPage) {
         return getSession()
                 .createCriteria(getDOClass())
                 .setFirstResult(pageNum * perPage)
@@ -50,7 +51,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      * {@inheritDoc}
      */
     @Override
-    public Iterable<T> search(String searchText) {
+    public List<T> search(String searchText) {
         return search(searchText, 0, Integer.MAX_VALUE);
     }
 
@@ -58,7 +59,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      * {@inheritDoc}
      */
     @Override
-    public Iterable<T> search(String searchText, int pageNum, int perPage) {
+    public List<T> search(String searchText, int pageNum, int perPage) {
         //TODO implement search capability
         return Collections.emptyList();
     }
