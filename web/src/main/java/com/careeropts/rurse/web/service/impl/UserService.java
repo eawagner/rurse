@@ -32,10 +32,13 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.transform;
 import static javax.ws.rs.core.Response.ok;
 import static org.apache.commons.io.IOUtils.copy;
+import static org.apache.tika.config.TikaConfig.getDefaultConfig;
 
 @Service
 @Transactional
 public class UserService implements IUserService{
+
+    private static TikaConfig TIKA_CONFIG = getDefaultConfig();
 
     @Autowired
     IUserDao dao;
@@ -84,7 +87,7 @@ public class UserService implements IUserService{
         metadata.add(Metadata.RESOURCE_NAME_KEY, name);
 
         try (ByteArrayInputStream input = new ByteArrayInputStream(data)) {
-            MediaType mediaType = TikaConfig.getDefaultConfig().getDetector().detect(input, metadata);
+            MediaType mediaType = TIKA_CONFIG.getDetector().detect(input, metadata);
             if (mediaType != null)
                 return fromMimeType(mediaType.toString());
 

@@ -19,6 +19,7 @@
     <properties>
         <java.version>1.7</java.version>
 
+        <commons.codec.version>1.6</commons.codec.version>
         <commons.lang.version>3.0</commons.lang.version>
         <commons.validator.version>1.4.0</commons.validator.version>
         <guava.version>14.0.1</guava.version>
@@ -29,6 +30,7 @@
         <jersey.version>1.17.1</jersey.version>
         <junit.version>4.11</junit.version>
         <mysql.version>5.1.26</mysql.version>
+        <slf4j.version>1.7.5</slf4j.version>
         <spring.version>3.2.4.RELEASE</spring.version>
         <tika.version>1.4</tika.version>
         <tomcat.dbcp.version>7.0.41</tomcat.dbcp.version>
@@ -121,16 +123,21 @@
                 <artifactId>jackson-jaxrs-json-provider</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.jaxrs</groupId>
-                <artifactId>jackson-jaxrs-xml-provider</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
 
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons.codec.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -146,6 +153,25 @@
                 <groupId>org.apache.tika</groupId>
                 <artifactId>tika-core</artifactId>
                 <version>${tika.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-parsers</artifactId>
+                <version>${tika.version}</version>
+                <exclusions>
+                    <!--<exclusion>-->
+                        <!--<groupId>org.apache.geronimo.specs</groupId>-->
+                        <!--<artifactId>geronimo-stax-api_1.0_spec</artifactId>-->
+                    <!--</exclusion>-->
+                    <!--<exclusion>-->
+                        <!--<groupId>org.ccil.cowan.tagsoup</groupId>-->
+                        <!--<artifactId>tagsoup</artifactId>-->
+                    <!--</exclusion>-->
+                    <exclusion>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm-debug-all</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!--Database-->

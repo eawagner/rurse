@@ -1,11 +1,17 @@
 package com.careeropts.rurse.dao.object;
 
+import com.careeropts.rurse.dao.support.ResumeClassFieldBridge;
+import org.hibernate.search.annotations.ClassBridge;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.AUTO;
+import static org.hibernate.search.annotations.Index.YES;
+import static org.hibernate.search.annotations.Store.NO;
 
 @Entity
 @Table(name = "Resume")
+@ClassBridge(name = "resumeBridge", index = YES, store = NO, impl = ResumeClassFieldBridge.class)
 public class ResumeEntity {
 
     @Id
