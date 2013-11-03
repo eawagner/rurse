@@ -21,6 +21,8 @@
             <props>
                 <prop key="hibernate.hbm2ddl.auto">${rurse.db.hbm2dll.auto}</prop>
                 <prop key="hibernate.dialect">${rurse.db.dialect}</prop>
+                <prop key="hibernate.search.default.directory_provider">${rurse.db.search.index.provider}</prop>
+                <prop key="hibernate.search.default.indexBase">${rurse.db.search.index.location}</prop>
             </props>
         </property>
     </bean>

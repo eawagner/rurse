@@ -15,4 +15,14 @@ public class BookDao extends AbstractBaseDao<BookEntity> implements IBookDao {
     protected Class<BookEntity> getDOClass() {
         return BookEntity.class;
     }
+
+    @Override
+    protected String[] getSearchFields() {
+        return new String[]{"title", "description"};
+    }
+
+    @Override
+    protected String getAnalyzer() {
+        return "bookAnalyzer";
+    }
 }

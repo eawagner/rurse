@@ -16,4 +16,13 @@ public class CourseDao extends AbstractBaseDao<CourseEntity> implements ICourseD
         return CourseEntity.class;
     }
 
+    @Override
+    protected String[] getSearchFields() {
+        return new String[]{"title", "description"};
+    }
+
+    @Override
+    protected String getAnalyzer() {
+        return "courseAnalyzer";
+    }
 }
