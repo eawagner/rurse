@@ -1,14 +1,12 @@
 package com.careeropts.rurse.web.exception;
 
 
-import javax.ws.rs.WebApplicationException;
-
 import static com.sun.jersey.api.Responses.notFound;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN_TYPE;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.status;
 
-public class NotFoundException extends WebApplicationException{
+public class NotFoundException extends WebAppResponseException {
     public NotFoundException() {
         super(notFound().entity("").type(TEXT_PLAIN_TYPE).build());
     }

@@ -1,7 +1,11 @@
 package com.careeropts.rurse.web.resource;
 
 import com.careeropts.rurse.model.Job;
+import com.careeropts.rurse.web.exception.InternalServerError;
+import com.careeropts.rurse.web.exception.WebAppResponseException;
 import com.careeropts.rurse.web.service.IJobService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +27,8 @@ import static javax.ws.rs.core.Response.ok;
 @Path("/job")
 public class JobResource {
 
+    private static Logger logger = LoggerFactory.getLogger(JobResource.class);
+
     @Autowired
     IJobService service;
 
@@ -40,7 +46,16 @@ public class JobResource {
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
-        return service.query(searchText, pageNum, size);
+        try {
+
+            return service.query(searchText, pageNum, size);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
 
     }
 
@@ -55,8 +70,17 @@ public class JobResource {
     public Job addSingleJob(
             Job model) {
 
-        model.setId(null);
-        return service.save(model);
+        try {
+
+            model.setId(null);
+            return service.save(model);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -70,7 +94,16 @@ public class JobResource {
     public Job getSingleJob(
             @PathParam("id") Long id) {
 
-        return service.getSingle(id);
+        try {
+
+            return service.getSingle(id);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -87,8 +120,17 @@ public class JobResource {
             @PathParam("id") Long id,
             Job model) {
 
-        model.setId(id);
-        return service.update(model);
+        try {
+
+            model.setId(id);
+            return service.update(model);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -101,8 +143,16 @@ public class JobResource {
     public Response deleteSingleJob(
             @PathParam("id") Long id) {
 
-        service.delete(id);
+        try {
 
-        return ok().build();
+            service.delete(id);
+            return ok().build();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 }

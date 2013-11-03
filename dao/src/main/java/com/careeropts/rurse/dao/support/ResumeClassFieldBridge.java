@@ -6,11 +6,15 @@ import org.apache.lucene.document.Field;
 import org.apache.tika.exception.TikaException;
 import org.hibernate.search.bridge.FieldBridge;
 import org.hibernate.search.bridge.LuceneOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
 
 public class ResumeClassFieldBridge implements FieldBridge{
+
+    private static Logger logger = LoggerFactory.getLogger(ResumeClassFieldBridge.class);
 
     @Override
     public void set(String name, Object value, Document document, LuceneOptions luceneOptions) {
@@ -23,8 +27,8 @@ public class ResumeClassFieldBridge implements FieldBridge{
 
 
         } catch (TikaException | SAXException | IOException e) {
-            System.out.println(e.getMessage());
-            //TODO log
+            logger.error("Error parsing resume document", e);
+            throw new RuntimeException(e);
         }
     }
 }

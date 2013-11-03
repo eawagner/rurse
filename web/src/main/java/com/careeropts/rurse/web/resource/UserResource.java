@@ -3,9 +3,13 @@ package com.careeropts.rurse.web.resource;
 
 import com.careeropts.rurse.model.Resume;
 import com.careeropts.rurse.model.User;
+import com.careeropts.rurse.web.exception.InternalServerError;
+import com.careeropts.rurse.web.exception.WebAppResponseException;
 import com.careeropts.rurse.web.service.IUserService;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +31,8 @@ import static javax.ws.rs.core.Response.ok;
 @Path("/user")
 public class UserResource {
 
+    private static Logger logger = LoggerFactory.getLogger(UserResource.class);
+
     @Autowired
     IUserService service;
 
@@ -44,7 +50,16 @@ public class UserResource {
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
-        return service.query(searchText, pageNum, size);
+        try {
+
+            return service.query(searchText, pageNum, size);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
 
@@ -55,7 +70,17 @@ public class UserResource {
     @Path("/current")
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     public User getCurrentUser() {
-        return service.getCurrentUser();
+
+        try {
+
+            return service.getCurrentUser();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -68,9 +93,17 @@ public class UserResource {
     public Response changePassword(
             String password) {
 
-        service.changePassword(password);
+        try {
 
-        return ok().build();
+            service.changePassword(password);
+            return ok().build();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -79,7 +112,17 @@ public class UserResource {
     @GET
     @Path("/current/resume")
     public Response getCurrentUserResume() {
-        return service.getResumeResponse();
+
+        try {
+
+            return service.getResumeResponse();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -97,16 +140,25 @@ public class UserResource {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataBodyPart bodyPart) {
 
-        String fileType = null;
-        String fileName = null;
+        try {
 
-        if (bodyPart != null)
-            fileName = (bodyPart.getContentDisposition() == null ? null : bodyPart.getContentDisposition().getFileName());
+            String fileType = null;
+            String fileName = null;
 
-        if (bodyPart != null)
-            fileType = (bodyPart.getMediaType() == null ? null : bodyPart.getMediaType().toString());
+            if (bodyPart != null)
+                fileName = (bodyPart.getContentDisposition() == null ? null : bodyPart.getContentDisposition().getFileName());
 
-        return service.saveResume(fileName, fileType, uploadedInputStream);
+            if (bodyPart != null)
+                fileType = (bodyPart.getMediaType() == null ? null : bodyPart.getMediaType().toString());
+
+            return service.saveResume(fileName, fileType, uploadedInputStream);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -116,8 +168,17 @@ public class UserResource {
     @Path("/current/resume")
     public Response deleteCurrentResume() {
 
-        service.deleteResume();
-        return ok().build();
+        try {
+
+            service.deleteResume();
+            return ok().build();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -131,7 +192,16 @@ public class UserResource {
     public User getUser(
             @PathParam("id") Long id) {
 
-        return service.getUser(id);
+        try {
+
+            return service.getUser(id);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -143,8 +213,17 @@ public class UserResource {
     public Response deleteUser(
             @PathParam("id") Long id) {
 
-        service.delete(id);
-        return ok().build();
+        try {
+
+            service.delete(id);
+            return ok().build();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -156,8 +235,17 @@ public class UserResource {
     public Response getCurrentUserResume(
             @PathParam("id") Long id) {
 
-        //TODO this ignores any accept header, but that is ok for now.
-        return service.getResumeResponse(id);
+        try {
+
+            //TODO this ignores any accept header, but that is ok for now.
+            return service.getResumeResponse(id);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -172,6 +260,15 @@ public class UserResource {
             @PathParam("id") Long id,
             @QueryParam("manager") boolean manager) {
 
-        return service.updateAuths(id, manager);
+        try {
+
+            return service.updateAuths(id, manager);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 }

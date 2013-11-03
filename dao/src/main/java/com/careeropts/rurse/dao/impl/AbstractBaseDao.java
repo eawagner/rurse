@@ -7,6 +7,8 @@ import org.apache.lucene.util.Version;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -15,6 +17,8 @@ import static java.util.Collections.emptyList;
 import static org.hibernate.search.Search.getFullTextSession;
 
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     SessionFactory sessionFactory;
@@ -88,7 +92,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
                     .list();
 
         } catch (ParseException e) {
-            //TODO log
+            logger.warn(String.format("Error parsing search query (%s)", searchText), e);
             return emptyList();
         }
     }

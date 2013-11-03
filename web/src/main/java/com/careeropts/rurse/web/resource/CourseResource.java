@@ -1,7 +1,11 @@
 package com.careeropts.rurse.web.resource;
 
 import com.careeropts.rurse.model.Course;
+import com.careeropts.rurse.web.exception.InternalServerError;
+import com.careeropts.rurse.web.exception.WebAppResponseException;
 import com.careeropts.rurse.web.service.ICourseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +27,8 @@ import static javax.ws.rs.core.Response.ok;
 @Path("/course")
 public class CourseResource {
 
+    private static Logger logger = LoggerFactory.getLogger(CourseResource.class);
+
     @Autowired
     ICourseService service;
 
@@ -40,7 +46,16 @@ public class CourseResource {
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
-        return service.query(searchText, pageNum, size);
+        try {
+
+            return service.query(searchText, pageNum, size);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
 
     }
 
@@ -54,8 +69,17 @@ public class CourseResource {
     public Course addSingleCourse(
             Course model) {
 
-        model.setId(null);
-        return service.save(model);
+        try {
+
+            model.setId(null);
+            return service.save(model);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -69,7 +93,16 @@ public class CourseResource {
     public Course getSingleCourse(
             @PathParam("id") Long id) {
 
-        return service.getSingle(id);
+        try {
+
+            return service.getSingle(id);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -86,8 +119,17 @@ public class CourseResource {
             @PathParam("id") Long id,
             Course model) {
 
-        model.setId(id);
-        return service.update(model);
+        try {
+
+            model.setId(id);
+            return service.update(model);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 
     /**
@@ -100,8 +142,16 @@ public class CourseResource {
     public Response deleteSingleCourse(
             @PathParam("id") Long id) {
 
-        service.delete(id);
+        try {
 
-        return ok().build();
+            service.delete(id);
+            return ok().build();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
     }
 }

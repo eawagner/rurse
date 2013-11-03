@@ -15,6 +15,8 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,7 @@ import static com.careeropts.rurse.model.Resume.DocType;
 import static com.careeropts.rurse.model.Resume.DocType.fromMimeType;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.transform;
+import static java.lang.String.format;
 import static javax.ws.rs.core.Response.ok;
 import static org.apache.commons.io.IOUtils.copy;
 import static org.apache.tika.config.TikaConfig.getDefaultConfig;
@@ -37,6 +40,8 @@ import static org.apache.tika.config.TikaConfig.getDefaultConfig;
 @Service
 @Transactional
 public class UserService implements IUserService{
+
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private static TikaConfig TIKA_CONFIG = getDefaultConfig();
 
@@ -93,7 +98,7 @@ public class UserService implements IUserService{
 
 
         } catch (IOException ex) {
-            //TODO log
+            logger.error(format("Error deriving MIME type of the uploaded resume (%s)", name), ex);
         }
 
         return null;
@@ -166,6 +171,9 @@ public class UserService implements IUserService{
         if (user == null)
             throw new InternalServerError();
 
+        if (logger.isInfoEnabled())
+            logger.info(format("Creating new user %s", email));
+
         return fromDBObject(user, false);
     }
 
@@ -237,6 +245,9 @@ public class UserService implements IUserService{
         if (user == null)
             throw  new InternalServerError();
 
+        if (logger.isInfoEnabled())
+            logger.info(format("Changing the authorizations for %s, manager=%b", user.getEmail(), manager));
+
         return fromDBObject(user, false);
     }
 
@@ -248,6 +259,8 @@ public class UserService implements IUserService{
         if (!dao.delete(getById(id)))
             throw new NotFoundException();
 
+        if (logger.isInfoEnabled())
+            logger.info(format("Deleted user %d", id));
     }
 
 
@@ -262,7 +275,6 @@ public class UserService implements IUserService{
 
         UserEntity savedObj = getByEmail(getCurrentUserName());
 
-        //TODO change password before securing.
         savedObj.setPassword(password);
         if (dao.update(savedObj) == null)
             throw new InternalServerError();
@@ -320,6 +332,9 @@ public class UserService implements IUserService{
         if (oldResume != null && !dao.deleteResume(oldResume))
             throw new InternalServerError();
 
+        if (logger.isInfoEnabled())
+            logger.info(format("User (%s) uploaded a new resume to the system", user.getEmail()));
+
         return fromDBObject(user.getResume());
     }
 
@@ -342,5 +357,8 @@ public class UserService implements IUserService{
         //delete resume seperately because database may not cascade a delete for dereferenced entities.
         if (!dao.deleteResume(resume) || user == null)
             throw new InternalServerError();
+
+        if (logger.isInfoEnabled())
+            logger.info(format("User (%s) deleted their resume from the system", user.getEmail()));
     }
 }
