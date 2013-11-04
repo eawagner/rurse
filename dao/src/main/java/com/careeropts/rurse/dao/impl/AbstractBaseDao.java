@@ -44,28 +44,12 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
      * {@inheritDoc}
      */
     @Override
-    public List<T> getAll() {
-        return getAll(0, Integer.MAX_VALUE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public List<T> getAll(int pageNum, int perPage) {
         return getSession()
                 .createCriteria(getDOClass())
                 .setFirstResult(pageNum * perPage)
                 .setMaxResults(perPage)
                 .list();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<T> search(String searchText) {
-        return search(searchText, 0, Integer.MAX_VALUE);
     }
 
     /**
@@ -117,8 +101,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
         if (item ==null)
             return null;
 
-        getSession().merge(item);
-        return item;
+        return (T) getSession().merge(item);
     }
 
     /**

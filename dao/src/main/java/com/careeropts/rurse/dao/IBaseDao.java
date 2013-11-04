@@ -11,19 +11,9 @@ public interface IBaseDao<T> {
     public T getSingle(long id);
 
     /**
-     * Retrieves all entities managed by the dao
-     */
-    public List<T> getAll();
-
-    /**
      * Retrieves all entities managed by the dao with pagination parameters.
      */
     public List<T> getAll(int pageNum, int perPage);
-
-    /**
-     * Retrieves all entities managed by the dao matches the given search text.
-     */
-    public List<T> search(String searchText);
 
     /**
      * Retrieves all entities managed by the dao matches the given search text with pagination parameters.
