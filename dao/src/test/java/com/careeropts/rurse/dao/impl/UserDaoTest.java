@@ -16,20 +16,24 @@ public class UserDaoTest extends AbstractBaseDaoTest<UserEntity>{
     @Autowired
     IUserDao dao;
 
-    public static UserEntity genEntity(Long id, String resumeText) {
+    public static UserEntity genEntity(Long id, String fileExt, String type, byte[] resumeData) {
         UserEntity entity = new UserEntity(
                 randomUUID().toString(),
                 randomUUID().toString(),
                 true,
                 new ResumeEntity(
-                        "resume.txt",
-                        "text/plain",
-                        resumeText.getBytes()
+                        "resume." + fileExt,
+                        type,
+                        resumeData
                 )
         );
 
         entity.setId(id);
         return entity;
+    }
+
+    public static UserEntity genEntity(Long id, String resumeText) {
+        return genEntity(id, "txt", "text/plain", resumeText.getBytes());
     }
 
     public static UserEntity copyEntity(UserEntity entity) {
