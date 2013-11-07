@@ -20,7 +20,11 @@
     </sec:http>
 
     <sec:authentication-manager alias="authenticationManager">
-        <sec:authentication-provider user-service-ref="userSecurityService"/>
+        <sec:authentication-provider user-service-ref="userSecurityService">
+            <sec:password-encoder ref="bcryptPassEncoder"/>
+        </sec:authentication-provider>
     </sec:authentication-manager>
+
+    <bean id="bcryptPassEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 </beans>

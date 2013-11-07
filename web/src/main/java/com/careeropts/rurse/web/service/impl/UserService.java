@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,10 +51,8 @@ public class UserService implements IUserService{
     @Autowired
     IUserDao dao;
 
-    private static boolean validPassword(String password) {
-        //TODO look into stronger password requirements.
-        return !isNullOrEmpty(password);
-    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     private static String getCurrentUserName() {
         Authentication auth = getContext().getAuthentication();
@@ -135,6 +134,13 @@ public class UserService implements IUserService{
         return new ResumeEntity(name, docType.getMimeType(), data);
     }
 
+    private String encodePassword(String password) {
+        if (isNullOrEmpty(password))
+            throw new BadRequestException("Invalid password");
+
+        return passwordEncoder.encode(password);
+    }
+
     private UserEntity getByEmail(String email) {
         if (!EmailValidator.getInstance().isValid(email))
             throw new BadRequestException("Invalid email address");
@@ -152,7 +158,6 @@ public class UserService implements IUserService{
             throw new NotFoundException();
 
         UserEntity user = dao.getSingle(id);
-
         if (user == null)
             throw new NotFoundException("No user user exists with the following id: " + id);
 
@@ -167,13 +172,10 @@ public class UserService implements IUserService{
         if (!EmailValidator.getInstance().isValid(email))
             throw new BadRequestException("Invalid email address");
 
-        if (!validPassword(password))
-            throw new BadRequestException("Invalid password");
-
         if (dao.getByEmail(email) != null)
             throw new BadRequestException("Account already exists");
 
-        UserEntity user = dao.save(new UserEntity(email, password, false, null));
+        UserEntity user = dao.save(new UserEntity(email, encodePassword(password), false, null));
         if (user == null)
             throw new InternalServerError();
 
@@ -276,8 +278,7 @@ public class UserService implements IUserService{
      */
     @Override
     public void changePassword(String password) {
-        if (!validPassword(password))
-            throw new BadRequestException("Invalid password");
+        password = encodePassword(password);
 
         UserEntity savedObj = getByEmail(getCurrentUserName());
 
@@ -297,7 +298,6 @@ public class UserService implements IUserService{
                 getByEmail(getCurrentUserName()),
                 true
         );
-
     }
 
     /**
