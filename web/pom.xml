@@ -107,6 +107,7 @@
                     </systemProperties>
                     <webAppConfig>
                         <contextPath>/${artifact.name}</contextPath>
+                        <extraClasspath>${project.basedir}/../system-files/conf-files/dev/conf/rurse</extraClasspath>
                     </webAppConfig>
                 </configuration>
             </plugin>
