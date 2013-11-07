@@ -7,6 +7,7 @@ import com.careeropts.rurse.web.service.IJobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
@@ -25,6 +26,7 @@ import static javax.ws.rs.core.Response.ok;
  */
 @Component
 @Path("/job")
+@PreAuthorize("hasRole('ROLE_MANAGER')")
 public class JobResource {
 
     private static Logger logger = LoggerFactory.getLogger(JobResource.class);
@@ -41,6 +43,7 @@ public class JobResource {
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Job> queryJobs(
             @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
@@ -91,6 +94,7 @@ public class JobResource {
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Job getSingleJob(
             @PathParam("id") Long id) {
 

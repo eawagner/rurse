@@ -11,6 +11,7 @@ import com.sun.jersey.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
@@ -29,6 +30,7 @@ import static javax.ws.rs.core.Response.ok;
  */
 @Component
 @Path("/user")
+@PreAuthorize("hasRole('ROLE_MANAGER')")
 public class UserResource {
 
     private static Logger logger = LoggerFactory.getLogger(UserResource.class);
@@ -69,6 +71,7 @@ public class UserResource {
     @GET
     @Path("/current")
     @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getCurrentUser() {
 
         try {
@@ -90,6 +93,7 @@ public class UserResource {
     @POST
     @Consumes({TEXT_PLAIN})
     @Path("/current/password")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Response changePassword(
             String password) {
 
@@ -111,6 +115,7 @@ public class UserResource {
      */
     @GET
     @Path("/current/resume")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Response getCurrentUserResume() {
 
         try {
@@ -136,6 +141,7 @@ public class UserResource {
     @Consumes(MULTIPART_FORM_DATA)
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/current/resume")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Resume saveCurrentResume(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataBodyPart bodyPart) {
@@ -166,6 +172,7 @@ public class UserResource {
      */
     @DELETE
     @Path("/current/resume")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Response deleteCurrentResume() {
 
         try {

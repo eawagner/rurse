@@ -18,6 +18,7 @@ import org.apache.tika.mime.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +36,7 @@ import static com.google.common.collect.Lists.transform;
 import static java.lang.String.format;
 import static javax.ws.rs.core.Response.ok;
 import static org.apache.commons.io.IOUtils.copy;
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 import static org.apache.tika.config.TikaConfig.getDefaultConfig;
 
 @Service
@@ -54,8 +56,12 @@ public class UserService implements IUserService{
     }
 
     private static String getCurrentUserName() {
-        //TODO retrieve from security context
-        return "user@email.com";
+        Authentication auth = getContext().getAuthentication();
+        if (auth != null)
+            return auth.getName();
+
+        return null;
+
     }
 
     private static Resume fromDBObject(ResumeEntity dataObject) {
