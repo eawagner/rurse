@@ -54,12 +54,7 @@ public class UserService implements IUserService{
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    private static DocType deriveFileDocType(String name, String type, byte[] data) {
-
-        //first check specified type is one of the supported types.
-        DocType docType = fromMimeType(type);
-        if (docType != null)
-            return docType;
+    private static DocType deriveFileDocType(String name, byte[] data) {
 
         //With no mimetype information try to derive the mime type from the file name and/or contents.
         Metadata metadata = new Metadata();
@@ -78,7 +73,7 @@ public class UserService implements IUserService{
         return null;
     }
 
-    private static ResumeEntity generateNewResume(String name, String type, InputStream resumeData) {
+    private static ResumeEntity generateNewResume(String name, InputStream resumeData) {
         if (isNullOrEmpty(name))
             throw new BadRequestException("The file name is required for a resume");
 
@@ -96,7 +91,7 @@ public class UserService implements IUserService{
             throw new InternalServerError();
         }
 
-        DocType docType = deriveFileDocType(name, type, data);
+        DocType docType = deriveFileDocType(name, data);
         if (docType == null)
             throw new BadRequestException("Unrecognized document type.  Text and Micorosoft Word documents are accepted.");
 
@@ -290,13 +285,13 @@ public class UserService implements IUserService{
      * {@inheritDoc}
      */
     @Override
-    public Resume saveResume(String name, String type, InputStream resumeData) {
+    public Resume saveResume(String name, InputStream resumeData) {
 
         //save the resume
         UserEntity user = getCurrent();
         ResumeEntity oldResume = user.getResume();
 
-        user.setResume(generateNewResume(name, type, resumeData));
+        user.setResume(generateNewResume(name, resumeData));
         user = dao.update(user);
 
         if (user == null || user.getResume() == null)

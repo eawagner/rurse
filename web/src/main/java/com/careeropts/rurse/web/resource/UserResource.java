@@ -15,7 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.io.InputStream;
 import java.util.List;
 
@@ -137,7 +137,7 @@ public class UserResource {
      * Uploads a resume document for the current authenticated user.  Consumes multipart/form-data.
      * Information about the filename and mime-type of the file should be sent with the request.
      *
-     * @param uploadedInputStream Input stream of the file to store
+     * @param inputStream Input stream of the file to store
      * @param bodyPart Metadata about the file being uploaded.
      */
     @POST
@@ -145,22 +145,45 @@ public class UserResource {
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/current/resume")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Resume saveCurrentResume(
-            @FormDataParam("file") InputStream uploadedInputStream,
+    public Resume saveCurrentResume (
+            @FormDataParam("file") InputStream inputStream,
             @FormDataParam("file") FormDataBodyPart bodyPart) {
 
         try {
-
-            String fileType = null;
             String fileName = null;
 
             if (bodyPart != null)
                 fileName = (bodyPart.getContentDisposition() == null ? null : bodyPart.getContentDisposition().getFileName());
 
-            if (bodyPart != null)
-                fileType = (bodyPart.getMediaType() == null ? null : bodyPart.getMediaType().toString());
+            return service.saveResume(fileName, inputStream);
 
-            return service.saveResume(fileName, fileType, uploadedInputStream);
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
+    }
+
+    /**
+     * Uploads a resume document for the current authenticated user.  Consumes multipart/form-data.
+     * Information about the filename and mime-type of the file should be sent with the request.
+     *
+     * @param fileName File name of the resume being uploaded.
+     * @param inputStream Input stream of the file to store
+     */
+    @POST
+    @Consumes({APPLICATION_OCTET_STREAM})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @Path("/current/resume")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Resume saveCurrentResume (
+            @QueryParam("fileName") String fileName,
+            InputStream inputStream) {
+
+        try {
+
+            return service.saveResume(fileName, inputStream);
 
         } catch (WebAppResponseException e) {
             throw e;

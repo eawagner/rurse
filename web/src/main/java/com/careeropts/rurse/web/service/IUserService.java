@@ -73,10 +73,9 @@ public interface IUserService {
     /**
      * Saves a new resume for the authenticated user.
      * @param name File name of the resume.
-     * @param type Provided MIME type of the resume.
      * @param resumeData Datastream holding the binary resume data.
      */
-    public Resume saveResume(String name, String type, InputStream resumeData);
+    public Resume saveResume(String name, InputStream resumeData);
 
     /**
      * Deletes the resume for the authenticated user.
