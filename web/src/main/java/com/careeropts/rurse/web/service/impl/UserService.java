@@ -10,6 +10,7 @@ import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.IUserService;
+import com.careeropts.rurse.web.service.util.EntityTransform;
 import com.google.common.base.Function;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.tika.config.TikaConfig;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import static com.careeropts.rurse.model.Resume.DocType;
 import static com.careeropts.rurse.model.Resume.DocType.fromMimeType;
+import static com.careeropts.rurse.web.service.util.EntityTransform.fromEntity;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.transform;
 import static java.lang.String.format;
@@ -53,37 +55,6 @@ public class UserService implements IUserService{
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    private static String getCurrentUserName() {
-        Authentication auth = getContext().getAuthentication();
-        if (auth != null)
-            return auth.getName();
-
-        return null;
-
-    }
-
-    private static Resume fromDBObject(ResumeEntity dataObject) {
-        if (dataObject == null)
-            return null;
-
-        return new Resume(
-                dataObject.getFileName(),
-                fromMimeType(dataObject.getFileType())
-        );
-    }
-
-    private static User fromDBObject(UserEntity dataObject, boolean includeResume) {
-        if (dataObject == null)
-            return null;
-
-        return new User(
-                dataObject.getId(),
-                dataObject.getEmail(),
-                dataObject.isManager(),
-                (includeResume? fromDBObject(dataObject.getResume()) : null)
-        );
-    }
 
     private static DocType deriveFileDocType(String name, String type, byte[] data) {
 
@@ -141,14 +112,16 @@ public class UserService implements IUserService{
         return passwordEncoder.encode(password);
     }
 
-    private UserEntity getByEmail(String email) {
-        if (!EmailValidator.getInstance().isValid(email))
-            throw new BadRequestException("Invalid email address");
+    private UserEntity getCurrent() {
+        //retrieve the user email from the security context.
+        Authentication auth = getContext().getAuthentication();
+        if (auth == null)
+            throw new InternalServerError("Unable to find an authenticated user.");
 
-        UserEntity user = dao.getByEmail(email);
+        UserEntity user = dao.getByEmail(auth.getName());
 
         if (user == null)
-            throw new NotFoundException("No user user exists with the following email address: " + email);
+            throw new InternalServerError("Unable to find the authorized user.");
 
         return user;
     }
@@ -182,7 +155,7 @@ public class UserService implements IUserService{
         if (logger.isInfoEnabled())
             logger.info(format("Creating new user %s", email));
 
-        return fromDBObject(user, false);
+        return fromEntity(user);
     }
 
     /**
@@ -191,7 +164,7 @@ public class UserService implements IUserService{
     @Transactional(readOnly = true)
     @Override
     public User getUser(Long id) {
-        return fromDBObject(getById(id), true);
+        return fromEntity(getById(id));
     }
 
     /**
@@ -235,7 +208,7 @@ public class UserService implements IUserService{
         return transform(results, new Function<UserEntity, User>() {
             @Override
             public User apply(UserEntity userEntity) {
-                return fromDBObject(userEntity, false);
+                return fromEntity(userEntity);
             }
         });
     }
@@ -256,7 +229,7 @@ public class UserService implements IUserService{
         if (logger.isInfoEnabled())
             logger.info(format("Changing the authorizations for %s, manager=%b", user.getEmail(), manager));
 
-        return fromDBObject(user, false);
+        return fromEntity(user);
     }
 
     /**
@@ -280,7 +253,7 @@ public class UserService implements IUserService{
     public void changePassword(String password) {
         password = encodePassword(password);
 
-        UserEntity savedObj = getByEmail(getCurrentUserName());
+        UserEntity savedObj = getCurrent();
 
         savedObj.setPassword(password);
         if (dao.update(savedObj) == null)
@@ -294,10 +267,7 @@ public class UserService implements IUserService{
     @Transactional(readOnly = true)
     @Override
     public User getCurrentUser() {
-        return fromDBObject(
-                getByEmail(getCurrentUserName()),
-                true
-        );
+        return fromEntity(getCurrent());
     }
 
     /**
@@ -306,7 +276,7 @@ public class UserService implements IUserService{
     @Transactional(readOnly = true)
     @Override
     public Response getResumeResponse() {
-        UserEntity user = getByEmail(getCurrentUserName());
+        UserEntity user = getCurrent();
 
         if (user.getResume() == null)
             throw new NotFoundException();
@@ -325,7 +295,7 @@ public class UserService implements IUserService{
     public Resume saveResume(String name, String type, InputStream resumeData) {
 
         //save the resume
-        UserEntity user = getByEmail(getCurrentUserName());
+        UserEntity user = getCurrent();
         ResumeEntity oldResume = user.getResume();
 
         user.setResume(generateNewResume(name, type, resumeData));
@@ -341,7 +311,7 @@ public class UserService implements IUserService{
         if (logger.isInfoEnabled())
             logger.info(format("User (%s) uploaded a new resume to the system", user.getEmail()));
 
-        return fromDBObject(user.getResume());
+        return fromEntity(user.getResume());
     }
 
     /**
@@ -349,7 +319,7 @@ public class UserService implements IUserService{
      */
     @Override
     public void deleteResume() {
-        UserEntity user = getByEmail(getCurrentUserName());
+        UserEntity user = getCurrent();
 
         if (user.getResume() == null)
             throw new NotFoundException();

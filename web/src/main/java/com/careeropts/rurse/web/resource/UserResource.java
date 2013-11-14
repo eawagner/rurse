@@ -1,8 +1,7 @@
 package com.careeropts.rurse.web.resource;
 
 
-import com.careeropts.rurse.model.Resume;
-import com.careeropts.rurse.model.User;
+import com.careeropts.rurse.model.*;
 import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.WebAppResponseException;
 import com.careeropts.rurse.web.service.IUserService;
@@ -189,6 +188,76 @@ public class UserResource {
     }
 
     /**
+     *
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     */
+    @GET
+    @Path("/current/recommendation/book")
+    public List<Book> getRecommendedBooks(
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
+            @QueryParam("resultSize") Integer size) {
+
+        try {
+
+            return null;
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
+    }
+
+    /**
+     *
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     */
+    @GET
+    @Path("/current/recommendation/course")
+    public List<Course> getRecommendedCoursess(
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
+            @QueryParam("resultSize") Integer size) {
+
+        try {
+
+            return null;
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
+    }
+
+    /**
+     *
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     */
+    @GET
+    @Path("/current/recommendation/job")
+    public List<Job> getRecommendedJobs(
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
+            @QueryParam("resultSize") Integer size) {
+
+        try {
+
+            return null;
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
+    }
+
+
+    /**
      * Retrieves a specific user.
      *
      * @param id The id of a user.
@@ -239,7 +308,7 @@ public class UserResource {
      */
     @GET
     @Path("/{id:\\d+}/resume")
-    public Response getCurrentUserResume(
+    public Response getUserResume(
             @PathParam("id") Long id) {
 
         try {

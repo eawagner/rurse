@@ -5,6 +5,7 @@ import com.careeropts.rurse.dao.object.CourseEntity;
 import com.careeropts.rurse.model.Course;
 import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.service.ICourseService;
+import com.careeropts.rurse.web.service.util.EntityTransform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,32 +52,14 @@ public class CourseService extends AbstractSimpleService<Course, CourseEntity> i
      */
     @Override
     protected CourseEntity toEntity(Course model) {
-        if (model == null)
-            return null;
-
-        return new CourseEntity(
-                model.getId(),
-                model.getTitle(),
-                model.getDescription(),
-                model.getCost(),
-                model.getDuration()
-        );
+        return EntityTransform.toEntity(model);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Course fromEntity(CourseEntity dataObject) {
-        if (dataObject == null)
-            return null;
-
-        return new Course(
-                dataObject.getId(),
-                dataObject.getTitle(),
-                dataObject.getDescription(),
-                dataObject.getCost(),
-                dataObject.getDuration()
-        );
+    protected Course fromEntity(CourseEntity entity) {
+        return EntityTransform.fromEntity(entity);
     }
 }

@@ -5,6 +5,7 @@ import com.careeropts.rurse.dao.object.JobEntity;
 import com.careeropts.rurse.model.Job;
 import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.service.IJobService;
+import com.careeropts.rurse.web.service.util.EntityTransform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,36 +48,14 @@ public class JobService extends AbstractSimpleService<Job, JobEntity> implements
      */
     @Override
     protected JobEntity toEntity(Job model) {
-        if (model == null)
-            return null;
-
-        return new JobEntity(
-                model.getId(),
-                model.getTitle(),
-                model.getDescription(),
-                model.getLocation(),
-                model.getCity(),
-                model.getState(),
-                model.isActive()
-        );
+        return EntityTransform.toEntity(model);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Job fromEntity(JobEntity dataObject) {
-        if (dataObject == null)
-            return null;
-
-        return new Job(
-                dataObject.getId(),
-                dataObject.getTitle(),
-                dataObject.getDescription(),
-                dataObject.getLocation(),
-                dataObject.getCity(),
-                dataObject.getState(),
-                dataObject.isActive()
-        );
+    protected Job fromEntity(JobEntity entity) {
+        return EntityTransform.fromEntity(entity);
     }
 }

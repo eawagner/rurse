@@ -5,6 +5,7 @@ import com.careeropts.rurse.dao.object.BookEntity;
 import com.careeropts.rurse.model.Book;
 import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.service.IBookService;
+import com.careeropts.rurse.web.service.util.EntityTransform;
 import org.apache.commons.validator.routines.ISBNValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,36 +57,14 @@ public class BookService extends AbstractSimpleService<Book, BookEntity> impleme
      */
     @Override
     protected BookEntity toEntity(Book model) {
-        if (model == null)
-            return null;
-
-        return new BookEntity(
-                model.getId(),
-                model.getTitle(),
-                model.getDescription(),
-                model.getPublisher(),
-                model.getPublishDate(),
-                model.getPrice(),
-                model.getIsbn()
-        );
+        return EntityTransform.toEntity(model);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Book fromEntity(BookEntity dataObject) {
-        if (dataObject == null)
-            return null;
-
-        return new Book(
-                dataObject.getId(),
-                dataObject.getTitle(),
-                dataObject.getDescription(),
-                dataObject.getPublisher(),
-                dataObject.getPublishDate(),
-                dataObject.getPrice(),
-                dataObject.getIsbn()
-        );
+    protected Book fromEntity(BookEntity entity) {
+        return EntityTransform.fromEntity(entity);
     }
 }
