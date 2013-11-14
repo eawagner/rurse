@@ -39,7 +39,7 @@
     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
           p:sessionFactory-ref="sessionFactory"/>
 
-    <bean id="luceneIndexRebuilder" class="com.careeropts.rurse.dao.support.LuceneIndexRebuilder" init-method="start"
+    <bean id="luceneIndexRebuilder" class="com.careeropts.rurse.dao.support.LuceneIndexRebuildAction" init-method="start"
           p:rebuild="${rurse.db.search.index.rebuildOnStart}"/>
 
     <bean id="dbExceptionPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>

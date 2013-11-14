@@ -4,6 +4,7 @@ package com.careeropts.rurse.web.resource;
 import com.careeropts.rurse.model.*;
 import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.WebAppResponseException;
+import com.careeropts.rurse.web.service.IRecommendationService;
 import com.careeropts.rurse.web.service.IUserService;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataParam;
@@ -36,6 +37,9 @@ public class UserResource {
 
     @Autowired
     IUserService service;
+
+    @Autowired
+    IRecommendationService recommendationService;
 
     /**
      * Retrieves a list of all the users in the system.
@@ -188,19 +192,23 @@ public class UserResource {
     }
 
     /**
+     * If the current user has a resume in the system, will return a list of recommended books for the user
+     * based on the content of their resume.
      *
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
-    @Path("/current/recommendation/book")
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @Path("/current/recommend/book")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Book> getRecommendedBooks(
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
         try {
 
-            return null;
+            return recommendationService.recommendBooksForCurrentUser(pageNum, size);
 
         } catch (WebAppResponseException e) {
             throw e;
@@ -211,19 +219,23 @@ public class UserResource {
     }
 
     /**
+     * If the current user has a resume in the system, will return a list of recommended courses for the user
+     * based on the content of their resume.
      *
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
-    @Path("/current/recommendation/course")
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @Path("/current/recommend/course")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Course> getRecommendedCoursess(
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
         try {
 
-            return null;
+            return recommendationService.recommendCoursesForCurrentUser(pageNum, size);
 
         } catch (WebAppResponseException e) {
             throw e;
@@ -234,19 +246,23 @@ public class UserResource {
     }
 
     /**
+     * If the current user has a resume in the system, will return a list of recommended jobs for the user
+     * based on the content of their resume.
      *
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
      * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
-    @Path("/current/recommendation/job")
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @Path("/current/recommend/job")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Job> getRecommendedJobs(
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
             @QueryParam("resultSize") Integer size) {
 
         try {
 
-            return null;
+            return recommendationService.recommendJobsForCurrentUser(pageNum, size);
 
         } catch (WebAppResponseException e) {
             throw e;

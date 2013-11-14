@@ -10,7 +10,6 @@ import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.IUserService;
-import com.careeropts.rurse.web.service.util.EntityTransform;
 import com.google.common.base.Function;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.tika.config.TikaConfig;
@@ -19,7 +18,6 @@ import org.apache.tika.mime.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,12 +32,12 @@ import java.util.List;
 import static com.careeropts.rurse.model.Resume.DocType;
 import static com.careeropts.rurse.model.Resume.DocType.fromMimeType;
 import static com.careeropts.rurse.web.service.util.EntityTransform.fromEntity;
+import static com.careeropts.rurse.web.service.util.SecurityUtils.getAuthenticatedUser;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.transform;
 import static java.lang.String.format;
 import static javax.ws.rs.core.Response.ok;
 import static org.apache.commons.io.IOUtils.copy;
-import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 import static org.apache.tika.config.TikaConfig.getDefaultConfig;
 
 @Service
@@ -114,11 +112,11 @@ public class UserService implements IUserService{
 
     private UserEntity getCurrent() {
         //retrieve the user email from the security context.
-        Authentication auth = getContext().getAuthentication();
-        if (auth == null)
+        String current = getAuthenticatedUser();
+        if (current == null)
             throw new InternalServerError("Unable to find an authenticated user.");
 
-        UserEntity user = dao.getByEmail(auth.getName());
+        UserEntity user = dao.getByEmail(current);
 
         if (user == null)
             throw new InternalServerError("Unable to find the authorized user.");

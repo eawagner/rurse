@@ -17,6 +17,8 @@ import static org.apache.tika.config.TikaConfig.getDefaultConfig;
 
 public class ResumeParser {
 
+    private ResumeParser() {/*private constructor*/};
+
     private static TikaConfig TIKI_CONFIG = getDefaultConfig();
 
     public static String parse(ResumeEntity resume) throws TikaException, SAXException, IOException {

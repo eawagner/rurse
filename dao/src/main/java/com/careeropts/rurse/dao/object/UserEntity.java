@@ -7,7 +7,6 @@ import org.hibernate.search.annotations.Parameter;
 import javax.persistence.*;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
@@ -46,7 +45,7 @@ public class UserEntity {
     @Column(nullable = false)
     private boolean manager;
 
-    @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
+    @OneToOne(cascade = ALL, orphanRemoval = true)
     @IndexedEmbedded
     ResumeEntity resume;
 

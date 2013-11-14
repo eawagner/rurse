@@ -18,11 +18,17 @@ public class UserDao extends AbstractBaseDao<UserEntity> implements IUserDao {
         return UserEntity.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String[] getSearchFields() {
         return new String[]{"resume"};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getAnalyzer() {
         return "userAnalyzer";

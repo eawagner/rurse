@@ -16,11 +16,17 @@ public class JobDao extends AbstractBaseDao<JobEntity> implements IJobDao {
         return JobEntity.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String[] getSearchFields() {
         return new String[]{"title", "description"};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getAnalyzer() {
         return "jobAnalyzer";

@@ -4,9 +4,9 @@ import com.careeropts.rurse.dao.support.ResumeClassFieldBridge;
 import org.hibernate.search.annotations.ClassBridge;
 
 import javax.persistence.*;
-
 import java.util.Arrays;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 import static org.hibernate.search.annotations.Index.YES;
 import static org.hibernate.search.annotations.Store.NO;
@@ -28,6 +28,7 @@ public class ResumeEntity {
     String fileType;
 
     @Lob
+    @Basic(fetch = LAZY)
     @Column(nullable = false)
     byte[] data;
 

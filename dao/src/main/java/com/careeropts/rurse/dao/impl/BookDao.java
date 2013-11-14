@@ -16,11 +16,17 @@ public class BookDao extends AbstractBaseDao<BookEntity> implements IBookDao {
         return BookEntity.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String[] getSearchFields() {
         return new String[]{"title", "description"};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getAnalyzer() {
         return "bookAnalyzer";

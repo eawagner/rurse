@@ -1,9 +1,11 @@
 package com.careeropts.rurse.web.resource;
 
 import com.careeropts.rurse.model.Job;
+import com.careeropts.rurse.model.User;
 import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.WebAppResponseException;
 import com.careeropts.rurse.web.service.IJobService;
+import com.careeropts.rurse.web.service.IRecommendationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class JobResource {
 
     @Autowired
     IJobService service;
+
+    @Autowired
+    IRecommendationService recommendationService;
 
     /**
      * Queries the system for all job listings currently in the system.
@@ -151,6 +156,26 @@ public class JobResource {
 
             service.delete(id);
             return ok().build();
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
+    }
+
+    @GET
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @Path("/{id:\\d+}/recommend/user")
+    public List<User> getRecommendedUsersForJob(
+            @PathParam("id") Long id,
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
+            @QueryParam("resultSize") Integer size) {
+
+        try {
+
+            return recommendationService.recommendUsersForJob(id, pageNum, size);
 
         } catch (WebAppResponseException e) {
             throw e;
