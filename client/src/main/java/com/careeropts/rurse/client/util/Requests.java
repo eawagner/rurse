@@ -1,26 +1,29 @@
 package com.careeropts.rurse.client.util;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.StringEntity;
 
 import java.io.InputStream;
 import java.net.URI;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.http.HttpHeaders.ACCEPT;
-import static org.apache.http.HttpHeaders.CONTENT_TYPE;
+import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 public class Requests {
-
     private Requests() {/*private constructor*/}
 
-    public static final String JSON = "application/json";
-    public static final String OCTET_STREAM = "application/octet-stream";
+    private static ObjectMapper mapper = new ObjectMapper();
 
-    public static HttpGet get(URI uri) {
+    public static final String JSON = APPLICATION_JSON.getMimeType();
+
+    public static HttpGet getAny(URI uri) {
         return get(uri, null);
     }
 
@@ -45,13 +48,18 @@ public class Requests {
         return method;
     }
 
-    public static HttpPost post(URI uri, String accept, String contentType, InputStream input) {
+    public static HttpPost postStream(URI uri, String accept, InputStream input) {
         HttpPost method = post(uri, accept);
-
-        if (!isEmpty(contentType))
-            method.setHeader(CONTENT_TYPE, contentType);
-
         method.setEntity(new InputStreamEntity(input));
+        return method;
+    }
+
+    public static <T> HttpPost postJson(URI uri, String accept, T data) throws JsonProcessingException {
+        HttpPost method = post(uri, accept);
+        method.setEntity(new StringEntity(
+                mapper.writeValueAsString(data),
+                APPLICATION_JSON
+        ));
 
         return method;
     }
@@ -59,5 +67,4 @@ public class Requests {
     public static HttpDelete delete(URI uri) {
         return new HttpDelete(uri);
     }
-
 }

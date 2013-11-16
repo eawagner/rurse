@@ -24,11 +24,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static com.careeropts.rurse.client.util.Endpoints.CURRENT_USER_ENDPOINT;
 import static com.careeropts.rurse.client.util.Endpoints.builder;
-import static com.careeropts.rurse.client.util.Requests.*;
+import static com.careeropts.rurse.client.util.Requests.JSON;
+import static com.careeropts.rurse.client.util.Requests.post;
 import static com.careeropts.rurse.client.util.ResponseHandlers.jsonResponse;
-import static com.careeropts.rurse.client.util.ResponseHandlers.simpleResponse;
 import static org.apache.commons.lang3.Validate.notEmpty;
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.apache.http.client.utils.URIUtils.extractHost;
@@ -72,21 +71,6 @@ public class RurseApplication {
         }
     }
 
-    private static User getUserInfo(String baseUrl, HttpClient client, HttpContext context) {
-        try {
-            URI uri = builder(baseUrl, CURRENT_USER_ENDPOINT).build();
-            return client.execute(
-                    get(uri, JSON),
-                    jsonResponse(User.class)
-            );
-
-        } catch (URISyntaxException e) {
-            throw new UriException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public RurseApplication() {
         this(DEFAULT_BASE_URL);
     }
@@ -107,7 +91,7 @@ public class RurseApplication {
         this.client = client;
     }
 
-    public void createAccount(String email, String password) {
+    public User createAccount(String email, String password) {
         notNull(email);
         notNull(password);
         try {
@@ -116,30 +100,36 @@ public class RurseApplication {
                     .addParameter("password", password)
                     .build();
 
-            client.execute(post(uri), simpleResponse());
+            return client.execute(
+                    post(uri, JSON),
+                    jsonResponse(User.class)
+            );
 
         } catch (URISyntaxException e) {
             throw new UriException( e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    public UserOperations userOperations(String email, String password) {
+    public IUserOperations userOperations(String email, String password) {
         HttpContext context = generateContext(baseUrl, email, password);
 
-        //make this call to verify the user is in the system.
-        getUserInfo(baseUrl, client, context);
+        UserOperations userOps = new UserOperations(baseUrl, client, context);
 
-        return new UserOperations(baseUrl, client, context);
+        //make this call to verify the user is in the system.
+        userOps.getUserInfo();
+
+        return userOps;
     }
 
-    public UserOperations managerOperations(String email, String password) {
+    public IManagerOperations managerOperations(String email, String password) {
         HttpContext context = generateContext(baseUrl, email, password);
 
+        MangerOperations managerOps = new MangerOperations(baseUrl, client, context);
+
         //make this call to verify the user is in the system.
-        User user = getUserInfo(baseUrl, client, context);
+        User user = managerOps.getUserInfo();
 
         //verify they are a manager.
         if (!user.isManager())
@@ -147,5 +137,4 @@ public class RurseApplication {
 
         return new MangerOperations(baseUrl, client, context);
     }
-
 }

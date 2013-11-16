@@ -15,15 +15,19 @@ public class Endpoints {
     public static final String ACCOUNT_ENDPOINT = REST_BASE + "/account";
 
     public static final String BOOK_ENDPOINT = REST_BASE + "/book";
-    public static final String SINGLE_BOOK_ENDPOINT = REST_BASE + "/book/%d";
+    public static final String SINGLE_BOOK_ENDPOINT = BOOK_ENDPOINT + "/%d";
 
     public static final String COURSE_ENDPOINT = REST_BASE + "/course";
-    public static final String SINGLE_COURSE_ENDPOINT = REST_BASE + "/course/%d";
+    public static final String SINGLE_COURSE_ENDPOINT = COURSE_ENDPOINT + "/%d";
 
     public static final String JOB_ENDPOINT = REST_BASE + "/job";
-    public static final String SINGLE_JOB_ENDPOINT = REST_BASE + "/job/%d";
+    public static final String SINGLE_JOB_ENDPOINT = JOB_ENDPOINT + "/%d";
 
     public static final String USER_ENDPOINT = REST_BASE + "/user";
+    public static final String SINGLE_USER_ENDPOINT = USER_ENDPOINT + "/%d";
+    public static final String SINGLE_USER_RESUME_ENDPOINT = SINGLE_USER_ENDPOINT + "/resume";
+    public static final String SINGLE_USER_AUTH_ENDPOINT = SINGLE_USER_ENDPOINT + "/auth";
+
     public static final String CURRENT_USER_ENDPOINT = USER_ENDPOINT + "/current";
     public static final String CURRENT_USER_RESUME_ENDPOINT = CURRENT_USER_ENDPOINT + "/resume";
 

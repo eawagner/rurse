@@ -44,9 +44,10 @@ public class ResponseHandlers {
                         return new ByteArrayInputStream(toByteArray(input));
                     }
                 else
-                    responseException(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
-
-                return null;
+                    throw responseException(
+                            response.getStatusLine().getStatusCode(),
+                            EntityUtils.toString(response.getEntity())
+                    );
             }
         };
     }
@@ -58,23 +59,25 @@ public class ResponseHandlers {
                 if (response.getStatusLine().getStatusCode() == SC_OK)
                     return mapper.readValue(response.getEntity().getContent(), clazz);
                 else
-                    responseException(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
-
-                return null;
+                    throw responseException(
+                            response.getStatusLine().getStatusCode(),
+                            EntityUtils.toString(response.getEntity())
+                    );
             }
         };
     }
 
-    public static <T> ResponseHandler<List<T>> jsonCollectionResponse(final Class<T> clazz) {
+    public static <T> ResponseHandler<List<T>> jsonListResponse(final Class<T> clazz) {
         return new ResponseHandler<List<T>>() {
             @Override
             public List<T> handleResponse(HttpResponse response) throws IOException {
                 if (response.getStatusLine().getStatusCode() == SC_OK)
                     return mapper.readValue(response.getEntity().getContent(), new TypeReference<List<T>>(){});
                 else
-                    responseException(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
-
-                return null;
+                    throw responseException(
+                            response.getStatusLine().getStatusCode(),
+                            EntityUtils.toString(response.getEntity())
+                    );
             }
         };
     }

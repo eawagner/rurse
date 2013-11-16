@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.core.Response;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 import static com.careeropts.rurse.model.Resume.DocType;
@@ -90,6 +87,9 @@ public class UserService implements IUserService{
         } catch (IOException e) {
             throw new InternalServerError();
         }
+
+        //Strip any path information from the name if it exists.
+        name = new File(name).getName();
 
         DocType docType = deriveFileDocType(name, data);
         if (docType == null)

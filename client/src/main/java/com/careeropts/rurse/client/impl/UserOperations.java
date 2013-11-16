@@ -59,7 +59,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonCollectionResponse(Book.class),
+                    jsonListResponse(Book.class),
                     context
             );
         } catch (URISyntaxException e) {
@@ -114,7 +114,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonCollectionResponse(Course.class),
+                    jsonListResponse(Course.class),
                     context
             );
         } catch (URISyntaxException e) {
@@ -169,7 +169,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonCollectionResponse(Job.class),
+                    jsonListResponse(Job.class),
                     context
             );
         } catch (URISyntaxException e) {
@@ -220,7 +220,7 @@ public class UserOperations implements IUserOperations {
             URI uri = builder(baseUrl, CURRENT_USER_RESUME_ENDPOINT)
                     .build();
             return client.execute(
-                    get(uri),
+                    getAny(uri),
                     streamResponse(),
                     context
             );
@@ -240,7 +240,7 @@ public class UserOperations implements IUserOperations {
                     .setParameter("fileName", fileName)
                     .build();
             return client.execute(
-                    post(uri, JSON, OCTET_STREAM, resume),
+                    postStream(uri, JSON, resume),
                     jsonResponse(Resume.class),
                     context
             );
@@ -283,7 +283,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonCollectionResponse(Book.class),
+                    jsonListResponse(Book.class),
                     context
             );
         } catch (URISyntaxException e) {
@@ -308,7 +308,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonCollectionResponse(Course.class),
+                    jsonListResponse(Course.class),
                     context
             );
         } catch (URISyntaxException e) {
@@ -333,7 +333,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonCollectionResponse(Job.class),
+                    jsonListResponse(Job.class),
                     context
             );
         } catch (URISyntaxException e) {
