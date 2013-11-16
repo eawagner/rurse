@@ -2,6 +2,7 @@ package com.careeropts.rurse.client.impl;
 
 
 import com.careeropts.rurse.client.IManagerOperations;
+import com.careeropts.rurse.client.exception.RurseAppException;
 import com.careeropts.rurse.client.exception.UriException;
 import com.careeropts.rurse.model.Book;
 import com.careeropts.rurse.model.Course;
@@ -45,7 +46,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -64,7 +65,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -81,7 +82,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -99,7 +100,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -118,7 +119,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -135,7 +136,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -153,7 +154,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -172,7 +173,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -189,7 +190,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -206,7 +207,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -243,7 +244,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -261,7 +262,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -278,7 +279,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -296,7 +297,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -314,7 +315,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
 
     }

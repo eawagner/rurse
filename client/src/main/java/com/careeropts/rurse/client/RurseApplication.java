@@ -1,6 +1,8 @@
 package com.careeropts.rurse.client;
 
 
+import com.careeropts.rurse.client.exception.RurseAppException;
+import com.careeropts.rurse.client.exception.UnauthorizedException;
 import com.careeropts.rurse.client.exception.UriException;
 import com.careeropts.rurse.client.impl.MangerOperations;
 import com.careeropts.rurse.client.impl.UserOperations;
@@ -26,7 +28,6 @@ import java.net.URISyntaxException;
 
 import static com.careeropts.rurse.client.util.Endpoints.builder;
 import static com.careeropts.rurse.client.util.Requests.JSON;
-import static com.careeropts.rurse.client.util.Requests.post;
 import static com.careeropts.rurse.client.util.Requests.postText;
 import static com.careeropts.rurse.client.util.ResponseHandlers.jsonResponse;
 import static org.apache.commons.lang3.Validate.notEmpty;
@@ -108,7 +109,7 @@ public class RurseApplication {
         } catch (URISyntaxException e) {
             throw new UriException( e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -133,7 +134,7 @@ public class RurseApplication {
 
         //verify they are a manager.
         if (!user.isManager())
-            throw new RuntimeException(); //TODO throw meaningful exception
+            throw new UnauthorizedException("The provided email address is not a valid manager in the system");
 
         return new MangerOperations(baseUrl, client, context);
     }

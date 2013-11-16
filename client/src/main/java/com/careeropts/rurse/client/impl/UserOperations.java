@@ -2,6 +2,7 @@ package com.careeropts.rurse.client.impl;
 
 
 import com.careeropts.rurse.client.IUserOperations;
+import com.careeropts.rurse.client.exception.RurseAppException;
 import com.careeropts.rurse.client.exception.UriException;
 import com.careeropts.rurse.model.*;
 import org.apache.http.client.HttpClient;
@@ -66,7 +67,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -84,7 +85,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -121,7 +122,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -139,7 +140,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -176,7 +177,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -194,7 +195,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -211,7 +212,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -228,7 +229,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -251,7 +252,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -268,7 +269,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -293,7 +294,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -318,7 +319,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 
@@ -343,7 +344,7 @@ public class UserOperations implements IUserOperations {
         } catch (URISyntaxException e) {
             throw new UriException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RurseAppException(e);
         }
     }
 }

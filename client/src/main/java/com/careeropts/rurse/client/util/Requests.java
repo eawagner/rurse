@@ -14,9 +14,7 @@ import java.net.URI;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.http.HttpHeaders.ACCEPT;
-import static org.apache.http.entity.ContentType.APPLICATION_JSON;
-import static org.apache.http.entity.ContentType.APPLICATION_OCTET_STREAM;
-import static org.apache.http.entity.ContentType.TEXT_PLAIN;
+import static org.apache.http.entity.ContentType.*;
 
 public class Requests {
     private Requests() {/*private constructor*/}
