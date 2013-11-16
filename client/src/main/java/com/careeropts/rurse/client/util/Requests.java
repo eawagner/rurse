@@ -15,6 +15,8 @@ import java.net.URI;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.http.HttpHeaders.ACCEPT;
 import static org.apache.http.entity.ContentType.APPLICATION_JSON;
+import static org.apache.http.entity.ContentType.APPLICATION_OCTET_STREAM;
+import static org.apache.http.entity.ContentType.TEXT_PLAIN;
 
 public class Requests {
     private Requests() {/*private constructor*/}
@@ -50,7 +52,10 @@ public class Requests {
 
     public static HttpPost postStream(URI uri, String accept, InputStream input) {
         HttpPost method = post(uri, accept);
-        method.setEntity(new InputStreamEntity(input));
+        method.setEntity(new InputStreamEntity(
+                input,
+                APPLICATION_OCTET_STREAM
+        ));
         return method;
     }
 
@@ -59,6 +64,16 @@ public class Requests {
         method.setEntity(new StringEntity(
                 mapper.writeValueAsString(data),
                 APPLICATION_JSON
+        ));
+
+        return method;
+    }
+
+    public static <T> HttpPost postText(URI uri, String accept, String data) throws JsonProcessingException {
+        HttpPost method = post(uri, accept);
+        method.setEntity(new StringEntity(
+                data,
+                TEXT_PLAIN
         ));
 
         return method;

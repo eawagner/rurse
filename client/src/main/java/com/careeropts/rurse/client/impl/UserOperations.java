@@ -60,7 +60,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonListResponse(Book.class),
+                    jsonListResponse(BOOK_LIST_TYPE_REF),
                     context
             );
         } catch (URISyntaxException e) {
@@ -115,7 +115,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonListResponse(Course.class),
+                    jsonListResponse(COURSE_LIST_TYPE_REF),
                     context
             );
         } catch (URISyntaxException e) {
@@ -170,7 +170,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonListResponse(Job.class),
+                    jsonListResponse(JOB_LIST_TYPE_REF),
                     context
             );
         } catch (URISyntaxException e) {
@@ -287,7 +287,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonListResponse(Book.class),
+                    jsonListResponse(BOOK_LIST_TYPE_REF),
                     context
             );
         } catch (URISyntaxException e) {
@@ -312,7 +312,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonListResponse(Course.class),
+                    jsonListResponse(COURSE_LIST_TYPE_REF),
                     context
             );
         } catch (URISyntaxException e) {
@@ -337,7 +337,7 @@ public class UserOperations implements IUserOperations {
 
             return client.execute(
                     get(uri, JSON),
-                    jsonListResponse(Job.class),
+                    jsonListResponse(JOB_LIST_TYPE_REF),
                     context
             );
         } catch (URISyntaxException e) {

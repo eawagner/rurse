@@ -22,6 +22,7 @@ public class Endpoints {
 
     public static final String JOB_ENDPOINT = REST_BASE + "/job";
     public static final String SINGLE_JOB_ENDPOINT = JOB_ENDPOINT + "/%d";
+    public static final String SINGLE_JOB_RECOMMENDED_USER_ENDPOINT = SINGLE_JOB_ENDPOINT + "/recommend/user";
 
     public static final String USER_ENDPOINT = REST_BASE + "/user";
     public static final String SINGLE_USER_ENDPOINT = USER_ENDPOINT + "/%d";

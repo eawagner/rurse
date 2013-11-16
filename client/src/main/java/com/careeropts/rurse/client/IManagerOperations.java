@@ -22,6 +22,7 @@ public interface IManagerOperations extends IUserOperations {
     public Job saveJob(Job job);
     public Job updateJob(Job job);
     public void deleteJob(long id);
+    public List<User> recommendedUsersForJob(long id);
 
     public List<User> getUsers();
     public List<User> getUsers(int page, int pageSize);
@@ -31,4 +32,5 @@ public interface IManagerOperations extends IUserOperations {
     public InputStream getResume(long id);
 
     public User changeAuthorization(long id, boolean makeManager);
+    public void deleteUser(long id);
 }

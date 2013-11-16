@@ -1,6 +1,10 @@
 package com.careeropts.rurse.client.util;
 
 
+import com.careeropts.rurse.model.Book;
+import com.careeropts.rurse.model.Course;
+import com.careeropts.rurse.model.Job;
+import com.careeropts.rurse.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
@@ -20,6 +24,11 @@ public class ResponseHandlers {
     private ResponseHandlers() {/*private constructor*/}
 
     private static ObjectMapper mapper = new ObjectMapper();
+
+    public static TypeReference<List<Book>> BOOK_LIST_TYPE_REF = new TypeReference<List<Book>>() {};
+    public static TypeReference<List<Course>> COURSE_LIST_TYPE_REF = new TypeReference<List<Course>>() {};
+    public static TypeReference<List<Job>> JOB_LIST_TYPE_REF = new TypeReference<List<Job>>() {};
+    public static TypeReference<List<User>> USER_LIST_TYPE_REF = new TypeReference<List<User>>() {};
 
     public static <T> ResponseHandler<T> simpleResponse() {
         return new ResponseHandler<T>() {
@@ -67,12 +76,12 @@ public class ResponseHandlers {
         };
     }
 
-    public static <T> ResponseHandler<List<T>> jsonListResponse(final Class<T> clazz) {
+    public static <T> ResponseHandler<List<T>> jsonListResponse(final TypeReference<List<T>> typeReference) {
         return new ResponseHandler<List<T>>() {
             @Override
             public List<T> handleResponse(HttpResponse response) throws IOException {
                 if (response.getStatusLine().getStatusCode() == SC_OK)
-                    return mapper.readValue(response.getEntity().getContent(), new TypeReference<List<T>>(){});
+                    return mapper.readValue(response.getEntity().getContent(), typeReference);
                 else
                     throw responseException(
                             response.getStatusLine().getStatusCode(),

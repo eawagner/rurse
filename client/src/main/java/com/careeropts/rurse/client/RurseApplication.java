@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import static com.careeropts.rurse.client.util.Endpoints.builder;
 import static com.careeropts.rurse.client.util.Requests.JSON;
 import static com.careeropts.rurse.client.util.Requests.post;
+import static com.careeropts.rurse.client.util.Requests.postText;
 import static com.careeropts.rurse.client.util.ResponseHandlers.jsonResponse;
 import static org.apache.commons.lang3.Validate.notEmpty;
 import static org.apache.commons.lang3.Validate.notNull;
@@ -97,11 +98,10 @@ public class RurseApplication {
         try {
             URI uri = builder(baseUrl, Endpoints.ACCOUNT_ENDPOINT)
                     .addParameter("email", email)
-                    .addParameter("password", password)
                     .build();
 
             return client.execute(
-                    post(uri, JSON),
+                    postText(uri, JSON, password),
                     jsonResponse(User.class)
             );
 

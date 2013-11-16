@@ -194,6 +194,23 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
     }
 
     @Override
+    public List<User> recommendedUsersForJob(long id) {
+        try {
+            URI uri = builder(baseUrl, SINGLE_JOB_RECOMMENDED_USER_ENDPOINT, id)
+                    .build();
+            return client.execute(
+                    get(uri, JSON),
+                    jsonListResponse(USER_LIST_TYPE_REF),
+                    context
+            );
+        } catch (URISyntaxException e) {
+            throw new UriException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<User> getUsers() {
         return getUsers(0, MAX_VALUE);
     }
@@ -220,7 +237,7 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
 
             return client.execute(
                     get(uri, JSON),
-                    jsonListResponse(User.class),
+                    jsonListResponse(USER_LIST_TYPE_REF),
                     context
             );
         } catch (URISyntaxException e) {
@@ -281,5 +298,24 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void deleteUser(long id) {
+
+        try {
+            URI uri = builder(baseUrl, SINGLE_USER_ENDPOINT, id)
+                    .build();
+            client.execute(
+                    delete(uri),
+                    simpleResponse(),
+                    context
+            );
+        } catch (URISyntaxException e) {
+            throw new UriException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
