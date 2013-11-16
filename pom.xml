@@ -11,6 +11,7 @@
     <inceptionYear>2013</inceptionYear>
 
     <modules>
+        <module>client</module>
         <module>dao</module>
         <module>model</module>
         <module>web</module>
@@ -20,12 +21,14 @@
         <java.version>1.7</java.version>
 
         <commons.codec.version>1.6</commons.codec.version>
+        <commons.io.version>2.4</commons.io.version>
         <commons.lang.version>3.0</commons.lang.version>
         <commons.validator.version>1.4.0</commons.validator.version>
         <guava.version>14.0.1</guava.version>
         <hibernate.version>4.2.6.Final</hibernate.version>
         <hibernate.search.version>4.3.0.Final</hibernate.search.version>
         <hsqldb.version>2.3.1</hsqldb.version>
+        <httpclient.version>4.3.1</httpclient.version>
         <jackson.version>2.2.3</jackson.version>
         <jersey.version>1.17.1</jersey.version>
         <junit.version>4.11</junit.version>
@@ -56,6 +59,13 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!--Client-->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
 
             <!--Web-->
             <dependency>
@@ -141,6 +151,11 @@
             <!--Json-->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
@@ -174,6 +189,11 @@
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
                 <version>${commons.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.tika</groupId>
