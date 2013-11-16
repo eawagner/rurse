@@ -88,9 +88,6 @@ public class UserService implements IUserService{
             throw new InternalServerError();
         }
 
-        //Strip any path information from the name if it exists.
-        name = new File(name).getName();
-
         DocType docType = deriveFileDocType(name, data);
         if (docType == null)
             throw new BadRequestException("Unrecognized document type.  Text and Micorosoft Word documents are accepted.");

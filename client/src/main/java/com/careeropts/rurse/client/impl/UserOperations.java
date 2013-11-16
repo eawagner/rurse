@@ -7,6 +7,7 @@ import com.careeropts.rurse.model.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.protocol.HttpContext;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -236,6 +237,9 @@ public class UserOperations implements IUserOperations {
         notEmpty(fileName, "File name required for a resume");
         notNull(resume, "Resume data required for upload");
         try {
+            //Strip path from filename.
+            fileName = new File(fileName).getName();
+
             URI uri = builder(baseUrl, CURRENT_USER_RESUME_ENDPOINT)
                     .setParameter("fileName", fileName)
                     .build();
