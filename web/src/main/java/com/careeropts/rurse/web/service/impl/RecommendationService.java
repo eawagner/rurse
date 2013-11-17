@@ -31,17 +31,26 @@ import static java.util.Collections.emptyList;
 @Transactional(readOnly = true)
 public class RecommendationService implements IRecommendationService {
 
-    @Autowired
-    IUserDao userDao;
+    private final IUserDao userDao;
+
+    private final IUserRecommendEngine userRecommendEngine;
+
+    private final IJobDao jobDao;
+
+    private final IJobRecommendEngine jobRecommendEngine;
 
     @Autowired
-    IUserRecommendEngine userRecommendEngine;
+    public RecommendationService(
+            IUserDao userDao,
+            IUserRecommendEngine userRecommendEngine,
+            IJobDao jobDao,
+            IJobRecommendEngine jobRecommendEngine) {
 
-    @Autowired
-    IJobDao jobDao;
-
-    @Autowired
-    IJobRecommendEngine jobRecommendEngine;
+        this.userDao = userDao;
+        this.userRecommendEngine = userRecommendEngine;
+        this.jobDao = jobDao;
+        this.jobRecommendEngine = jobRecommendEngine;
+    }
 
     private UserEntity getCurrentUser() {
         //retrieve the user email from the security context.

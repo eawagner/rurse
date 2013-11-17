@@ -19,8 +19,12 @@ import static java.util.Collections.emptyList;
 @Component
 public class JobRecommendEngine implements IJobRecommendEngine {
 
+    private final IUserDao userDao;
+
     @Autowired
-    IUserDao userDao;
+    public JobRecommendEngine(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 
     /**
      * Takes in a job and returns a string with all non alphanumeric characters converted to whitespace so only

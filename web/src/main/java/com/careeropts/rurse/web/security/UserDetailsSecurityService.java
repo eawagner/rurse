@@ -21,8 +21,12 @@ import java.util.Collection;
 @Component("userSecurityService")
 public class UserDetailsSecurityService implements UserDetailsService {
 
+    private final IUserDao dao;
+
     @Autowired
-    IUserDao dao;
+    public UserDetailsSecurityService(IUserDao dao) {
+        this.dao = dao;
+    }
 
     @Transactional(readOnly = true)
     @Override

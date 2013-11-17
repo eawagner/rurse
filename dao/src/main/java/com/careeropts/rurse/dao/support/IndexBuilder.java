@@ -21,7 +21,7 @@ import static org.hibernate.search.Search.getFullTextSession;
 public class IndexBuilder {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     private static <T> void indexEntity(FullTextSession session, Class<T> clazz) {
 

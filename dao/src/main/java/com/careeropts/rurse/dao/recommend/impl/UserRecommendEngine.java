@@ -31,14 +31,18 @@ public class UserRecommendEngine implements IUserRecommendEngine {
 
     private static Logger logger = LoggerFactory.getLogger(UserRecommendEngine.class);
 
-    @Autowired
-    IBookDao bookDao;
+    private final IBookDao bookDao;
+
+    private final ICourseDao courseDao;
+
+    private final IJobDao jobDao;
 
     @Autowired
-    ICourseDao courseDao;
-
-    @Autowired
-    IJobDao jobDao;
+    public UserRecommendEngine(IBookDao bookDao, ICourseDao courseDao, IJobDao jobDao) {
+        this.bookDao = bookDao;
+        this.courseDao = courseDao;
+        this.jobDao = jobDao;
+    }
 
     /**
      * Takes in a resume and returns a string with all non alphanumeric characters converted to whitespace so only

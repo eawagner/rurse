@@ -48,11 +48,15 @@ public class UserService implements IUserService{
 
     private static TikaConfig TIKA_CONFIG = getDefaultConfig();
 
-    @Autowired
-    IUserDao dao;
+    private final IUserDao dao;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    public UserService(IUserDao dao, PasswordEncoder passwordEncoder) {
+        this.dao = dao;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     private static DocType deriveFileDocType(String name, byte[] data) {
 

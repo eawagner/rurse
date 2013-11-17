@@ -20,8 +20,11 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    protected AbstractBaseDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     protected abstract Class<T> getDOClass();
     protected abstract String[] getSearchFields();

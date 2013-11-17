@@ -14,8 +14,12 @@ public class LuceneIndexRebuildAction {
 
     private boolean rebuild = false;
 
+    private final IndexBuilder indexBuilder;
+
     @Autowired
-    IndexBuilder indexBuilder;
+    public LuceneIndexRebuildAction(IndexBuilder indexBuilder) {
+        this.indexBuilder = indexBuilder;
+    }
 
     public void setRebuild(boolean rebuild) {
         this.rebuild = rebuild;

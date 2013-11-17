@@ -17,7 +17,7 @@ import static com.google.common.collect.Lists.transform;
 @Transactional
 public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
 
-    IBaseDao<U> dao;
+    protected final IBaseDao<U> dao;
 
     protected AbstractSimpleService(IBaseDao<U> dao) {
         this.dao = dao;
