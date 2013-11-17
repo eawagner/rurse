@@ -18,10 +18,13 @@ import java.util.List;
 import static com.careeropts.rurse.client.util.Endpoints.*;
 import static com.careeropts.rurse.client.util.Requests.*;
 import static com.careeropts.rurse.client.util.ResponseHandlers.*;
-import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.Validate.notEmpty;
 import static org.apache.commons.lang3.Validate.notNull;
 
+/**
+ * Implementation for {@link IUserOperations} which uses a {@link HttpClient} to communicate with the
+ * REST endpoints on the RURSE system.
+ */
 public class UserOperations implements IUserOperations {
 
     protected final String baseUrl;
@@ -34,21 +37,17 @@ public class UserOperations implements IUserOperations {
         this.context = context;
     }
 
-    @Override
-    public List<Book> getBooks() {
-        return getBooks(0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Book> getBooks(int page, int pageSize) {
         return searchBooks("", page, pageSize);
     }
 
-    @Override
-    public List<Book> searchBooks(String keyWords) {
-        return searchBooks(keyWords, 0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Book> searchBooks(String keyWords, int page, int pageSize) {
         notNull(keyWords, "Unable to search.  Keywords are null");
@@ -71,6 +70,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Book getBook(long id) {
         try {
@@ -89,21 +91,17 @@ public class UserOperations implements IUserOperations {
         }
     }
 
-    @Override
-    public List<Course> getCourses() {
-        return getCourses(0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Course> getCourses(int page, int pageSize) {
         return searchCourses("", page, pageSize);
     }
 
-    @Override
-    public List<Course> searchCourses(String keyWords) {
-        return searchCourses(keyWords, 0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Course> searchCourses(String keyWords, int page, int pageSize) {
         notNull(keyWords, "Unable to search.  Keywords are null");
@@ -126,6 +124,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Course getCourse(long id) {
         try {
@@ -144,21 +145,17 @@ public class UserOperations implements IUserOperations {
         }
     }
 
-    @Override
-    public List<Job> getJobs() {
-        return getJobs(0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Job> getJobs(int page, int pageSize) {
         return searchJobs("", page, pageSize);
     }
 
-    @Override
-    public List<Job> searchJobs(String keyWords) {
-        return searchJobs(keyWords, 0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Job> searchJobs(String keyWords, int page, int pageSize) {
         notNull(keyWords, "Unable to search.  Keywords are null");
@@ -181,6 +178,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Job getJob(long id) {
         try {
@@ -199,6 +199,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User getUserInfo() {
         try {
@@ -216,6 +219,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public InputStream getResume() {
         try {
@@ -233,6 +239,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Resume uploadResume(String fileName, InputStream resume) {
         notEmpty(fileName, "File name required for a resume");
@@ -256,6 +265,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteResume() {
         try {
@@ -273,11 +285,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
-    @Override
-    public List<Book> getRecommendedBooks() {
-        return getRecommendedBooks(0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Book> getRecommendedBooks(int page, int pageSize) {
         try {
@@ -298,11 +308,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
-    @Override
-    public List<Course> getRecommendedCourses() {
-        return getRecommendedCourses(0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Course> getRecommendedCourses(int page, int pageSize) {
         try {
@@ -323,11 +331,9 @@ public class UserOperations implements IUserOperations {
         }
     }
 
-    @Override
-    public List<Job> getRecommendedJobs() {
-        return getRecommendedJobs(0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Job> getRecommendedJobs(int page, int pageSize) {
         try {

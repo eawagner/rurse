@@ -39,15 +39,15 @@ public class BookResource {
      *
      * @param searchText If provided will limit the books returned to the keywords provided.  Otherwise will return all books.
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     @PreAuthorize("hasRole('ROLE_USER')")
     public List<Book> queryBooks(
             @QueryParam("search") String searchText,
-            @QueryParam("pageNum") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 

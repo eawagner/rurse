@@ -57,13 +57,16 @@ public class RecommendationService implements IRecommendationService {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Book> recommendBooksForCurrentUser(Integer pageNum, Integer perPage) {
         if (pageNum == null || pageNum < 0)
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
-            perPage = Integer.MAX_VALUE;
+            perPage = 50;
 
         UserEntity user = getCurrentUser();
         if (user.getResume() == null)
@@ -78,13 +81,16 @@ public class RecommendationService implements IRecommendationService {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Course> recommendCoursesForCurrentUser(Integer pageNum, Integer perPage) {
         if (pageNum == null || pageNum < 0)
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
-            perPage = Integer.MAX_VALUE;
+            perPage = 50;
 
         UserEntity user = getCurrentUser();
         if (user.getResume() == null)
@@ -99,13 +105,16 @@ public class RecommendationService implements IRecommendationService {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Job> recommendJobsForCurrentUser(Integer pageNum, Integer perPage) {
         if (pageNum == null || pageNum < 0)
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
-            perPage = Integer.MAX_VALUE;
+            perPage = 50;
 
         UserEntity user = getCurrentUser();
         if (user.getResume() == null)
@@ -120,6 +129,9 @@ public class RecommendationService implements IRecommendationService {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<User> recommendUsersForJob(Long jobId, Integer pageNum, Integer perPage) {
         if (jobId == null)
@@ -129,15 +141,12 @@ public class RecommendationService implements IRecommendationService {
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
-            perPage = Integer.MAX_VALUE;
-
-
+            perPage = 50;
 
         JobEntity job = jobDao.getSingle(jobId);
 
         if (job == null)
             throw new NotFoundException();
-
 
         return transform(jobRecommendEngine.recommendUsers(job, pageNum, perPage),
                 new Function<UserEntity, User>() {

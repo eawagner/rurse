@@ -4,8 +4,15 @@ import org.springframework.security.core.Authentication;
 
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
+/**
+ * Security utility methods
+ */
 public class SecurityUtils {
+    public SecurityUtils() {/*private constructor*/}
 
+    /**
+     * Gets the current username from the security context
+     */
     public static String getAuthenticatedUser() {
         Authentication auth = getContext().getAuthentication();
         if (auth != null)

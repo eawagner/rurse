@@ -75,7 +75,7 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
-            perPage = Integer.MAX_VALUE;
+            perPage = 50;
 
         List<U> results;
 

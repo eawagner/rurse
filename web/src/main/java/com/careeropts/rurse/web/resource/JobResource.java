@@ -44,7 +44,7 @@ public class JobResource {
      *
      * @param searchText If provided will limit the job listings returned to the keywords provided.  Otherwise will return all job listings.
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
@@ -52,7 +52,7 @@ public class JobResource {
     public List<Job> queryJobs(
             @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 
@@ -165,13 +165,19 @@ public class JobResource {
         }
     }
 
+    /**
+     * Queries the system for all user's with resumes which the system recommends for specified job listing.
+     *
+     * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
+     */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     @Path("/{id:\\d+}/recommend/user")
     public List<User> getRecommendedUsersForJob(
             @PathParam("id") Long id,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 

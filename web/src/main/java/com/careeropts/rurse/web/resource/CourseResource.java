@@ -39,7 +39,7 @@ public class CourseResource {
      *
      * @param searchText If provided will limit the courses returned to the keywords provided.  Otherwise will return all courses.
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
@@ -47,7 +47,7 @@ public class CourseResource {
     public List<Course> queryCourses(
             @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 

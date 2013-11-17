@@ -46,14 +46,14 @@ public class UserResource {
      *
      * @param searchText If provided will limit the users returned to the users with resumes with the keywords provided.  Otherwise will return all users.
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     public List<User> queryUsers(
             @QueryParam("search") String searchText,
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 
@@ -219,7 +219,7 @@ public class UserResource {
      * based on the content of their resume.
      *
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
@@ -227,7 +227,7 @@ public class UserResource {
     @PreAuthorize("hasRole('ROLE_USER')")
     public List<Book> getRecommendedBooks(
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 
@@ -246,7 +246,7 @@ public class UserResource {
      * based on the content of their resume.
      *
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
@@ -254,7 +254,7 @@ public class UserResource {
     @PreAuthorize("hasRole('ROLE_USER')")
     public List<Course> getRecommendedCoursess(
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 
@@ -273,7 +273,7 @@ public class UserResource {
      * based on the content of their resume.
      *
      * @param pageNum If provided the value Specifies which page to retrieve for pagination.  This is a zero-based index, i.e. the first page is pageNum=0.
-     * @param size If provided limits the results to be returned.  If used with pageNum, then this specifies the size of a page.
+     * @param size If provided limits the results to be returned, otherwise it defaults to 50.  If used with pageNum, then this specifies the size of a page.
      */
     @GET
     @Produces({APPLICATION_JSON, APPLICATION_XML})
@@ -281,7 +281,7 @@ public class UserResource {
     @PreAuthorize("hasRole('ROLE_USER')")
     public List<Job> getRecommendedJobs(
             @QueryParam("pageNum") @DefaultValue("0") Integer pageNum,
-            @QueryParam("resultSize") Integer size) {
+            @QueryParam("resultSize") @DefaultValue("50") Integer size) {
 
         try {
 

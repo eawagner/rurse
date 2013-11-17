@@ -5,6 +5,9 @@ import com.careeropts.rurse.model.*;
 
 import static com.careeropts.rurse.model.Resume.DocType.fromMimeType;
 
+/**
+ * Utility functions for converting to and from models to entities.
+ */
 public class EntityTransform {
 
     private EntityTransform() {/* private constructor */}

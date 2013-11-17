@@ -189,7 +189,7 @@ public class UserService implements IUserService{
             pageNum = 0;
 
         if (perPage == null || perPage < 0)
-            perPage = Integer.MAX_VALUE;
+            perPage = 50;
 
         List<UserEntity> results;
 

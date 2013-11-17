@@ -34,9 +34,23 @@ import static org.apache.commons.lang3.Validate.notEmpty;
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.apache.http.client.utils.URIUtils.extractHost;
 
+/**
+ * Primary API for interacting the RURSE system.  This class takes care of all configurations for the REST client to
+ * enable valid interactions with the REST API.
+ *
+ * This class acts as a factory class which allows the creation of classes that are responsible for interacting
+ * with the system for various user privilege levels.  All operations instances will share a common {@link HttpClient}
+ * implementation.  This client defaults to allow 20 concurrent connections so applications which have different
+ * needs should provide their own instance.
+ *
+ * All operations instances are self contained, so that it is safe to generate multiple operations instances with
+ * different account information.
+ *
+ * This API is thread safe.
+ */
 public class RurseApplication {
 
-    private static String DEFAULT_BASE_URL = "http://localhost:8080";
+    private static String DEFAULT_BASE_URL = "http://rurse.careeropts.com:8080";
 
     final private String baseUrl;
     final private HttpClient client;
@@ -50,6 +64,9 @@ public class RurseApplication {
                 .build();
     }
 
+    /**
+     * Builds an Http Context to allow for authentication to occur in rest requests.
+     */
     private static HttpContext generateContext(String baseUrl, String email, String password) {
         notNull(email);
         notNull(password);
@@ -93,6 +110,11 @@ public class RurseApplication {
         this.client = client;
     }
 
+    /**
+     * Creates a new account in the RURSE system with the given email and password.
+     * @param email Email address for the user to create an account for.
+     * @param password Password for the new account.
+     */
     public User createAccount(String email, String password) {
         notNull(email);
         notNull(password);
@@ -113,6 +135,13 @@ public class RurseApplication {
         }
     }
 
+    /**
+     * Creates a {@link IUserOperations} object for the user with the provided credentials.  This will allow the
+     * user to interact with the basic user operation in the RURSE system.
+     *
+     * @param email Email address of the user using the RURSE system.
+     * @param password Password for the user.
+     */
     public IUserOperations userOperations(String email, String password) {
         HttpContext context = generateContext(baseUrl, email, password);
 
@@ -124,6 +153,13 @@ public class RurseApplication {
         return userOps;
     }
 
+    /**
+     * Creates a {@link IManagerOperations} object for the user with the provided credentials.  This will allow the
+     * user to interact with the manager operation in the RURSE system.
+     *
+     * @param email Email address of the user using the RURSE system.
+     * @param password Password for the user.
+     */
     public IManagerOperations managerOperations(String email, String password) {
         HttpContext context = generateContext(baseUrl, email, password);
 

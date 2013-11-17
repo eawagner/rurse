@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Implementation of {@link UserDetailsService} to allow Spring to hook into the user data in the system for authentication
+ * and role management.
+ */
 @Component("userSecurityService")
 public class UserDetailsSecurityService implements UserDetailsService {
 

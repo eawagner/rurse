@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileInputStream;
 
+import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.io.IOUtils.toByteArray;
 import static org.junit.Assert.*;
 
@@ -27,9 +28,9 @@ public class RurseApplicationTest {
 
         assertEquals(book, ops.getBook(book.getId()));
 
-        assertTrue(ops.getBooks().contains(book));
-        assertTrue(ops.searchBooks("title").contains(book));
-        assertFalse(ops.searchBooks("bad").contains(book));
+        assertTrue(ops.getBooks(0, MAX_VALUE).contains(book));
+        assertTrue(ops.searchBooks("title", 0, MAX_VALUE).contains(book));
+        assertFalse(ops.searchBooks("bad", 0, MAX_VALUE).contains(book));
 
         ops.deleteBook(book.getId());
     }
@@ -46,9 +47,9 @@ public class RurseApplicationTest {
 
         assertEquals(course, ops.getCourse(course.getId()));
 
-        assertTrue(ops.getCourses().contains(course));
-        assertTrue(ops.searchCourses("title").contains(course));
-        assertFalse(ops.searchCourses("bad").contains(course));
+        assertTrue(ops.getCourses(0, MAX_VALUE).contains(course));
+        assertTrue(ops.searchCourses("title", 0, MAX_VALUE).contains(course));
+        assertFalse(ops.searchCourses("bad", 0, MAX_VALUE).contains(course));
 
         ops.deleteCourse(course.getId());
     }
@@ -65,9 +66,9 @@ public class RurseApplicationTest {
 
         assertEquals(job, ops.getJob(job.getId()));
 
-        assertTrue(ops.getJobs().contains(job));
-        assertTrue(ops.searchJobs("title").contains(job));
-        assertFalse(ops.searchJobs("bad").contains(job));
+        assertTrue(ops.getJobs(0, MAX_VALUE).contains(job));
+        assertTrue(ops.searchJobs("title", 0, MAX_VALUE).contains(job));
+        assertFalse(ops.searchJobs("bad", 0, MAX_VALUE).contains(job));
 
         ops.deleteJob(job.getId());
     }
@@ -80,9 +81,9 @@ public class RurseApplicationTest {
 
         IUserOperations ops = api.userOperations(email, "password");
 
-        assertEquals(0, ops.getRecommendedBooks().size());
-        assertEquals(0, ops.getRecommendedCourses().size());
-        assertEquals(0, ops.getRecommendedJobs().size());
+        assertEquals(0, ops.getRecommendedBooks(0, MAX_VALUE).size());
+        assertEquals(0, ops.getRecommendedCourses(0, MAX_VALUE).size());
+        assertEquals(0, ops.getRecommendedJobs(0, MAX_VALUE).size());
 
         File resume = new File("/home/abbot/Desktop/Edward Resume.txt");
         try (FileInputStream resumeStream = new FileInputStream(resume)) {
@@ -98,9 +99,9 @@ public class RurseApplicationTest {
         String resumeData = new String(toByteArray(ops.getResume()));
         assertNotEquals(0, resumeData.length());
 
-        assertNotEquals(0, ops.getRecommendedBooks().size());
-        assertNotEquals(0, ops.getRecommendedCourses().size());
-        assertNotEquals(0, ops.getRecommendedJobs().size());
+        assertNotEquals(0, ops.getRecommendedBooks(0, MAX_VALUE).size());
+        assertNotEquals(0, ops.getRecommendedCourses(0, MAX_VALUE).size());
+        assertNotEquals(0, ops.getRecommendedJobs(0, MAX_VALUE).size());
 
         return user;
     }
@@ -112,12 +113,12 @@ public class RurseApplicationTest {
         assertTrue(user.isManager());
 
         assertEquals(user, ops.getUserInfo(user.getId()));
-        assertTrue(ops.getUsers().contains(user));
+        assertTrue(ops.getUsers(0, MAX_VALUE).contains(user));
 
         String resumeData = new String(toByteArray(ops.getResume(user.getId())));
         assertNotEquals(0, resumeData.length());
 
-        assertTrue(ops.recommendedUsersForJob(1).contains(user));
+        assertTrue(ops.recommendedUsersForJob(1, 0, MAX_VALUE).contains(user));
 
         api.userOperations("java13@test.com", "password").deleteResume();
         user = ops.getUserInfo(user.getId());

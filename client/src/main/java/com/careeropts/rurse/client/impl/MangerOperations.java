@@ -22,16 +22,21 @@ import static com.careeropts.rurse.client.util.Requests.*;
 import static com.careeropts.rurse.client.util.ResponseHandlers.*;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.Validate.notNull;
 
+/**
+ * Implementation for {@link IManagerOperations} which uses a {@link HttpClient} to communicate with the
+ * REST endpoints on the RURSE system.
+ */
 public class MangerOperations extends UserOperations implements IManagerOperations {
 
     public MangerOperations(String baseUrl, HttpClient client, HttpContext context) {
         super(baseUrl, client, context);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Book saveBook(Book book) {
         notNull(book, "No data to save");
@@ -50,6 +55,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Book updateBook(Book book) {
         notNull(book, "No data to save");
@@ -69,6 +77,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteBook(long id) {
         try {
@@ -86,6 +97,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Course saveCourse(Course course) {
         notNull(course, "No data to save");
@@ -104,6 +118,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Course updateCourse(Course course) {
         notNull(course, "No data to save");
@@ -123,6 +140,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteCourse(long id) {
         try {
@@ -140,6 +160,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Job saveJob(Job job) {
         notNull(job, "No data to save");
@@ -158,6 +181,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Job updateJob(Job job) {
         notNull(job, "No data to save");
@@ -177,6 +203,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteJob(long id) {
         try {
@@ -194,10 +223,15 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<User> recommendedUsersForJob(long id) {
+    public List<User> recommendedUsersForJob(long jobId, int page, int pageSize) {
         try {
-            URI uri = builder(baseUrl, SINGLE_JOB_RECOMMENDED_USER_ENDPOINT, id)
+            URI uri = builder(baseUrl, SINGLE_JOB_RECOMMENDED_USER_ENDPOINT, jobId)
+                    .addParameter("pageNum", Integer.toString(page))
+                    .addParameter("resultSize", Integer.toString(pageSize))
                     .build();
             return client.execute(
                     get(uri, JSON),
@@ -211,21 +245,17 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
-    @Override
-    public List<User> getUsers() {
-        return getUsers(0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<User> getUsers(int page, int pageSize) {
         return searchUsers("", page, pageSize);
     }
 
-    @Override
-    public List<User> searchUsers(String keyWords) {
-        return searchUsers(keyWords, 0, MAX_VALUE);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<User> searchUsers(String keyWords, int page, int pageSize) {
         notNull(keyWords, "Unable to search.  Keywords are null");
@@ -248,6 +278,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User getUserInfo(long id) {
         try {
@@ -266,6 +299,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public InputStream getResume(long id) {
         try {
@@ -283,6 +319,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User changeAuthorization(long id, boolean makeManager) {
         try {
@@ -301,6 +340,9 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteUser(long id) {
 
@@ -317,6 +359,5 @@ public class MangerOperations extends UserOperations implements IManagerOperatio
         } catch (IOException e) {
             throw new RurseAppException(e);
         }
-
     }
 }
