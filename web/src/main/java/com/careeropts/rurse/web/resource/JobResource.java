@@ -31,7 +31,7 @@ import static javax.ws.rs.core.Response.ok;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 public class JobResource {
 
-    private static Logger logger = LoggerFactory.getLogger(JobResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(JobResource.class);
 
     @Autowired
     IJobService service;

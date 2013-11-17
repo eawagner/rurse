@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class LuceneIndexRebuildAction {
 
-    private static Logger logger = LoggerFactory.getLogger(LuceneIndexRebuildAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(LuceneIndexRebuildAction.class);
 
     private boolean rebuild = false;
 

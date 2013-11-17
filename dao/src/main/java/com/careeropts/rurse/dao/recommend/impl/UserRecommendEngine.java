@@ -29,7 +29,7 @@ import static java.util.Collections.emptyList;
 @Component
 public class UserRecommendEngine implements IUserRecommendEngine {
 
-    private static Logger logger = LoggerFactory.getLogger(UserRecommendEngine.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserRecommendEngine.class);
 
     private final IBookDao bookDao;
 

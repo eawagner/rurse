@@ -44,9 +44,9 @@ import static org.apache.tika.config.TikaConfig.getDefaultConfig;
 @Transactional
 public class UserService implements IUserService{
 
-    private static Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    private static TikaConfig TIKA_CONFIG = getDefaultConfig();
+    private static final TikaConfig TIKA_CONFIG = getDefaultConfig();
 
     private final IUserDao dao;
 

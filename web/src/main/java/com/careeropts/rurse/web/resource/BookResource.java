@@ -29,7 +29,7 @@ import static javax.ws.rs.core.Response.ok;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 public class BookResource {
 
-    private static Logger logger = LoggerFactory.getLogger(BookResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(BookResource.class);
 
     @Autowired
     IBookService service;

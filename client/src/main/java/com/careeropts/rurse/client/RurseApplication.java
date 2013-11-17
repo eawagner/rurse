@@ -4,7 +4,7 @@ package com.careeropts.rurse.client;
 import com.careeropts.rurse.client.exception.RurseAppException;
 import com.careeropts.rurse.client.exception.UnauthorizedException;
 import com.careeropts.rurse.client.exception.UriException;
-import com.careeropts.rurse.client.impl.MangerOperations;
+import com.careeropts.rurse.client.impl.ManagerOperations;
 import com.careeropts.rurse.client.impl.UserOperations;
 import com.careeropts.rurse.client.util.Endpoints;
 import com.careeropts.rurse.model.User;
@@ -163,7 +163,7 @@ public class RurseApplication {
     public IManagerOperations managerOperations(String email, String password) {
         HttpContext context = generateContext(baseUrl, email, password);
 
-        MangerOperations managerOps = new MangerOperations(baseUrl, client, context);
+        ManagerOperations managerOps = new ManagerOperations(baseUrl, client, context);
 
         //make this call to verify the user is in the system.
         User user = managerOps.getUserInfo();
@@ -172,6 +172,6 @@ public class RurseApplication {
         if (!user.isManager())
             throw new UnauthorizedException("The provided email address is not a valid manager in the system");
 
-        return new MangerOperations(baseUrl, client, context);
+        return managerOps;
     }
 }

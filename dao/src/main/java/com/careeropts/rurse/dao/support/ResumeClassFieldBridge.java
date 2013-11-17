@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class ResumeClassFieldBridge implements FieldBridge{
 
-    private static Logger logger = LoggerFactory.getLogger(ResumeClassFieldBridge.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResumeClassFieldBridge.class);
 
     @Override
     public void set(String name, Object value, Document document, LuceneOptions luceneOptions) {

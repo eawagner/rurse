@@ -28,9 +28,9 @@ import static org.apache.commons.lang3.Validate.notNull;
  * Implementation for {@link IManagerOperations} which uses a {@link HttpClient} to communicate with the
  * REST endpoints on the RURSE system.
  */
-public class MangerOperations extends UserOperations implements IManagerOperations {
+public class ManagerOperations extends UserOperations implements IManagerOperations {
 
-    public MangerOperations(String baseUrl, HttpClient client, HttpContext context) {
+    public ManagerOperations(String baseUrl, HttpClient client, HttpContext context) {
         super(baseUrl, client, context);
     }
 

@@ -23,12 +23,12 @@ import static org.apache.http.HttpStatus.SC_OK;
 public class ResponseHandlers {
     private ResponseHandlers() {/*private constructor*/}
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static TypeReference<List<Book>> BOOK_LIST_TYPE_REF = new TypeReference<List<Book>>() {};
-    public static TypeReference<List<Course>> COURSE_LIST_TYPE_REF = new TypeReference<List<Course>>() {};
-    public static TypeReference<List<Job>> JOB_LIST_TYPE_REF = new TypeReference<List<Job>>() {};
-    public static TypeReference<List<User>> USER_LIST_TYPE_REF = new TypeReference<List<User>>() {};
+    public static final TypeReference<List<Book>> BOOK_LIST_TYPE_REF = new TypeReference<List<Book>>() {};
+    public static final TypeReference<List<Course>> COURSE_LIST_TYPE_REF = new TypeReference<List<Course>>() {};
+    public static final TypeReference<List<Job>> JOB_LIST_TYPE_REF = new TypeReference<List<Job>>() {};
+    public static final TypeReference<List<User>> USER_LIST_TYPE_REF = new TypeReference<List<User>>() {};
 
     public static <T> ResponseHandler<T> simpleResponse() {
         return new ResponseHandler<T>() {
@@ -37,9 +37,10 @@ public class ResponseHandlers {
                 if (response.getStatusLine().getStatusCode() == SC_OK)
                     return null;
                 else
-                    responseException(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
-
-                return null;
+                    throw responseException(
+                            response.getStatusLine().getStatusCode(),
+                            EntityUtils.toString(response.getEntity())
+                    );
             }
         };
     }

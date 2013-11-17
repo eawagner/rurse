@@ -33,7 +33,7 @@ import static javax.ws.rs.core.Response.ok;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 public class UserResource {
 
-    private static Logger logger = LoggerFactory.getLogger(UserResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserResource.class);
 
     @Autowired
     IUserService service;
@@ -134,8 +134,35 @@ public class UserResource {
     }
 
     /**
-     * Uploads a resume document for the current authenticated user.  Consumes multipart/form-data.
-     * Information about the filename and mime-type of the file should be sent with the request.
+     * Uploads a resume document for the current authenticated user.
+     *
+     * @param fileName File name of the resume being uploaded.
+     * @param inputStream Input stream of the file to store
+     */
+    @POST
+    @Consumes({APPLICATION_OCTET_STREAM})
+    @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @Path("/current/resume")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Resume saveCurrentResume (
+            @QueryParam("fileName") String fileName,
+            InputStream inputStream) {
+
+        try {
+
+            return service.saveResume(fileName, inputStream);
+
+        } catch (WebAppResponseException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new InternalServerError(e.getMessage());
+        }
+    }
+
+    /**
+     * Uploads a resume document for the current authenticated user.  This endpoint is to allow simple integration
+     * with the HTML file upload form. Consumes multipart/form-data.
      *
      * @param inputStream Input stream of the file to store
      * @param bodyPart Metadata about the file being uploaded.
@@ -154,34 +181,6 @@ public class UserResource {
 
             if (bodyPart != null)
                 fileName = (bodyPart.getContentDisposition() == null ? null : bodyPart.getContentDisposition().getFileName());
-
-            return service.saveResume(fileName, inputStream);
-
-        } catch (WebAppResponseException e) {
-            throw e;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new InternalServerError(e.getMessage());
-        }
-    }
-
-    /**
-     * Uploads a resume document for the current authenticated user.  Consumes multipart/form-data.
-     * Information about the filename and mime-type of the file should be sent with the request.
-     *
-     * @param fileName File name of the resume being uploaded.
-     * @param inputStream Input stream of the file to store
-     */
-    @POST
-    @Consumes({APPLICATION_OCTET_STREAM})
-    @Produces({APPLICATION_JSON, APPLICATION_XML})
-    @Path("/current/resume")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public Resume saveCurrentResume (
-            @QueryParam("fileName") String fileName,
-            InputStream inputStream) {
-
-        try {
 
             return service.saveResume(fileName, inputStream);
 

@@ -19,7 +19,7 @@ public class ResumeParser {
 
     private ResumeParser() {/*private constructor*/};
 
-    private static TikaConfig TIKI_CONFIG = getDefaultConfig();
+    private static final TikaConfig TIKI_CONFIG = getDefaultConfig();
 
     public static String parse(ResumeEntity resume) throws TikaException, SAXException, IOException {
         if (resume == null ||

@@ -19,7 +19,7 @@ import static org.apache.http.entity.ContentType.*;
 public class Requests {
     private Requests() {/*private constructor*/}
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public static final String JSON = APPLICATION_JSON.getMimeType();
 
@@ -33,10 +33,6 @@ public class Requests {
             method.setHeader(ACCEPT, accept);
 
         return method;
-    }
-
-    public static HttpPost post(URI uri) {
-        return post(uri, null);
     }
 
     public static HttpPost post(URI uri, String accept) {
@@ -67,7 +63,7 @@ public class Requests {
         return method;
     }
 
-    public static <T> HttpPost postText(URI uri, String accept, String data) throws JsonProcessingException {
+    public static HttpPost postText(URI uri, String accept, String data) throws JsonProcessingException {
         HttpPost method = post(uri, accept);
         method.setEntity(new StringEntity(
                 data,

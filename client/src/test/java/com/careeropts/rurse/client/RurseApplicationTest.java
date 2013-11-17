@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class RurseApplicationTest {
 
-    private static String TEST_URL = "http://localhost:8080";
+    private static final String TEST_URL = "http://localhost:8080";
 
     private static void bookOperations(IManagerOperations ops) {
         /* Books */
@@ -108,7 +108,7 @@ public class RurseApplicationTest {
 
     private static void userOperations(RurseApplication api, IManagerOperations ops) throws Exception {
         /* User */
-        User user = setupUser(api, "java13@test.com");
+        User user = setupUser(api, "testuser@test.com");
         user = ops.changeAuthorization(user.getId(), true);
         assertTrue(user.isManager());
 
@@ -120,7 +120,7 @@ public class RurseApplicationTest {
 
         assertTrue(ops.recommendedUsersForJob(1, 0, MAX_VALUE).contains(user));
 
-        api.userOperations("java13@test.com", "password").deleteResume();
+        api.userOperations("testuser@test.com", "password").deleteResume();
         user = ops.getUserInfo(user.getId());
         assertNotNull(user);
         assertNull(user.getResume());

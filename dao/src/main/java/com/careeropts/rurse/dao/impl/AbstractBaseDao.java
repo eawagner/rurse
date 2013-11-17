@@ -18,7 +18,7 @@ import static org.hibernate.search.Search.getFullTextSession;
 
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final SessionFactory sessionFactory;
 

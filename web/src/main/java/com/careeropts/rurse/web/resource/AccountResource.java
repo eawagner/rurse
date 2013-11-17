@@ -24,7 +24,7 @@ import static javax.ws.rs.core.MediaType.*;
 @Path("/account")
 public class AccountResource {
 
-    private static Logger logger = LoggerFactory.getLogger(AccountResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountResource.class);
 
     @Autowired
     IUserService service;

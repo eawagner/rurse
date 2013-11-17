@@ -29,7 +29,7 @@ import static javax.ws.rs.core.Response.ok;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 public class CourseResource {
 
-    private static Logger logger = LoggerFactory.getLogger(CourseResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(CourseResource.class);
 
     @Autowired
     ICourseService service;
