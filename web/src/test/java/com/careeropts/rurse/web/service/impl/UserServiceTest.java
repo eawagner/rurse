@@ -126,7 +126,6 @@ public class UserServiceTest {
         IUserDao dao = mock(IUserDao.class);
         IUserService service = getUserService(dao);
 
-
         when(dao.getSingle(1L)).thenReturn(genUserEntity(1L, TEST_EMAIL, "", false, null));
 
         User user = service.getUser(1L);
@@ -159,8 +158,8 @@ public class UserServiceTest {
     public void getCurrentUserTest() {
         IUserDao dao = mock(IUserDao.class);
         IUserService service = getUserService(dao);
-
         setCurrentUser(TEST_EMAIL);
+
         when(dao.getByEmail(TEST_EMAIL)).thenReturn(genUserEntity(1L, TEST_EMAIL, "", false, null));
 
         User user = service.getCurrentUser();

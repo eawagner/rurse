@@ -8,7 +8,7 @@ import static org.springframework.security.core.context.SecurityContextHolder.ge
  * Security utility methods
  */
 public class SecurityUtils {
-    public SecurityUtils() {/*private constructor*/}
+    private SecurityUtils() {/*private constructor*/}
 
     /**
      * Gets the current username from the security context
