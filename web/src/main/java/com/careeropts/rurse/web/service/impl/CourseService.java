@@ -34,13 +34,11 @@ public class CourseService extends AbstractSimpleService<Course, CourseEntity> i
     @Override
     protected void normalizeAndValidate(Course model) {
 
-        if (isNullOrEmpty(model.getTitle())) {
+        if (isNullOrEmpty(model.getTitle()))
             throw new BadRequestException("A course must have a title");
-        }
 
-        if (isNullOrEmpty(model.getDescription())) {
+        if (isNullOrEmpty(model.getDescription()))
             throw new BadRequestException("A course must have a description");
-        }
 
         //normalize price to a two digit value
         if (model.getCost() != null)

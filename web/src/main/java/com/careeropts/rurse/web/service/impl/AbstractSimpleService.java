@@ -122,11 +122,11 @@ public abstract class AbstractSimpleService<T, U> implements ISimpleService<T> {
         getSingle(getId(item));
 
         normalizeAndValidate(item);
+
         U entity = dao.update(toEntity(item));
 
-        if (entity == null) {
+        if (entity == null)
             throw new InternalServerError();
-        }
 
         return fromEntity(entity);
     }

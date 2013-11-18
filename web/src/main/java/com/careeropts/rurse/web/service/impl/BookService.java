@@ -38,7 +38,6 @@ public class BookService extends AbstractSimpleService<Book, BookEntity> impleme
         if (isNullOrEmpty(model.getTitle()))
             throw new BadRequestException("A book must have a title");
 
-
         if (isNullOrEmpty(model.getDescription()))
             throw new BadRequestException("A book must have a description");
 

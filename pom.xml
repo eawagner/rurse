@@ -32,6 +32,7 @@
         <jackson.version>2.2.3</jackson.version>
         <jersey.version>1.17.1</jersey.version>
         <junit.version>4.11</junit.version>
+        <mockito.version>1.9.5</mockito.version>
         <mysql.version>5.1.26</mysql.version>
         <slf4j.version>1.7.5</slf4j.version>
         <spring.version>3.2.4.RELEASE</spring.version>
@@ -259,6 +260,11 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

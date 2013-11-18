@@ -32,15 +32,12 @@ public class JobService extends AbstractSimpleService<Job, JobEntity> implements
      */
     @Override
     protected void normalizeAndValidate(Job model) {
-        if (isNullOrEmpty(model.getTitle())) {
+        if (isNullOrEmpty(model.getTitle()))
             throw new BadRequestException("A job listing must have a title");
-        }
 
-        if (isNullOrEmpty(model.getDescription())) {
+        if (isNullOrEmpty(model.getDescription()))
             throw new BadRequestException("A job listing must have a description");
-        }
 
-        //TODO validate city and state.
     }
 
     /**
