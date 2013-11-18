@@ -132,4 +132,14 @@ public interface IUserOperations {
      * @param pageSize Size to use for each page of the results
      */
     public List<Job> getRecommendedJobs(int page, int pageSize);
+
+    /**
+     * Changes the password for the current user.
+     *
+     * WARNING!!!
+     * This operation will require that all other operation instances for this user be reacquired from the API.
+     *
+     * @param password New password for the user.
+     */
+    public void changePassword(String password);
 }

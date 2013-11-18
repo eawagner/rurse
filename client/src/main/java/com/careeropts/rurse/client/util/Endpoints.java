@@ -30,6 +30,7 @@ public class Endpoints {
     public static final String SINGLE_USER_AUTH_ENDPOINT = SINGLE_USER_ENDPOINT + "/auth";
 
     public static final String CURRENT_USER_ENDPOINT = USER_ENDPOINT + "/current";
+    public static final String CURRENT_USER_PASSWORD_ENDPOINT = CURRENT_USER_ENDPOINT + "/password";
     public static final String CURRENT_USER_RESUME_ENDPOINT = CURRENT_USER_ENDPOINT + "/resume";
 
     public static final String RECOMMENDED_BOOK_ENDPOINT = CURRENT_USER_ENDPOINT + "/recommend/book";

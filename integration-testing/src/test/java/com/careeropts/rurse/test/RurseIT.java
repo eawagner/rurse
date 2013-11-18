@@ -31,6 +31,12 @@ public class RurseIT {
         ops = api.managerOperations("admin@test.com", "password");
     }
 
+    @Test
+    public void changePassword() {
+        ops.changePassword("newpass");
+        ops = api.managerOperations("admin@test.com", "newpass");
+        assertNotNull(ops.getUserInfo());
+    }
 
     @Test
     public void bookOperations(){

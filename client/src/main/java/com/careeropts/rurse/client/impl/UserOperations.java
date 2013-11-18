@@ -353,4 +353,26 @@ public class UserOperations implements IUserOperations {
             throw new RurseAppException(e);
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void changePassword(String password) {
+        try {
+            URI uri = builder(baseUrl, CURRENT_USER_PASSWORD_ENDPOINT)
+                    .build();
+
+            client.execute(
+                    postText(uri, null, password),
+                    simpleResponse(),
+                    context
+            );
+
+        } catch (URISyntaxException e) {
+            throw new UriException(e);
+        } catch (IOException e) {
+            throw new RurseAppException(e);
+        }
+    }
 }
