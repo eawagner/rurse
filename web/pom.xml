@@ -12,10 +12,6 @@
     <name>RURSE Web Services</name>
     <packaging>war</packaging>
 
-    <properties>
-        <artifact.name>web-service</artifact.name>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.careeropts.rurse</groupId>
@@ -96,12 +92,11 @@
     </dependencies>
 
     <build>
-        <finalName>${artifact.name}</finalName>
+        <finalName>${deployment.artifact.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.13.v20130916</version>
                 <configuration>
                     <systemProperties>
                         <systemProperty>
@@ -110,7 +105,7 @@
                         </systemProperty>
                     </systemProperties>
                     <webAppConfig>
-                        <contextPath>/${artifact.name}</contextPath>
+                        <contextPath>/${deployment.artifact.name}</contextPath>
                         <extraClasspath>${project.basedir}/../system-files/conf-files/dev/conf/rurse</extraClasspath>
                     </webAppConfig>
                 </configuration>
@@ -161,7 +156,7 @@
                                     <useStandardDocletOptions>false</useStandardDocletOptions>
                                     <destDir>rest-doc</destDir>
                                     <reportOutputDirectory>${project.build.directory}/docs</reportOutputDirectory>
-                                    <additionalparam>-o swagger -version ${project.version} -url "http://localhost:8080/${artifact.name}"</additionalparam>
+                                    <additionalparam>-o swagger -version ${project.version} -url "http://localhost:8080/${deployment.artifact.name}"</additionalparam>
                                 </configuration>
                                 <goals>
                                     <goal>javadoc</goal>

@@ -53,7 +53,7 @@ public class RurseApplication {
     private static String DEFAULT_BASE_URL = "http://rurse.careeropts.com:8080";
 
     final private String baseUrl;
-    final private HttpClient client;
+    final private CloseableHttpClient client;
 
     private static CloseableHttpClient defaultClient() {
         return  HttpClients.custom()
@@ -98,11 +98,11 @@ public class RurseApplication {
         this(baseUrl, defaultClient());
     }
 
-    public RurseApplication(HttpClient client) {
+    public RurseApplication(CloseableHttpClient client) {
         this(DEFAULT_BASE_URL, client);
     }
 
-    public RurseApplication(String baseUrl, HttpClient client) {
+    public RurseApplication(String baseUrl, CloseableHttpClient client) {
         notEmpty(baseUrl);
         notNull(client);
 
@@ -173,5 +173,9 @@ public class RurseApplication {
             throw new UnauthorizedException("The provided email address is not a valid manager in the system");
 
         return managerOps;
+    }
+
+    public void close() throws IOException {
+        client.close();
     }
 }
