@@ -6,7 +6,6 @@ import com.careeropts.rurse.dao.object.BookEntity;
 import com.careeropts.rurse.model.Book;
 import com.careeropts.rurse.web.service.IBookService;
 import com.careeropts.rurse.web.service.util.EntityTransform;
-import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 

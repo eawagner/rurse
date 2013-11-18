@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -38,6 +37,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public T getSingle(long id) {
         return (T) getSession().get(getDOClass(), id);
@@ -46,6 +46,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> getAll(int pageNum, int perPage) {
         return getSession()
@@ -58,6 +59,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> search(String searchText, int pageNum, int perPage) {
         if (searchText == null)
@@ -99,6 +101,7 @@ public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public T update(T item) {
         if (item ==null)

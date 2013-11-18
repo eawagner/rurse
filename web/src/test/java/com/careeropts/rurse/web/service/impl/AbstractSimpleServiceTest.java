@@ -2,14 +2,10 @@ package com.careeropts.rurse.web.service.impl;
 
 
 import com.careeropts.rurse.dao.IBaseDao;
-import com.careeropts.rurse.dao.IUserDao;
-import com.careeropts.rurse.dao.object.ResumeEntity;
-import com.careeropts.rurse.model.User;
 import com.careeropts.rurse.web.exception.BadRequestException;
 import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.ISimpleService;
-import com.careeropts.rurse.web.service.IUserService;
 import org.junit.Test;
 import org.mockito.Matchers;
 
@@ -19,10 +15,8 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
