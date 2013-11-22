@@ -48,7 +48,7 @@ public class AccountResource {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            throw new InternalServerError(e.getMessage());
+            throw new InternalServerError();
         }
     }
 }
