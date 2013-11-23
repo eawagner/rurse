@@ -41,7 +41,7 @@ public class JobRecommendEngine implements IJobRecommendEngine {
                 .append(job.getDescription())
                 .toString();
 
-        return data.replace("[^\\p{L}\\p{Nd}]", " ");  //replace all non-letters with whitespace
+        return data.replaceAll("[^\\p{L}]", " ");  //replace all non-letters with whitespace
     }
 
     /**
