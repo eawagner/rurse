@@ -50,7 +50,7 @@ import static org.apache.http.client.utils.URIUtils.extractHost;
  */
 public class RurseApplication {
 
-    private static String DEFAULT_BASE_URL = "http://rurse.careeropts.com:8080";
+    private static String DEFAULT_BASE_URL = "http://rurse.careeropts.com";
 
     final private String baseUrl;
     final private CloseableHttpClient client;
