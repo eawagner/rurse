@@ -22,6 +22,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HttpContext;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -48,7 +49,7 @@ import static org.apache.http.client.utils.URIUtils.extractHost;
  *
  * This API is thread safe.
  */
-public class RurseApplication {
+public class RurseApplication implements Closeable {
 
     private static String DEFAULT_BASE_URL = "http://rurse.careeropts.com";
 
@@ -175,6 +176,7 @@ public class RurseApplication {
         return managerOps;
     }
 
+    @Override
     public void close() throws IOException {
         client.close();
     }
