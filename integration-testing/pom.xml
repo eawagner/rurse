@@ -81,6 +81,10 @@
                             <war>${project.build.directory}/war/${deployment.artifact.name}.war</war>
                             <systemProperties>
                                 <systemProperty>
+                                    <name>jetty.port</name>
+                                    <value>8888</value>
+                                </systemProperty>
+                                <systemProperty>
                                     <name>rurse.prop.dir</name>
                                     <value>${project.basedir}/src/test/resources</value>
                                 </systemProperty>

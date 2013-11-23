@@ -27,7 +27,7 @@ public class RurseIT {
 
     @BeforeClass
     public static void setup() {
-        api = new RurseApplication("http://localhost:8080");
+        api = new RurseApplication("http://localhost:8888");
         ops = api.managerOperations("admin@test.com", "password");
     }
 
