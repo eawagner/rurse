@@ -8,8 +8,7 @@ import com.careeropts.rurse.web.service.IRecommendationService;
 import com.careeropts.rurse.web.service.IUserService;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import static javax.ws.rs.core.MediaType.*;
 import static javax.ws.rs.core.Response.ok;
+import static org.apache.commons.logging.LogFactory.getLog;
 
 /**
  * Responsible for the management of user information in the system and resumes associated with those users.
@@ -33,7 +33,7 @@ import static javax.ws.rs.core.Response.ok;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 public class UserResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserResource.class);
+    private static final Log logger = getLog(UserResource.class);
 
     @Autowired
     IUserService service;

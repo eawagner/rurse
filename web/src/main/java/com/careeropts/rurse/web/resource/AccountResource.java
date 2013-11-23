@@ -5,14 +5,14 @@ import com.careeropts.rurse.model.User;
 import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.WebAppResponseException;
 import com.careeropts.rurse.web.service.IUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 
 import static javax.ws.rs.core.MediaType.*;
+import static org.apache.commons.logging.LogFactory.getLog;
 
 /**
  * Responsible for the management of user accounts
@@ -24,7 +24,7 @@ import static javax.ws.rs.core.MediaType.*;
 @Path("/account")
 public class AccountResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(AccountResource.class);
+    private static final Log logger = getLog(AccountResource.class);
 
     @Autowired
     IUserService service;

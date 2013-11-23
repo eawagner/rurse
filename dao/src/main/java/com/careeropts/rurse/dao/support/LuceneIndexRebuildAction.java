@@ -1,16 +1,17 @@
 package com.careeropts.rurse.dao.support;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.apache.commons.logging.LogFactory.getLog;
 
 /**
  * Utility class that is used to rebuild the Lucene indexes for the database.
  */
 public class LuceneIndexRebuildAction {
 
-    private static final Logger logger = LoggerFactory.getLogger(LuceneIndexRebuildAction.class);
+    private static final Log logger = getLog(LuceneIndexRebuildAction.class);
 
     private boolean rebuild = false;
 

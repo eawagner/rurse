@@ -11,12 +11,11 @@ import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.NotFoundException;
 import com.careeropts.rurse.web.service.IUserService;
 import com.google.common.base.Function;
+import org.apache.commons.logging.Log;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,13 +37,14 @@ import static com.google.common.collect.Lists.transform;
 import static java.lang.String.format;
 import static javax.ws.rs.core.Response.ok;
 import static org.apache.commons.io.IOUtils.copy;
+import static org.apache.commons.logging.LogFactory.getLog;
 import static org.apache.tika.config.TikaConfig.getDefaultConfig;
 
 @Service
 @Transactional
 public class UserService implements IUserService{
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Log logger = getLog(UserService.class);
 
     private static final TikaConfig TIKA_CONFIG = getDefaultConfig();
 

@@ -1,23 +1,23 @@
 package com.careeropts.rurse.dao.impl;
 
 import com.careeropts.rurse.dao.IBaseDao;
+import org.apache.commons.logging.Log;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.util.Version;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static org.apache.commons.logging.LogFactory.getLog;
 import static org.hibernate.search.Search.getFullTextSession;
 
 public abstract class AbstractBaseDao<T> implements IBaseDao<T> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Log logger = getLog(getClass());
 
     private final SessionFactory sessionFactory;
 

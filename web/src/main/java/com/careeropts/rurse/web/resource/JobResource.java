@@ -6,8 +6,7 @@ import com.careeropts.rurse.web.exception.InternalServerError;
 import com.careeropts.rurse.web.exception.WebAppResponseException;
 import com.careeropts.rurse.web.service.IJobService;
 import com.careeropts.rurse.web.service.IRecommendationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -19,6 +18,7 @@ import java.util.List;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.Response.ok;
+import static org.apache.commons.logging.LogFactory.getLog;
 
 /**
  * Responsible for the management of job listings in the system.
@@ -31,7 +31,7 @@ import static javax.ws.rs.core.Response.ok;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 public class JobResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(JobResource.class);
+    private static final Log logger = getLog(JobResource.class);
 
     @Autowired
     IJobService service;

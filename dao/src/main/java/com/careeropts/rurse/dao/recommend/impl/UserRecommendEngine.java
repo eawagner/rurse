@@ -9,9 +9,8 @@ import com.careeropts.rurse.dao.object.CourseEntity;
 import com.careeropts.rurse.dao.object.JobEntity;
 import com.careeropts.rurse.dao.object.ResumeEntity;
 import com.careeropts.rurse.dao.recommend.IUserRecommendEngine;
+import org.apache.commons.logging.Log;
 import org.apache.tika.exception.TikaException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import static com.careeropts.rurse.dao.support.ResumeParser.parse;
 import static java.util.Collections.emptyList;
+import static org.apache.commons.logging.LogFactory.getLog;
 
 /**
  * Simple recommendation Engine that simply converts the resume to single words and runs the resume words through
@@ -29,7 +29,7 @@ import static java.util.Collections.emptyList;
 @Component
 public class UserRecommendEngine implements IUserRecommendEngine {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRecommendEngine.class);
+    private static final Log logger = getLog(UserRecommendEngine.class);
 
     private final IBookDao bookDao;
 
