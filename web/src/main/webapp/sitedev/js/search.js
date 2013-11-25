@@ -2,7 +2,8 @@
 var maxlistings=5;
 var index;
 var listing;
-var resultsPage = 1;
+var listingCount;
+var resultsPage = 0;
 var resultsNumPages = 3;
 var resultsSearch;
 var x;
@@ -14,18 +15,18 @@ function getURLParameter(name) {
 }
 
 function resultsFetch(){
-		var listingCount=0;
+		listingCount=0;
 
 	$.getJSON("http://54.200.170.49:8080/web-service/rest/job?pageNum="+ resultsPage +"&resultSize=5&search="+resultsSearch, function(data){
         
 		$('#result').html("");
 		
 		$.each( data, function( key, val ){ 
-			listingCount++ 
+			listingCount++;
 		
-			listing = key +":"+ val;
-		
-			$('#result').append('<p>' + listing+ '</p>');
+			//listing = key + ":"+ val;
+		    
+			//$('#result').append('<p>' + listing+ '</p>');
 			listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['description'] + "<br>" + data[key]['city'] + ", " + data[key]['state'];
 			$('#result').append('<p>' + listing+ '</p>');
 		
@@ -42,16 +43,21 @@ function resultsFetch(){
 
 }
 
-
 function updateSearchPage(){
-	var searchPageText = "Page ";
+	var searchPageText = "";
 	
-	for(x=1; x<=resultsNumPages; x++){
-		if(x==resultsPage){
-			searchPageText+= " " + x.toString();
-		} else {
-			searchPageText+= " <a href='?resultsPage=" + x.toString() + "'>" + x.toString() + "</a>";
-		}
-	}
+	if(resultsPage > 0 || listingCount > 4) 
+		searchPageText = "Page: ";
+	if(resultsPage > 0) 
+		searchPageText+= " <a href='?resultsPage=" + (parseInt(resultsPage)-1) + "'> Previous </a>";
+	if(listingCount > 4) 
+		searchPageText+= " <a href='?resultsPage=" + (parseInt(resultsPage)+1) + "'> Next </a>";
+	// check for no records
+	if(resultsPage == 0 && listingCount == 0) 
+		searchPageText = "Sorry there are no records.";
+	// check for no records on next page
+	if(resultsPage > 0 && listingCount == 0) 
+		searchPageText = "Sorry there are no additional Records.<br><br> Page: <a href='?resultsPage=" + (parseInt(resultsPage)-1) + "'> Previous </a>";
+	
 	$('#page-selector').html( searchPageText);
 }
