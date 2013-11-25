@@ -16,10 +16,12 @@ $(document).ready(function (){
 
 	// first check the page
 	resultsPage = getURLParameter('resultsPage');
-	if(resultsPage=='null') resultsPage=1;
+	if(resultsPage=='null') resultsPage=0;
 	
 	resultsSearch = getURLParameter('search');
 	if(resultsSearch=='null') resultsSearch="";
+
+	$("#search-text").val(resultsSearch);
 
 	resultsFetch();	
 	
