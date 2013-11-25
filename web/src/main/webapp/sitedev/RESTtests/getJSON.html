@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>rurse - getJSON Demo</title>
+
+<script src="../js/jquery/jquery-1.10.1.min.js"></script>
+
+</head>
+
+<body>
+
+
+
+ 
+<p>
+  
+</p>
+<p>getJSON Test</p>
+<p id="result">test it</p>
+
+<script>
+
+$(document).ready(function (){
+
+$.getJSON("http://54.200.170.49:8080/web-service/rest/book/1", function(data){
+    var stuff = "";
+            $.each(data, function(index, d){           
+            stuff+= index + ":" + d + "<br> ";    
+            });
+			
+			$("#result").html(stuff);
+
+});
+ 
+});
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+
+
+</body>
+</html>

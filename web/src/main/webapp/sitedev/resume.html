@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>RURSE - Resume</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery/jquery-1.10.1.min.js"></script>
+<script src="js/page.js"></script>
+<script>
+
+$(document).ready(function (){
+
+	writeHeader();
+
+$.getJSON("http://54.200.170.49:8080/web-service/rest/user/current", function(data){
+	
+	$("#resume-filename").text(data['resume']['fileName']);
+    $("#resume-filetype").text(data['resume']['fileType']);
+    });
+	
+	
+});
+  </script>
+
+</head>
+
+<body>
+<div id="header"></div>
+<p>&nbsp;</p>
+<p>Current Resume File: <span id='resume-filename'></span></p>
+<p>File Type: <span id='resume-filetype'></span></p>
+<form action="/web-service/rest/user/current/resume" method="post" enctype="multipart/form-data">
+  <input name="file" type="file" id="file" title="Select Resume">
+  <input type="submit" name="submit" id="submit" value="Upload New Resume">
+</form>
+<p>&nbsp;</p>
+</body>
+</html>
