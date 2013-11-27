@@ -107,8 +107,7 @@
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
                             <port>8443</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                            <keystore>${project.basedir}/../system-files/ssl/localhost.jks</keystore>
+                            <keystore>${project.basedir}/../system-files/conf-files/dev/conf/server.jks</keystore>
                             <password>password</password>
                             <keyPassword>password</keyPassword>
                         </connector>

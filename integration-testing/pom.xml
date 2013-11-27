@@ -62,6 +62,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <javax.net.ssl.trustStore>${project.basedir}/src/test/resources/truststore.jks</javax.net.ssl.trustStore>
+                        <javax.net.ssl.trustStorePassword>password</javax.net.ssl.trustStorePassword>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
@@ -81,10 +87,6 @@
                             <war>${project.build.directory}/war/${deployment.artifact.name}.war</war>
                             <systemProperties>
                                 <systemProperty>
-                                    <name>jetty.port</name>
-                                    <value>8888</value>
-                                </systemProperty>
-                                <systemProperty>
                                     <name>rurse.prop.dir</name>
                                     <value>${project.basedir}/src/test/resources</value>
                                 </systemProperty>
@@ -93,6 +95,14 @@
                                 <contextPath>/${deployment.artifact.name}</contextPath>
                                 <extraClasspath>${project.basedir}/src/test/resources</extraClasspath>
                             </webAppConfig>
+                            <connectors>
+                                <connector implementation="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
+                                    <port>8888</port>
+                                    <keystore>${project.basedir}/src/test/resources/keystore.jks</keystore>
+                                    <password>password</password>
+                                    <keyPassword>password</keyPassword>
+                                </connector>
+                            </connectors>
                             <daemon>true</daemon>
                         </configuration>
                     </execution>

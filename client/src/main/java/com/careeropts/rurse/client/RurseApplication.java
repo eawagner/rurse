@@ -51,7 +51,7 @@ import static org.apache.http.client.utils.URIUtils.extractHost;
  */
 public class RurseApplication implements Closeable {
 
-    private static String DEFAULT_BASE_URL = "http://rurse.careeropts.com";
+    private static String DEFAULT_BASE_URL = "https://rurse.careeropts.com";
 
     final private String baseUrl;
     final private CloseableHttpClient client;
