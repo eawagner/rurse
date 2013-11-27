@@ -14,44 +14,34 @@ function getURLParameter(name) {
    );
 }
 
-function resultsFetch(){
-		listingCount=0;
 
-	$.getJSON("http://54.200.170.49:8080/web-service/rest/job?pageNum="+ resultsPage +"&resultSize=5&search="+resultsSearch, function(data){
-        
-		$('#result').html("");
-		
+function resultsFetch(resource){
+	listingCount=0;
+	$.getJSON("/web-service/rest/"+resource+"?pageNum="+ resultsPage +"&resultSize=5&search="+resultsSearch, function(data){       
+		$('#result').html("");	
 		$.each( data, function( key, val ){ 
 			listingCount++;
-		
-			//listing = key + ":"+ val;
-		    
-			//$('#result').append('<p>' + listing+ '</p>');
 			listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['description'] + "<br>" + data[key]['city'] + ", " + data[key]['state'];
 			$('#result').append('<p>' + listing+ '</p>');
-		
 		});
-		
-		//for(index=0;index<listingCount;index++){
-			
-			
-			//	listing = "<strong>" +data[index]['title'] + "</strong><br>" + data[index]['description'] + "<br>" + data[index]['city'] + ", " + data[index]['state'] ;
-			//	$('#result').append('<p>' + listing+ '</p>');
-		//}
 		updateSearchPage();
 	});
 
 }
 
+
 function updateSearchPage(){
-	var searchPageText = "";
-	
+	var searchPageText = "";	
 	if(resultsPage > 0 || listingCount > 4) 
 		searchPageText = "Page: ";
-	if(resultsPage > 0) 
+	if(resultsPage > 0 && resultsSearch=="") 
 		searchPageText+= " <a href='?resultsPage=" + (parseInt(resultsPage)-1) + "'> Previous </a>";
-	if(listingCount > 4) 
+	if(resultsPage > 0 && resultsSearch!="") 
+		searchPageText+= " <a href='?search=" + resultsSearch + "&resultsPage=" + (parseInt(resultsPage)-1) + "'> Previous </a>";
+	if(listingCount > 4 && resultsSearch=="") 
 		searchPageText+= " <a href='?resultsPage=" + (parseInt(resultsPage)+1) + "'> Next </a>";
+	if(listingCount > 4 && resultsSearch!="") 
+		searchPageText+= " <a href='?search=" + resultsSearch + "&resultsPage=" + (parseInt(resultsPage)+1) + "'> Next </a>";
 	// check for no records
 	if(resultsPage == 0 && listingCount == 0) 
 		searchPageText = "Sorry there are no records.";
@@ -61,3 +51,13 @@ function updateSearchPage(){
 	
 	$('#page-selector').html( searchPageText);
 }
+
+
+
+
+
+
+
+
+
+

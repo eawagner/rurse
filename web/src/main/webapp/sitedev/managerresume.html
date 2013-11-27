@@ -2,33 +2,22 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>RURSE - Jobs</title>
-
+<title>RURSE - Resume</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
+
 <script src="js/jquery/jquery-1.10.1.min.js"></script>
-<script src="js/search.js"></script>
 <script src="js/page.js"></script>
 <script>
 
 $(document).ready(function (){
-	
-	writeHeader();
 
-	// first check the page
-	resultsPage = getURLParameter('resultsPage');
-	if(resultsPage=='null') resultsPage=0;
-	
-	resultsSearch = getURLParameter('search');
-	if(resultsSearch=='null') resultsSearch="";
+	writeManagerHeader();
 
-	$("#search-text").val(resultsSearch);
-
-	resultsFetch("job");	
+$.getJSON("http://54.200.170.49:8080/web-service/rest/user/current", function(data){
 	
-	//$(".search-button").click( function(){
-		
-	//});
-	
+	$("#resume-filename").text(data['resume']['fileName']);
+    $("#resume-filetype").text(data['resume']['fileType']);
+    });
 	
 	
 });
@@ -48,7 +37,7 @@ $(document).ready(function (){
 	<p>left<br>area</p>
 </div>
 <div id="content">
-	<div id="search"><form method="get" action="jobs.html"><input id="search-text" name="search" type="text">
+	<div id="search"><form method="get" action="courses.html"><input id="search-text" name="search" type="text">
     <input id="search-button" type="submit" value="Search">
     </form></div>
 	<div id="result">.</div>
