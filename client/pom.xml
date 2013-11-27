@@ -55,6 +55,9 @@
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
+                                <configuration>
+                                    <excludePackageNames>com.careeropts.rurse.client.util</excludePackageNames>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
