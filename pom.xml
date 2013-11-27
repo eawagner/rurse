@@ -18,7 +18,7 @@
     </modules>
 
     <properties>
-        <web.host.url>http://localhost:8080</web.host.url>
+        <web.host.url>https://localhost:8443</web.host.url>
         <deployment.artifact.name>web-service</deployment.artifact.name>
 
         <java.version>1.7</java.version>

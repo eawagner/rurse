@@ -104,6 +104,15 @@
                         <contextPath>/${deployment.artifact.name}</contextPath>
                         <extraClasspath>${project.basedir}/../system-files/conf-files/dev/conf/rurse</extraClasspath>
                     </webAppConfig>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
+                            <port>8443</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                            <keystore>${project.basedir}/../system-files/ssl/localhost.jks</keystore>
+                            <password>password</password>
+                            <keyPassword>password</keyPassword>
+                        </connector>
+                    </connectors>
                 </configuration>
             </plugin>
         </plugins>
