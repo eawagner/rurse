@@ -10,7 +10,7 @@ function writeHeader() {
 	$.getJSON( "/web-service/rest/user/current", function(data){
 		if( data['manager'] == true ){
 			//alert( data['manager'] );
-			$('#header').append('<p> <a href="managerresume.html">manager mode</a> </p>');
+			$('#header').append('<p> <a href="managerjobs.html">manager mode</a> </p>');
 		}
 	});
 	
