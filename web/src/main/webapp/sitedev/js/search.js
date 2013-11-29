@@ -7,6 +7,7 @@ var resultsPage = 0;
 var resultsNumPages = 3;
 var resultsSearch;
 var x;
+var id;
 
 function getURLParameter(name) {
   return decodeURI(
@@ -21,8 +22,48 @@ function resultsFetch(resource){
 		$('#result').html("");	
 		$.each( data, function( key, val ){ 
 			listingCount++;
-			listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['description'] + "<br>" + data[key]['city'] + ", " + data[key]['state'];
+			if(resource == "job") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['description'] + "<br>" + data[key]['city'] + ", " + data[key]['state'];
+			if(resource == "course") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['duration'];
+			if(resource == "book") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['isbn'] + "<br>" + data[key]['publishDate'] + ", " + data[key]['publisher'];
 			$('#result').append('<p>' + listing+ '</p>');
+		});
+		updateSearchPage();
+	});
+
+}
+
+
+function resultsManagerFetch(resource){
+	listingCount=0;
+	$.getJSON("/web-service/rest/"+resource+"?pageNum="+ resultsPage +"&resultSize=5&search="+resultsSearch, function(data){       
+		$('#managelisting').html("");	
+		$.each( data, function( key, val ){ 
+			listingCount++;
+			
+			if(resource == "job") listing = "<div class='editable' id='" + data[key]['id'] + "'>" + data[key]['title'] + "<br>" +data[key]['city'] + ", " + data[key]['state'] + "</div><div><a href='managerresume.html?id="+ data[key]['id'] +"' >View Matching Resumes</a></div>";
+			if(resource == "course") listing = "<div class='editable' id='" + data[key]['id'] + "'>" + data[key]['title'] + "<br>" +data[key]['duration'] +  "</div>";
+			if(resource == "book") listing = "<div class='editable' id='" + data[key]['id'] + "'>" + data[key]['title'] + "<br>" +data[key]['publishDate'] +" "+ data[key]['publisher'] +"<br>" +data[key]['isbn'] +  "</div>";
+			
+			
+			$('#managelisting').append( listing);
+		});
+		updateSearchPage();
+	});
+
+}
+
+function resultsManagerResumeFetch(resource, id){
+	listingCount=0;
+	$.getJSON("/web-service/rest/"+resource+"/"+id+"/recommend/user?pageNum="+ resultsPage +"&resultSize=5&search="+resultsSearch, function(data){       
+		$('#result').html("");	
+		$.each( data, function( key, val ){ 
+			listingCount++;
+			
+			listing = "<div id='" + data[key]['id'] + "'>" + data[key]['email'] + "<br>" +data[key]['resume']['fileName'] +  "</div>";
+			
+			
+			
+			$('#result').append( listing);
 		});
 		updateSearchPage();
 	});
@@ -54,10 +95,118 @@ function updateSearchPage(){
 
 
 
+function loadEditorData(resource, id){
+	listingCount=0;
+	$.getJSON("/web-service/rest/"+resource+"/"+id, function(data){       
+			
+	$("#manageedit_id").val(id);
+	$("#manageedit_title").val(data['title']);
+	$("#manageedit_isbn").val(data['isbn']);
+	$("#manageedit_price").val(data['price']);
+	$("#manageedit_publisher").val(data['publisher']);
+	$("#manageedit_publishDate").val(data['publishDate']);
+
+	$("#manageedit_duration").val(data['duration']);
+	$("#manageedit_city").val(data['city']);
+	$("#manageedit_state").val(data['state']);
+	$("#manageedit_description").val(data['description']);
+	$("#manageedit_active").prop( "checked", data['active'] );
+	$("#managedelete").prop('disabled', false);
+	$("#managesave").prop('disabled', false);
+	});
+
+}
+
+function saveEditorData(resource){
+	var id = $("#manageedit_id").val();
+	var savedata = {};
+	
+	savedata['id'] = $("#manageedit_id").val();
+	savedata['duration'] = $("#manageedit_duration").val();
+	savedata['isbn'] = $("#manageedit_isbn").val();
+	savedata['publisher'] = $("#manageedit_publisher").val();
+	savedata['publishDate'] = $("#manageedit_publishDate").val();
+	savedata['price'] = $("#manageedit_price").val();
 
 
+	savedata['title'] = $("#manageedit_title").val();
+	savedata['description'] = $("#manageedit_description").val();
+	savedata['location'] = $("#manageedit_location").val();
+	savedata['city'] = $("#manageedit_city").val();
+	savedata['state'] = $("#manageedit_state").val();
+	savedata['active'] = $("#manageedit_active").prop('checked');
+	
+	$.ajax({
+    type: 'POST',
+    url: "/web-service/rest/"+resource+"/"+id,
+    data: JSON.stringify (savedata),
+    success: function(data) { 
+		if(resource=="job") $("#"+id).html(savedata['title'] + "<br>" + savedata['city'] + ", " +savedata['state']);
+		if(resource=="course") $("#"+id).html(savedata['title'] + "<br>" + savedata['duration']);
+		if(resource=="book") $("#"+id).html(savedata['title'] + "<br>" + savedata['publishDate'] + " " +savedata['publisher'] + "<br>" + savedata['isbn']);
+		
+	 },
+	error: function(data){ alert("Failure:" + data);  },
+    contentType: "application/json",
+    dataType: 'json'
+});	
+}
 
 
+function saveasnewEditorData(resource){
+	//var id = $("#manageedit_id").val();
+	var savedata = {};
+	
+	//savedata['id'] = $("#manageedit_id").val();
+	savedata['title'] = $("#manageedit_title").val();
+	savedata['description'] = $("#manageedit_description").val();
 
+	savedata['isbn'] = $("#manageedit_isbn").val();
+	savedata['publisher'] = $("#manageedit_publisher").val();
+	savedata['publishDate'] = $("#manageedit_publishDate").val();
+	savedata['price'] = $("#manageedit_price").val();
 
+	
+	savedata['duration'] = $("#manageedit_duration").val();
+	savedata['location'] = $("#manageedit_location").val();
+	savedata['city'] = $("#manageedit_city").val();
+	savedata['state'] = $("#manageedit_state").val();
+	savedata['active'] = $("#manageedit_active").prop('checked');
+	
+	$.ajax({
+    type: 'POST',
+    url: "/web-service/rest/"+resource,
+    data: JSON.stringify (savedata),
+    success: function(data) { 
+		//$("#"+id).html(savedata['title'] + "<br>" + savedata['city'] + ", " +savedata['state'])
+	 },
+	error: function(data){ alert("Failure:" + data);  },
+    contentType: "application/json",
+    dataType: 'json'
+});	
+}
 
+function deleteEditorData(resource){
+	var id = $("#manageedit_id").val();
+	var savedata = {};
+	
+	
+	$.ajax({
+    type: 'DELETE',
+    url: "/web-service/rest/"+resource+"/"+id,
+    data: JSON.stringify (savedata),
+    error: function(data) { 
+		$("#"+id).remove();
+		$("#manageedit_title").val("");
+		$("#manageedit_duration").val("");
+		
+		$("#manageedit_description").val("");
+		$("#manageedit_location").val("");
+		$("#manageedit_city").val("");
+		$("#manageedit_state").val("");
+		$("#manageedit_active").prop('checked', false);
+	 },
+	contentType: "application/json",
+    dataType: 'json'
+});	
+}
