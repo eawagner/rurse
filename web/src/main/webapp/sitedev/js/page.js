@@ -17,6 +17,18 @@ function writeHeader() {
 }
 
 
+function writeIndexHeader() {
+
+    var manStatus = true;
+
+	$('#header').html('<img src="img/logo.png" width="197" height="89" alt=""/><p class="rurse">RURSE </p>');
+	$('#header').append('<p>  <a href="resume.html">resume</a> <a href="jobs.html">jobs</a> <a href="courses.html">courses</a> <a href="books.html">books</a> </p>');
+	
+	
+	
+}
+
+
 function writeManagerHeader() {
 
     var manStatus = true;

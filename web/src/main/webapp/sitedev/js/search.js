@@ -20,17 +20,49 @@ function resultsFetch(resource){
 	listingCount=0;
 	$.getJSON("/web-service/rest/"+resource+"?pageNum="+ resultsPage +"&resultSize=5&search="+resultsSearch, function(data){       
 		$('#result').html("");	
+		listing = "";
 		$.each( data, function( key, val ){ 
 			listingCount++;
+			
 			if(resource == "job") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['description'] + "<br>" + data[key]['city'] + ", " + data[key]['state'];
 			if(resource == "course") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['duration'];
 			if(resource == "book") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['isbn'] + "<br>" + data[key]['publishDate'] + ", " + data[key]['publisher'];
 			$('#result').append('<p>' + listing+ '</p>');
+			if(resource == "user/current/recommend/job") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['description'] + "<br>" + data[key]['city'] + ", " + data[key]['state'];
+			if(resource == "user/current/recommend/course") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['duration'];
+			if(resource == "user/current/recommend/book") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['isbn'] + "<br>" + data[key]['publishDate'] + ", " + data[key]['publisher'];
+			if(resource == "user") listing = "<div id='" + data[key]['id'] + "'>" + data[key]['email'] + "<br>" +data[key]['resume']['fileName'] +  "</div>";
 		});
 		updateSearchPage();
 	});
 
 }
+
+
+function recommendedResultsFetch(resource){
+	listingCount=0;
+	$.getJSON("/web-service/rest/"+resource+"?pageNum=0&resultSize=1&search="+resultsSearch, function(data){       
+		$('#recommendedresultresult').html("");	
+		$.each( data, function( key, val ){ 
+			listingCount++;
+			if(resource == "user/current/recommend/job") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['description'] + "<br>" + data[key]['city'] + ", " + data[key]['state'];
+			if(resource == "user/current/recommend/course") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['duration'];
+			if(resource == "user/current/recommend/book") listing = "<strong>" + data[key]['title'] + "</strong><br>" + data[key]['isbn'] + "<br>" + data[key]['publishDate'] + ", " + data[key]['publisher'];
+			$('#recommendedresult').append('<p>' + listing+ '</p>');
+			
+			if(resource == "user/current/recommend/job") $('#recommendedresult').append('<p><a href="recommendedjobs.html"> To see more recommended listings click here</a></p>');
+			if(resource == "user/current/recommend/course") $('#recommendedresult').append('<p><a href="recommendedcourses.html"> To see more recommended listings click here</a></p>');
+			if(resource == "user/current/recommend/book") $('#recommendedresult').append('<p><a href="recommendedbooks.html"> To see more recommended listings click here</a></p>');
+			
+		});
+		updateSearchPage();
+	});
+
+}
+
+
+
+
 
 
 function resultsManagerFetch(resource){
@@ -103,6 +135,7 @@ function loadEditorData(resource, id){
 	$("#manageedit_title").val(data['title']);
 	$("#manageedit_isbn").val(data['isbn']);
 	$("#manageedit_price").val(data['price']);
+	$("#manageedit_cost").val(data['cost']);
 	$("#manageedit_publisher").val(data['publisher']);
 	$("#manageedit_publishDate").val(data['publishDate']);
 
@@ -127,6 +160,7 @@ function saveEditorData(resource){
 	savedata['publisher'] = $("#manageedit_publisher").val();
 	savedata['publishDate'] = $("#manageedit_publishDate").val();
 	savedata['price'] = $("#manageedit_price").val();
+	savedata['cost'] = $("#manageedit_cost").val();
 
 
 	savedata['title'] = $("#manageedit_title").val();
@@ -146,7 +180,7 @@ function saveEditorData(resource){
 		if(resource=="book") $("#"+id).html(savedata['title'] + "<br>" + savedata['publishDate'] + " " +savedata['publisher'] + "<br>" + savedata['isbn']);
 		
 	 },
-	error: function(data){ alert("Failure:" + data);  },
+	error: function(data){ alert( data['status'] + ": "+ data['statusText'] + "\n\n" + data['responseText'] + "" );  },
     contentType: "application/json",
     dataType: 'json'
 });	
@@ -165,6 +199,7 @@ function saveasnewEditorData(resource){
 	savedata['publisher'] = $("#manageedit_publisher").val();
 	savedata['publishDate'] = $("#manageedit_publishDate").val();
 	savedata['price'] = $("#manageedit_price").val();
+	savedata['cost'] = $("#manageedit_cost").val();
 
 	
 	savedata['duration'] = $("#manageedit_duration").val();
@@ -180,7 +215,7 @@ function saveasnewEditorData(resource){
     success: function(data) { 
 		//$("#"+id).html(savedata['title'] + "<br>" + savedata['city'] + ", " +savedata['state'])
 	 },
-	error: function(data){ alert("Failure:" + data);  },
+	error: function(data){ alert( data['status'] + ": "+ data['statusText'] + "\n\n" + data['responseText'] + "" );  },
     contentType: "application/json",
     dataType: 'json'
 });	
@@ -199,6 +234,11 @@ function deleteEditorData(resource){
 		$("#"+id).remove();
 		$("#manageedit_title").val("");
 		$("#manageedit_duration").val("");
+		$("#manageedit_price").val("");
+		$("#manageedit_cost").val("");
+		$("#manageedit_isbn").val("");
+		$("#manageedit_publisher").val("");
+		$("#manageedit_publishDate").val("");
 		
 		$("#manageedit_description").val("");
 		$("#manageedit_location").val("");

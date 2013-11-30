@@ -13,7 +13,7 @@ $(document).ready(function (){
 
 	writeHeader();
 
-$.getJSON("http://54.200.170.49:8080/web-service/rest/user/current", function(data){
+$.getJSON("/web-service/rest/user/current", function(data){
 	
 	$("#resume-filename").text(data['resume']['fileName']);
     $("#resume-filetype").text(data['resume']['fileType']);

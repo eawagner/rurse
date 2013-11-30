@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>RURSE - Create an account</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script src="js/jquery/jquery-1.10.1.min.js"></script>
+<script src="js/page.js"></script>
+<script>
+var savedata = {};
+$(document).ready(function (){
+	
+	writeIndexHeader();
+
+
+	$("#useraccount_button").click( function (){
+		
+		savedata['email'] = $("#useraccount_email").val();
+		savedata['password'] = $("#useraccount_password").val();
+	
+	
+	  
+	
+		$.ajax({
+    	type: 'POST',
+	    url: "/web-service/rest/account?email=" + savedata['email'],
+    	data: savedata['password'],
+    	success: function(data) {
+			 $("#enroll").html("Your account has been created.  <a href='resume.html'>Click here to upload your resume</a>")
+	 	},
+		error: function(data){ alert( data['status'] + ": "+ data['statusText'] + "\n\n" + data['responseText'] + "" );  },
+    	contentType: "text/plain",
+    	//dataType: 'json'
+		});	
+		
+	});
+	
+	
+	
+});
+  </script>
+
+</head>
+
+<body>
+<div id="header"></div>
+<p>&nbsp;</p>
+<div id="enroll">
+
+<p>Create an account:  </p>
+<p>
+<form >
+email address: <input id="useraccount_email" type="text"> <br>
+password: <input id="useraccount_password" type="password"> <br>
+<input id="useraccount_button" type="button" value="Create Account">
+</form>
+</p>
+</div>
+</body>
+</html>

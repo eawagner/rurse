@@ -23,17 +23,17 @@ $(document).ready(function (){
 
 	$("#search-text").val(resultsSearch);
 
-	resultsManagerFetch("job");	
+	resultsManagerFetch("course");	
 	$("#managedelete").prop('disabled', true);
 	$("#managesave").prop('disabled', true);
 	
 	$("div").delegate('.editable','click', function (){		
-		loadEditorData("job" , $(this).attr("id") );
+		loadEditorData("course" , $(this).attr("id") );
 	});
 
-	$("#managesave").click( function(){  saveEditorData("job");	});
-	$("#managesaveasnew").click( function(){  saveasnewEditorData("job");	});
-	$("#managedelete").click( function(){  deleteEditorData("job");	});
+	$("#managesave").click( function(){  saveEditorData("course");	});
+	$("#managesaveasnew").click( function(){  saveasnewEditorData("course");	});
+	$("#managedelete").click( function(){  deleteEditorData("course");	});
     
 	
 });
@@ -55,21 +55,22 @@ $(document).ready(function (){
 <div id="contentmanage">
 	
 	<div id="manageleft">
-    	<div id="search"><form method="get" action="managerjobs.html"><input id="search-text" name="search" type="text">
+    	<div id="search"><form method="get" action="managercourses.html"><input id="search-text" name="search" type="text">
     	<input id="search-button" type="submit" value="Search">
     	</form></div>
     	<div id="managelisting">.</div>
         <p id="page-selector">.</p>
     </div>
     <div id="manageedit">
-    <input id="manageedit_active" type="checkbox"> active<br>
+    
     <form class="formfield" id="manageform"><input id="manageedit_id" type="hidden">
     title:<br>
     <input class="formfield" id="manageedit_title" type="text"><br>
-    city:<br>
-    <input class="formfield" id="manageedit_city" type="text"><br>
-    state:<br>
-    <input class="formfield" id="manageedit_state" type="text"><br>
+    cost:<br>
+    <input class="formfield" id="manageedit_cost" type="text"><br>
+    duration:<br>
+    <input class="formfield" id="manageedit_duration" type="text"><br>
+    
     description:<br>
     <textarea rows="8" class="formfield" id="manageedit_description"></textarea><br><br>
     

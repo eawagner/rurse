@@ -24,7 +24,7 @@ $(document).ready(function (){
 	$("#search-text").val(resultsSearch);
 
 	resultsFetch("book");	
-	
+	recommendedResultsFetch("user/current/recommend/book");
 	//$(".search-button").click( function(){
 		
 	//});
@@ -45,19 +45,22 @@ $(document).ready(function (){
 
 <div id="wrapper">
 <div id="left">
-	<p>left<br>area</p>
+	<p></p>
 </div>
 <div id="content">
+	<h1>Books</h1>
 	<div id="search"><form method="get" action="books.html"><input id="search-text" name="search" type="text">
     <input id="search-button" type="submit" value="Search">
     </form></div>
+    <br>
+	<div id="recommendedresult">Recommended Result:</div>
 	<div id="result">.</div>
 	<div>
 		<p id="page-selector">.</p>
 	</div>
 </div>
 <div id="right">
-	<p>right<br>area</p>
+	<p></p>
 </div>
 </div>
 

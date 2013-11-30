@@ -23,17 +23,17 @@ $(document).ready(function (){
 
 	$("#search-text").val(resultsSearch);
 
-	resultsManagerFetch("job");	
+	resultsManagerFetch("book");	
 	$("#managedelete").prop('disabled', true);
 	$("#managesave").prop('disabled', true);
 	
 	$("div").delegate('.editable','click', function (){		
-		loadEditorData("job" , $(this).attr("id") );
+		loadEditorData("book" , $(this).attr("id") );
 	});
 
-	$("#managesave").click( function(){  saveEditorData("job");	});
-	$("#managesaveasnew").click( function(){  saveasnewEditorData("job");	});
-	$("#managedelete").click( function(){  deleteEditorData("job");	});
+	$("#managesave").click( function(){  saveEditorData("book");	});
+	$("#managesaveasnew").click( function(){  saveasnewEditorData("book");	});
+	$("#managedelete").click( function(){  deleteEditorData("book");	});
     
 	
 });
@@ -55,21 +55,27 @@ $(document).ready(function (){
 <div id="contentmanage">
 	
 	<div id="manageleft">
-    	<div id="search"><form method="get" action="managerjobs.html"><input id="search-text" name="search" type="text">
+    	<div id="search"><form method="get" action="managerbooks.html"><input id="search-text" name="search" type="text">
     	<input id="search-button" type="submit" value="Search">
     	</form></div>
     	<div id="managelisting">.</div>
         <p id="page-selector">.</p>
     </div>
     <div id="manageedit">
-    <input id="manageedit_active" type="checkbox"> active<br>
+    
     <form class="formfield" id="manageform"><input id="manageedit_id" type="hidden">
+    isbn:<br>
+    <input class="formfield" id="manageedit_isbn" type="text"><br>
     title:<br>
     <input class="formfield" id="manageedit_title" type="text"><br>
-    city:<br>
-    <input class="formfield" id="manageedit_city" type="text"><br>
-    state:<br>
-    <input class="formfield" id="manageedit_state" type="text"><br>
+    
+    publisher:<br>
+    <input class="formfield" id="manageedit_publisher" type="text"><br>
+    publish date:<br>
+    <input class="formfield" id="manageedit_publishDate" type="text"><br>
+    price:<br>
+    <input class="formfield" id="manageedit_price" type="text"><br>
+    
     description:<br>
     <textarea rows="8" class="formfield" id="manageedit_description"></textarea><br><br>
     
