@@ -1,0 +1,111 @@
+/* CSS Document */
+article, aside, figcaption, figure, footer, header, hgroup, nav, section
+{
+    display: block;
+}
+
+
+em
+{
+	font-style: normal;
+}
+
+#left
+{
+	float: left;
+	width: 100px;
+	hieght: 900px;
+}
+
+#right
+{
+	float: right;
+	width: 150px;
+	height: 900px;
+}
+
+#content
+{
+	width: 500px;
+	
+	float: left;
+}
+
+#contentmanage
+{
+	width: 650px;
+	
+	float: left;
+}
+
+
+#header
+{
+	background-image: url(../img/menu-bg.gif);
+	height: 140px;
+	text-indent: 0px;
+	background-repeat: repeat-x;
+	background-position: 0px 30%;
+}
+#header img
+{
+	display:block;
+	float: left;
+}
+#header p
+{
+	display: block;
+	float: left;
+	font-size: 25px;
+	color: #484848;
+	padding-top: 10px;
+	padding-left: 30px;
+	word-spacing: 10px;
+}
+
+.rurse
+{
+	
+	padding-right: 1px;
+	
+}
+
+#search-text
+{
+	width:85%;
+}
+#search-button
+{
+	width:12%;
+}
+
+#manageleft
+{
+	display: block;
+	width: 350px;
+	
+	float: left;
+}
+
+#manageedit
+{
+	display: block;
+	width: 290px;
+	float: right;
+	background-color: #ECECEC;
+}
+
+.formfield{
+	width:95%;
+}
+
+.editable
+{ cursor: pointer; cursor: hand; }
+
+.editable:hover {
+	background-color:#E9EEFD
+}
+#recommendedresult
+{
+	background-color:#FCF5CE;
+}
